@@ -3,6 +3,7 @@ import Head from "next/head"
 import Script from "next/script"
 import "../app/globals.css"
 import { ThemeProvider } from "../components/ThemeProvider"
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata = {
   title: "Soluciones IT personalizadas | Hyperion Marketing",
@@ -73,6 +74,8 @@ export default function RootLayout(props) {
             gtag('config', 'G-LZKWCDZ9L1');
           `}
         </Script>
+        <Analytics />
+
       </body>
     </html>
   )
