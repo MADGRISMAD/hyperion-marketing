@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://hyperionmkt.com
+
+# Sitemaps
+Sitemap: https://hyperionmkt.com/sitemap.xml

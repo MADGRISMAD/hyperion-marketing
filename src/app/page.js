@@ -138,7 +138,7 @@ export default function Home() {
               <div className="md:col-span-2 rounded-3xl overflow-hidden relative group h-[400px]">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10"></div>
                 <Image
-                  src="/placeholder.svg?height=800&width=1200"
+                  src="../"
                   alt="Digital Solutions"
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
