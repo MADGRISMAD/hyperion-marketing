@@ -1,11 +1,11 @@
 import React from "react"
 import Script from "next/script"
-import { Fraunces, Manrope } from "next/font/google"
+import { Sora, Manrope } from "next/font/google"
 import "../app/globals.css"
 import { ThemeProvider } from "../components/ThemeProvider"
 import { Analytics } from "@vercel/analytics/react"
 
-const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap" })
+const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" })
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" })
 
 export const metadata = {
@@ -15,7 +15,7 @@ export const metadata = {
     "10 años creando sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios. Creadores de mitiendita.software, mirestaurante.software e interships.gg.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Hyperion Marketing | Software que crece con tu negocio",
+    title: "Hyperion Marketing | Sistemas a medida, puntos de venta y automatización",
     description:
       "Sistemas a la medida, puntos de venta, automatizaciones y servicio técnico. 10 años de experiencia.",
     url: "https://hyperionmkt.com",
@@ -26,7 +26,7 @@ export const metadata = {
 }
 
 export const viewport = {
-  themeColor: "#040906",
+  themeColor: "#05070d",
 }
 
 const organizationLd = {
@@ -54,7 +54,7 @@ const organizationLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" suppressHydrationWarning className={`${fraunces.variable} ${manrope.variable}`}>
+    <html lang="es" suppressHydrationWarning className={`${sora.variable} ${manrope.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" disableTransitionOnChange>

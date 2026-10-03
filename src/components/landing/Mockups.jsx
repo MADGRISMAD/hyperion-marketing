@@ -3,12 +3,12 @@ import Image from "next/image"
 
 function Window({ url, children, accent = "#7ee2a8" }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-forest-900/90 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)] backdrop-blur">
+    <div className="overflow-hidden rounded-2xl border border-white/10 bg-ink-900/90 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.9)] backdrop-blur">
       <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
         <span className="h-2.5 w-2.5 rounded-full bg-[#ff6b5a]" />
         <span className="h-2.5 w-2.5 rounded-full bg-[#f2c14e]" />
         <span className="h-2.5 w-2.5 rounded-full bg-[#5ad17a]" />
-        <div className="ml-3 flex-1 truncate rounded-md bg-white/5 px-3 py-1 text-xs text-cream/60">
+        <div className="ml-3 flex-1 truncate rounded-md bg-white/5 px-3 py-1 text-xs text-fog/60">
           <span style={{ color: accent }}>●</span> {url}
         </div>
       </div>
@@ -37,8 +37,8 @@ export function TienditaMockup() {
           />
         </Window>
       </div>
-      <div className="float absolute -bottom-1 left-2 flex items-center gap-2 rounded-full border border-white/10 bg-forest-950/90 px-4 py-2 text-xs font-semibold shadow-xl backdrop-blur sm:left-6">
-        <span className="h-2 w-2 rounded-full bg-moss" /> Venta guardada en la nube
+      <div className="float absolute -bottom-1 left-2 flex items-center gap-2 rounded-full border border-white/10 bg-ink-950/90 px-4 py-2 text-xs font-semibold shadow-xl backdrop-blur sm:left-6">
+        <span className="h-2 w-2 rounded-full bg-aqua" /> Venta guardada en la nube
       </div>
       <div className="float absolute top-2 right-2 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ffd166] to-[#f2a33a] font-display text-sm font-bold text-[#3b2405] shadow-[0_10px_30px_-5px_rgba(242,163,58,0.7)] [animation-delay:1.5s]">
         +$22
@@ -57,7 +57,7 @@ export function RestauranteMockup() {
     <Window url="mirestaurante.software" accent="#f2a65a">
       <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-5 sm:p-4">
         <div className="sm:col-span-3">
-          <div className="mb-2 text-[10px] uppercase tracking-widest text-cream/50">Salón principal</div>
+          <div className="mb-2 text-[10px] uppercase tracking-widest text-fog/50">Salón principal</div>
           <div className="grid grid-cols-4 gap-2">
             {tables.map(([n, s]) => (
               <div
@@ -72,11 +72,11 @@ export function RestauranteMockup() {
           </div>
         </div>
         <div className="space-y-2 sm:col-span-2">
-          <div className="text-[10px] uppercase tracking-widest text-cream/50">Cocina</div>
+          <div className="text-[10px] uppercase tracking-widest text-fog/50">Cocina</div>
           {[["Mesa 2", "Tacos al pastor x3", "8 min"], ["Mesa 4", "Enchiladas suizas", "12 min"], ["Mesa 6", "Pozole grande", "4 min"]].map(([m, o, t]) => (
             <div key={m} className="rounded-lg border-l-2 border-amber bg-white/[0.04] p-2">
               <div className="flex justify-between text-[10px]"><span className="font-bold">{m}</span><span className="text-amber">{t}</span></div>
-              <div className="truncate text-[10px] text-cream/60">{o}</div>
+              <div className="truncate text-[10px] text-fog/60">{o}</div>
             </div>
           ))}
         </div>
@@ -90,7 +90,7 @@ export function IntershipsMockup() {
     <Window url="interships.gg" accent="#9b8cff">
       <div className="relative overflow-hidden p-5">
         <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[#9b8cff]/25 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-moss/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-aqua/20 blur-3xl" />
         <div className="relative">
           <div className="mb-1 font-display text-2xl font-bold">interships<span className="text-[#9b8cff]">.gg</span></div>
           <div className="mb-4 h-2 w-40 rounded bg-white/10" />
@@ -107,7 +107,7 @@ export function IntershipsMockup() {
             ))}
           </div>
           <div className="mt-4 flex gap-2">
-            <div className="rounded-full bg-[#9b8cff] px-4 py-1.5 text-[11px] font-bold text-forest-950">Entrar</div>
+            <div className="rounded-full bg-[#9b8cff] px-4 py-1.5 text-[11px] font-bold text-ink-950">Entrar</div>
             <div className="rounded-full border border-white/15 px-4 py-1.5 text-[11px]">Explorar</div>
           </div>
         </div>
