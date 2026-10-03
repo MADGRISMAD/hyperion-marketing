@@ -29,7 +29,7 @@ import {
 import Navbar, { Logo } from "../components/landing/Navbar"
 import Hero from "../components/landing/Hero"
 import { Parallax, Reveal, CountUp } from "../components/landing/parallax"
-import { TienditaMockup, RestauranteMockup, IntershipsMockup } from "../components/landing/Mockups"
+import { TienditaMockup, RestauranteMockup, InternshipsMockup } from "../components/landing/Mockups"
 
 const WHATSAPP = "https://wa.me/526645798903?text=Hola%20Hyperion%2C%20me%20interesa%20cotizar%20un%20proyecto"
 
@@ -44,17 +44,23 @@ function SectionTag({ children }) {
 /* ───────────────────────── Marquesina ───────────────────────── */
 function Marquee() {
   const items = ["Sistemas a la medida", "Puntos de venta", "Automatizaciones", "Servicio técnico", "Desarrollo web", "Marketing digital"]
-  const row = [...items, ...items]
-  return (
-    <div className="relative z-10 overflow-hidden border-y border-slate-200 bg-slate-50 py-5">
-      <div className="marquee flex w-max gap-10 whitespace-nowrap">
+  const row = [...items, ...items, ...items]
+  const Row = ({ speed, muted }) => (
+    <Parallax speed={speed} axis="x" className="w-full">
+      <div className="-ml-[40%] flex w-max gap-10 whitespace-nowrap">
         {row.map((t, i) => (
-          <span key={i} className="flex items-center gap-10 font-display text-xl font-semibold text-slate-500 md:text-2xl">
+          <span key={i} className={`flex items-center gap-10 font-display text-xl font-semibold md:text-3xl ${muted ? "text-slate-300" : "text-slate-600"}`}>
             {t}
             <span className="h-1.5 w-1.5 rounded-full bg-brand" />
           </span>
         ))}
       </div>
+    </Parallax>
+  )
+  return (
+    <div className="relative z-10 space-y-3 overflow-hidden border-y border-slate-200 bg-slate-50 py-6">
+      <Row speed={-0.6} />
+      <Row speed={0.6} muted />
     </div>
   )
 }
@@ -118,7 +124,8 @@ function Services() {
           {services.map((s, i) => {
             const Icon = s.icon
             return (
-              <Reveal key={s.title} delay={(i % 2) * 100}>
+              <Parallax key={s.title} axis="x" speed={i % 2 ? 0.18 : -0.18}>
+              <Reveal delay={(i % 2) * 100} className="h-full">
                 <Link
                   href={s.href}
                                     className="group relative block h-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
@@ -143,6 +150,7 @@ function Services() {
                   </span>
                 </Link>
               </Reveal>
+              </Parallax>
             )
           })}
         </div>
@@ -199,16 +207,16 @@ const products = [
     Mockup: RestauranteMockup,
   },
   {
-    name: "interships",
+    name: "internships",
     tld: ".gg",
-    href: "https://interships.gg",
-    color: "#6d4fe0",
+    href: "https://internships.gg",
+    color: "#059669",
     status: "Disponible",
-    tagline: "Nuestra plataforma en línea.",
+    tagline: "Sube de nivel tu carrera mientras estudias.",
     description:
-      "Una plataforma web diseñada, desarrollada y operada por nuestro equipo de principio a fin: la prueba de que construimos productos digitales que escalan.",
-    features: ["Diseño y desarrollo propio", "Infraestructura escalable", "Evolución continua"],
-    Mockup: IntershipsMockup,
+      "Plataforma para universitarios con misiones reales en empresas reales: trabajos freelance, remotos y por proyecto. Los estudiantes ganan dinero, juntan XP y llenan su portafolio; las empresas encuentran talento joven.",
+    features: ["Misiones freelance, remotas y por proyecto", "XP y rachas que motivan a seguir avanzando", "Sección para empresas que buscan talento"],
+    Mockup: InternshipsMockup,
   },
 ]
 
@@ -290,7 +298,7 @@ function Products() {
                   <Parallax speed={0.1} className="pointer-events-none absolute inset-0">
                     <div className="absolute inset-x-[6%] inset-y-[10%] rounded-3xl" style={{ background: `${p.color}14` }} />
                   </Parallax>
-                  <Parallax speed={-0.12}>
+                  <Parallax axis="x" speed={flip ? -0.22 : 0.22}>
                     <Reveal delay={150} className="relative">
                       <p.Mockup />
                       {p.status === "Próximamente" && (
@@ -313,11 +321,11 @@ function Products() {
 /* ───────────────────────── Automatizaciones (banda parallax) ───────────────────────── */
 function Automation() {
   const nodes = [
-    { icon: ShoppingCart, label: "Nueva venta", color: "#f5a524", speed: 0 },
-    { icon: Database, label: "Inventario", color: "#5b8cff", speed: -0.025 },
-    { icon: FileText, label: "Factura", color: "#34d6c4", speed: -0.05 },
-    { icon: BarChart3, label: "Reporte diario", color: "#9b8cff", speed: -0.075 },
-    { icon: Bell, label: "Aviso a tu celular", color: "#d9480f", speed: -0.1 },
+    { icon: ShoppingCart, label: "Nueva venta", color: "#f5a524" },
+    { icon: Database, label: "Inventario", color: "#5b8cff" },
+    { icon: FileText, label: "Factura", color: "#34d6c4" },
+    { icon: BarChart3, label: "Reporte diario", color: "#9b8cff" },
+    { icon: Bell, label: "Aviso a tu celular", color: "#d9480f" },
   ]
   return (
     <section id="automatizaciones" className="relative overflow-hidden border-y border-slate-200 bg-slate-50 py-24 md:py-32">
@@ -348,7 +356,7 @@ function Automation() {
             {nodes.map((n, i) => {
               const Icon = n.icon
               return (
-                <Parallax key={n.label} speed={n.speed}>
+                <Parallax key={n.label} axis="x" speed={i % 2 ? -0.12 : 0.12}>
                   <Reveal delay={i * 90}>
                     <div className="relative flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm" style={{ marginLeft: `${(i % 2) * 28}px` }}>
                       <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl" style={{ background: `${n.color}20`, boxShadow: `inset 0 0 0 1px ${n.color}55` }}>
@@ -630,7 +638,7 @@ function Footer() {
             <ul className="space-y-2.5 text-fog/65">
               <li><a href="https://mitiendita.software" target="_blank" rel="noopener noreferrer" className="hover:text-fog">mitiendita.software</a></li>
               <li className="flex items-center gap-2">mirestaurante.software <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Pronto</span></li>
-              <li><a href="https://interships.gg" target="_blank" rel="noopener noreferrer" className="hover:text-fog">interships.gg</a></li>
+              <li><a href="https://internships.gg" target="_blank" rel="noopener noreferrer" className="hover:text-fog">internships.gg</a></li>
             </ul>
           </div>
           <div>

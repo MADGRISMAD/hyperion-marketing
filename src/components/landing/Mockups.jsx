@@ -85,33 +85,17 @@ export function RestauranteMockup() {
   )
 }
 
-export function IntershipsMockup() {
+export function InternshipsMockup() {
   return (
-    <Window url="interships.gg" accent="#9b8cff">
-      <div className="relative overflow-hidden p-5">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[#9b8cff]/15 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-aqua/10 blur-3xl" />
-        <div className="relative">
-          <div className="mb-1 font-display text-2xl font-bold">interships<span className="text-[#9b8cff]">.gg</span></div>
-          <div className="mb-4 h-2 w-40 rounded bg-slate-200" />
-          <div className="grid grid-cols-3 gap-2">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className="rounded-xl border border-slate-200 bg-slate-50 p-2">
-                <div
-                  className="mb-2 aspect-video rounded-lg"
-                  style={{ background: `linear-gradient(135deg, hsl(${250 + i * 30} 60% 45%), hsl(${200 + i * 40} 60% 20%))` }}
-                />
-                <div className="mb-1 h-1.5 w-3/4 rounded bg-slate-300" />
-                <div className="h-1.5 w-1/2 rounded bg-slate-200" />
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 flex gap-2">
-            <div className="rounded-full bg-[#9b8cff] px-4 py-1.5 text-[11px] font-bold text-white">Entrar</div>
-            <div className="rounded-full border border-slate-300 px-4 py-1.5 text-[11px]">Explorar</div>
-          </div>
-        </div>
-      </div>
+    <Window url="internships.gg" accent="#10b981">
+      <Image
+        src="/productos/internships-landing.png"
+        alt="Página de inicio de internships.gg"
+        width={1440}
+        height={900}
+        sizes="(min-width: 1024px) 560px, 92vw"
+        className="h-auto w-full"
+      />
     </Window>
   )
 }
