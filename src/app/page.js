@@ -160,12 +160,17 @@ const products = [
     name: "mitiendita",
     tld: ".software",
     href: "https://mitiendita.software",
-    color: "#7ee2a8",
+    color: "#f2a33a",
     status: "Disponible",
-    tagline: "El punto de venta para tu tienda.",
+    tagline: "Tu tienda no cierra aunque la compu falle.",
     description:
-      "Vende rápido, controla tu inventario y haz tus cortes de caja sin complicaciones. Pensado para tiendas, abarrotes y comercios que quieren dejar atrás la libreta.",
-    features: ["Ventas en segundos", "Inventario en tiempo real", "Cortes de caja y reportes"],
+      "Punto de venta en la nube para abarrotes y comercios. Abre caja desde el celular, la tablet o la PC sin instalar nada: tus ventas, productos y cortes siempre a la mano.",
+    features: [
+      "Escanea con lector de código de barras o busca por nombre",
+      "Atajos de teclado para cobrar en segundos (F12)",
+      "Ventas en espera, descuentos y cortes de caja",
+      "Prueba gratis, sin tarjeta",
+    ],
     Mockup: TienditaMockup,
   },
   {
@@ -226,7 +231,7 @@ function Products() {
                         {p.status}
                       </span>
                     </div>
-                    <h3 className="font-display text-4xl font-semibold md:text-5xl">
+                    <h3 className="font-display text-[1.7rem] font-semibold break-words sm:text-4xl md:text-5xl">
                       {p.name}
                       <span style={{ color: p.color }}>{p.tld}</span>
                     </h3>

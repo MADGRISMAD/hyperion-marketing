@@ -1,4 +1,5 @@
-// Ilustraciones de interfaz hechas con CSS para los productos.
+// Ilustraciones de interfaz para los productos.
+import Image from "next/image"
 
 function Window({ url, children, accent = "#7ee2a8" }) {
   return (
@@ -17,47 +18,32 @@ function Window({ url, children, accent = "#7ee2a8" }) {
 }
 
 export function TienditaMockup() {
-  const products = [
-    ["Refresco 600ml", "$22"],
-    ["Pan dulce", "$12"],
-    ["Leche 1L", "$28"],
-    ["Café molido", "$89"],
-    ["Galletas", "$18"],
-    ["Huevo 12 pz", "$46"],
-  ]
   return (
-    <Window url="mitiendita.software" accent="#7ee2a8">
-      <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-5 sm:p-4">
-        <div className="grid grid-cols-3 gap-2 sm:col-span-3">
-          {products.map(([n, p], i) => (
-            <div key={n} className="rounded-xl border border-white/5 bg-white/[0.04] p-2.5">
-              <div
-                className="mb-2 aspect-[4/3] rounded-lg"
-                style={{ background: `linear-gradient(135deg, hsl(${140 + i * 25} 45% 30%), hsl(${150 + i * 25} 50% 18%))` }}
-              />
-              <div className="truncate text-[10px] text-cream/70">{n}</div>
-              <div className="text-xs font-bold text-moss">{p}</div>
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col rounded-xl sm:col-span-2 border border-white/5 bg-black/30 p-3">
-          <div className="mb-2 text-[10px] uppercase tracking-widest text-cream/50">Ticket #1042</div>
-          {[["Leche 1L", "x2", "$56"], ["Pan dulce", "x4", "$48"], ["Café molido", "x1", "$89"]].map(([n, q, t]) => (
-            <div key={n} className="flex justify-between border-b border-dashed border-white/10 py-1.5 text-[10px] text-cream/80">
-              <span className="truncate">{n} <span className="text-cream/40">{q}</span></span>
-              <span>{t}</span>
-            </div>
-          ))}
-          <div className="mt-auto pt-3">
-            <div className="flex items-end justify-between">
-              <span className="text-[10px] text-cream/50">Total</span>
-              <span className="font-display text-2xl font-bold text-cream">$193</span>
-            </div>
-            <div className="mt-2 rounded-lg bg-moss py-2 text-center text-[11px] font-bold text-forest-950">Cobrar</div>
-          </div>
-        </div>
+    <div className="relative pt-10 pb-6">
+      {/* Página de mitiendita.software al fondo */}
+      <div className="absolute top-0 -left-4 w-[62%] -rotate-6 overflow-hidden rounded-xl border border-white/10 opacity-80 shadow-2xl sm:-left-8">
+        <Image src="/productos/mitiendita-landing.webp" alt="" width={2000} height={1155} sizes="(min-width: 1024px) 380px, 60vw" className="h-auto w-full" />
       </div>
-    </Window>
+      {/* Sistema real: pantalla de venta */}
+      <div className="relative ml-auto w-[92%]">
+        <Window url="mitiendita.software" accent="#f2a33a">
+          <Image
+            src="/productos/mitiendita-app.webp"
+            alt="Pantalla de venta del punto de venta mitiendita.software"
+            width={2000}
+            height={1161}
+            sizes="(min-width: 1024px) 560px, 92vw"
+            className="h-auto w-full"
+          />
+        </Window>
+      </div>
+      <div className="float absolute -bottom-1 left-2 flex items-center gap-2 rounded-full border border-white/10 bg-forest-950/90 px-4 py-2 text-xs font-semibold shadow-xl backdrop-blur sm:left-6">
+        <span className="h-2 w-2 rounded-full bg-moss" /> Venta guardada en la nube
+      </div>
+      <div className="float absolute top-2 right-2 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ffd166] to-[#f2a33a] font-display text-sm font-bold text-[#3b2405] shadow-[0_10px_30px_-5px_rgba(242,163,58,0.7)] [animation-delay:1.5s]">
+        +$22
+      </div>
+    </div>
   )
 }
 
