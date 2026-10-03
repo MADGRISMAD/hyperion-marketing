@@ -26,7 +26,7 @@ export const metadata = {
 }
 
 export const viewport = {
-  themeColor: "#05070d",
+  themeColor: "#ffffff",
 }
 
 const organizationLd = {

@@ -47,7 +47,7 @@ export default function Navbar() {
     <>
     <header
       ref={header}
-      className="group fixed inset-x-0 top-0 z-50 transition-all duration-500 [&.is-scrolled]:border-b [&.is-scrolled]:border-white/5 [&.is-scrolled]:bg-ink-950/75 [&.is-scrolled]:backdrop-blur-xl"
+      className="group fixed inset-x-0 top-0 z-50 transition-all duration-500 [&.is-scrolled]:border-b [&.is-scrolled]:border-slate-200 [&.is-scrolled]:bg-ink-950/75 [&.is-scrolled]:backdrop-blur-xl"
     >
       <div className="container flex h-20 items-center justify-between">
         <Link href="#inicio" aria-label="Hyperion Marketing, inicio">
@@ -56,7 +56,7 @@ export default function Navbar() {
 
         <nav className="hidden items-center gap-8 md:flex">
           {links.map(([href, label]) => (
-            <Link key={href} href={href} className="relative text-sm font-medium text-fog/70 transition hover:text-fog after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-amber after:transition-all hover:after:w-full">
+            <Link key={href} href={href} className="relative text-sm font-medium text-fog/70 transition hover:text-fog after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-brand after:transition-all hover:after:w-full">
               {label}
             </Link>
           ))}
@@ -64,7 +64,7 @@ export default function Navbar() {
 
         <Link
           href="#contacto"
-          className="hidden rounded-full bg-fog px-5 py-2.5 text-sm font-semibold text-ink-950 transition hover:bg-amber md:inline-flex"
+          className="hidden rounded-full bg-fog px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand md:inline-flex"
         >
           Cotizar ahora
         </Link>
@@ -73,7 +73,7 @@ export default function Navbar() {
           <Menu className="h-6 w-6" />
         </button>
       </div>
-      <div className="absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-volt via-aqua to-amber" ref={bar} style={{ transform: "scaleX(0)" }} />
+      <div className="absolute inset-x-0 bottom-0 h-px origin-left bg-brand" ref={bar} style={{ transform: "scaleX(0)" }} />
     </header>
 
       {/* Menú móvil (fuera del header: backdrop-filter rompería el position: fixed) */}
@@ -90,13 +90,13 @@ export default function Navbar() {
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className={`font-display text-4xl text-fog transition-all duration-500 hover:text-amber ${open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}`}
+              className={`font-display text-4xl text-fog transition-all duration-500 hover:text-brand ${open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}`}
               style={{ transitionDelay: open ? `${100 + i * 60}ms` : "0ms" }}
             >
               {label}
             </Link>
           ))}
-          <Link href="#contacto" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-gradient-to-r from-amber to-[#ff7a45] py-4 text-center font-semibold text-ink-950">
+          <Link href="#contacto" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-brand py-4 text-center font-semibold text-white">
             Cotizar ahora
           </Link>
         </nav>

@@ -4,14 +4,15 @@
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
 
-  --color-ink-950: #05070d;
-  --color-ink-900: #0a0e18;
-  --color-ink-800: #111727;
-  --color-ink-700: #1a2236;
-  --color-fog: #e7ecf6;
-  --color-amber: #f5a524;
-  --color-volt: #5b8cff;
-  --color-aqua: #34d6c4;
+  /* Tema claro: "ink" son fondos, "fog" es el color de texto */
+  --color-ink-950: #ffffff;
+  --color-ink-900: #f8fafc;
+  --color-ink-800: #f1f5f9;
+  --color-ink-700: #e2e8f0;
+  --color-fog: #0f172a;
+  --color-brand: #1d4ed8;
+  --color-volt: #2563eb;
+  --color-aqua: #0d9488;
 }
 
 html {
@@ -28,8 +29,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-amber);
-  color: var(--color-ink-950);
+  background: #bfdbfe;
+  color: #0f172a;
 }
 
 .container {
@@ -38,39 +39,6 @@ body {
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.text-gradient {
-  background: linear-gradient(100deg, #ffd27a 0%, #f5a524 45%, #ff7a45 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.text-gradient-volt {
-  background: linear-gradient(100deg, #9ec0ff 0%, #5b8cff 50%, #34d6c4 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Cuadrícula de fondo */
-.bg-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-
-/* Piso en perspectiva */
-.grid-floor {
-  background-image:
-    linear-gradient(rgba(91, 140, 255, 0.35) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(91, 140, 255, 0.35) 1px, transparent 1px);
-  background-size: 80px 80px;
-  transform: perspective(600px) rotateX(62deg);
-  transform-origin: center top;
-  mask-image: linear-gradient(180deg, transparent 0%, #000 25%, #000 60%, transparent 100%);
 }
 
 /* Revelado al hacer scroll */
@@ -122,27 +90,8 @@ body {
   animation: pulse-dot 2s ease-out infinite;
 }
 @keyframes pulse-dot {
-  0% { box-shadow: 0 0 0 0 rgba(52, 214, 196, 0.6); }
-  100% { box-shadow: 0 0 0 12px rgba(52, 214, 196, 0); }
-}
-
-/* Tarjeta con brillo que sigue al cursor */
-.glow-card {
-  position: relative;
-  isolation: isolate;
-}
-.glow-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(91, 140, 255, 0.16), transparent 45%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  z-index: -1;
-}
-.glow-card:hover::before {
-  opacity: 1;
+  0% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.5); }
+  100% { box-shadow: 0 0 0 12px rgba(13, 148, 136, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {

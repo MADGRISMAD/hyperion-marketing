@@ -9,9 +9,8 @@ export const metadata = {
 export default function Gracias() {
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-4">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,#14204a_0%,#05070d_65%)]" />
-      <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse,#000_20%,transparent_70%)]" />
-      <div className="relative z-10 max-w-lg rounded-3xl border border-white/10 bg-ink-900/80 p-10 text-center backdrop-blur-xl">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#eef4ff] to-white" />
+      <div className="relative z-10 max-w-lg rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-xl shadow-slate-900/5">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-aqua/15 ring-1 ring-aqua/40">
           <CheckCircle2 className="h-8 w-8 text-aqua" />
         </div>
@@ -21,7 +20,7 @@ export default function Gracias() {
         </p>
         <Link
           href="/"
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-amber px-7 py-3.5 font-semibold text-ink-950 transition hover:scale-[1.03]"
+          className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3.5 font-semibold text-white transition hover:scale-[1.03]"
         >
           <ArrowLeft className="h-4 w-4" /> Volver al inicio
         </Link>

@@ -33,15 +33,9 @@ import { TienditaMockup, RestauranteMockup, IntershipsMockup } from "../componen
 
 const WHATSAPP = "https://wa.me/526645798903?text=Hola%20Hyperion%2C%20me%20interesa%20cotizar%20un%20proyecto"
 
-function trackGlow(e) {
-  const r = e.currentTarget.getBoundingClientRect()
-  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`)
-  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`)
-}
-
 function SectionTag({ children }) {
   return (
-    <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold tracking-[0.15em] text-amber uppercase">
+    <span className="mb-3 inline-block text-sm font-semibold tracking-wide text-brand uppercase">
       {children}
     </span>
   )
@@ -52,12 +46,12 @@ function Marquee() {
   const items = ["Sistemas a la medida", "Puntos de venta", "Automatizaciones", "Servicio técnico", "Desarrollo web", "Marketing digital"]
   const row = [...items, ...items]
   return (
-    <div className="relative z-10 overflow-hidden border-y border-white/5 bg-ink-900/80 py-5">
+    <div className="relative z-10 overflow-hidden border-y border-slate-200 bg-slate-50 py-5">
       <div className="marquee flex w-max gap-10 whitespace-nowrap">
         {row.map((t, i) => (
-          <span key={i} className="flex items-center gap-10 font-display text-xl font-semibold text-fog/70 md:text-2xl">
+          <span key={i} className="flex items-center gap-10 font-display text-xl font-semibold text-slate-500 md:text-2xl">
             {t}
-            <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+            <span className="h-1.5 w-1.5 rounded-full bg-brand" />
           </span>
         ))}
       </div>
@@ -109,7 +103,7 @@ function Services() {
           <Reveal>
             <SectionTag>Servicios</SectionTag>
             <h2 className="font-display text-3xl leading-tight font-bold md:text-5xl">
-              Todo lo que tu negocio necesita en <span className="text-gradient">tecnología</span>.
+              Todo lo que tu negocio necesita en <span className="text-brand">tecnología</span>.
             </h2>
           </Reveal>
           <Reveal delay={100}>
@@ -127,8 +121,7 @@ function Services() {
               <Reveal key={s.title} delay={(i % 2) * 100}>
                 <Link
                   href={s.href}
-                  onMouseMove={trackGlow}
-                  className="glow-card group relative block h-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.05] to-white/[0.01] p-8 transition duration-500 hover:-translate-y-1 hover:border-white/25"
+                                    className="group relative block h-full overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
                 >
                   <div
                     className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl transition group-hover:scale-110"
@@ -148,10 +141,6 @@ function Services() {
                   <span className="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: s.accent }}>
                     Conocer más <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </span>
-                  <div
-                    className="pointer-events-none absolute -top-20 -right-20 h-48 w-48 rounded-full opacity-0 blur-3xl transition duration-500 group-hover:opacity-60"
-                    style={{ background: s.accent }}
-                  />
                 </Link>
               </Reveal>
             )
@@ -163,7 +152,7 @@ function Services() {
             { icon: Globe, title: "Desarrollo web", text: "Sitios rápidos y atractivos que convierten visitas en clientes.", href: "/servicios/desarrollo-web" },
             { icon: Megaphone, title: "Marketing digital", text: "Estrategia, contenido y campañas para que tu negocio se vea.", href: "/servicios/marketing-digital" },
           ].map(({ icon: Icon, title, text, href }) => (
-            <Link key={title} href={href} className="group flex items-center gap-5 rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition hover:border-white/25">
+            <Link key={title} href={href} className="group flex items-center gap-5 rounded-2xl border border-slate-200 bg-white p-6 transition hover:border-slate-300">
               <Icon className="h-6 w-6 shrink-0 text-fog/60" />
               <div className="flex-1">
                 <div className="font-display font-semibold">{title}</div>
@@ -184,7 +173,7 @@ const products = [
     name: "mitiendita",
     tld: ".software",
     href: "https://mitiendita.software",
-    color: "#f5a524",
+    color: "#e8750c",
     status: "Disponible",
     tagline: "Tu tienda no cierra aunque la compu falle.",
     description:
@@ -201,7 +190,7 @@ const products = [
     name: "mirestaurante",
     tld: ".software",
     href: null,
-    color: "#ff7a45",
+    color: "#d9480f",
     status: "Próximamente",
     tagline: "Tu restaurante, en orden.",
     description:
@@ -213,7 +202,7 @@ const products = [
     name: "interships",
     tld: ".gg",
     href: "https://interships.gg",
-    color: "#9b8cff",
+    color: "#6d4fe0",
     status: "Disponible",
     tagline: "Nuestra plataforma en línea.",
     description:
@@ -226,12 +215,11 @@ const products = [
 function Products() {
   return (
     <section id="productos" className="relative overflow-hidden py-24 md:py-32">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(91,140,255,0.10),transparent_60%)]" />
       <div className="container relative">
         <Reveal className="mx-auto mb-20 max-w-3xl text-center">
           <SectionTag>Nuestros productos</SectionTag>
           <h2 className="font-display text-3xl leading-tight font-bold md:text-5xl">
-            Software propio, probado en <span className="text-gradient-volt">negocios reales</span>.
+            Software propio, probado en <span className="text-brand">negocios reales</span>.
           </h2>
           <p className="mt-5 text-lg text-fog/65">
             Además de crear sistemas para nuestros clientes, desarrollamos y operamos nuestras propias plataformas. Lo que
@@ -255,7 +243,7 @@ function Products() {
                         {p.status}
                       </span>
                     </div>
-                    <h3 className="font-display text-[1.7rem] font-bold break-words sm:text-4xl md:text-5xl">
+                    <h3 className="font-display text-[1.7rem] font-bold sm:text-4xl xl:text-[2.75rem]">
                       {p.name}
                       <span style={{ color: p.color }}>{p.tld}</span>
                     </h3>
@@ -277,7 +265,7 @@ function Products() {
                           href={p.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-semibold text-ink-950 transition hover:scale-[1.03]"
+                          className="group inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-semibold text-white transition hover:scale-[1.03]"
                           style={{ background: p.color }}
                         >
                           Visitar {p.name}
@@ -299,14 +287,14 @@ function Products() {
                 </div>
 
                 <div className={`relative min-w-0 ${flip ? "lg:order-1" : ""}`}>
-                  <Parallax speed={0.18} className="pointer-events-none absolute inset-0">
-                    <div className="absolute inset-[5%] rounded-full blur-[90px]" style={{ background: `${p.color}30` }} />
+                  <Parallax speed={0.1} className="pointer-events-none absolute inset-0">
+                    <div className="absolute inset-x-[6%] inset-y-[10%] rounded-3xl" style={{ background: `${p.color}14` }} />
                   </Parallax>
                   <Parallax speed={-0.12}>
                     <Reveal delay={150} className="relative">
                       <p.Mockup />
                       {p.status === "Próximamente" && (
-                        <div className="float absolute -top-5 -right-3 rotate-6 rounded-xl bg-[#ff7a45] px-4 py-2 font-display text-sm font-bold text-ink-950 shadow-xl">
+                        <div className="float absolute -top-5 -right-3 rotate-6 rounded-xl bg-[#d9480f] px-4 py-2 font-display text-sm font-bold text-white shadow-xl">
                           ¡Muy pronto!
                         </div>
                       )}
@@ -329,21 +317,15 @@ function Automation() {
     { icon: Database, label: "Inventario", color: "#5b8cff", speed: -0.025 },
     { icon: FileText, label: "Factura", color: "#34d6c4", speed: -0.05 },
     { icon: BarChart3, label: "Reporte diario", color: "#9b8cff", speed: -0.075 },
-    { icon: Bell, label: "Aviso a tu celular", color: "#ff7a45", speed: -0.1 },
+    { icon: Bell, label: "Aviso a tu celular", color: "#d9480f", speed: -0.1 },
   ]
   return (
-    <section id="automatizaciones" className="relative overflow-hidden border-y border-white/5 bg-ink-900 py-24 md:py-32">
-      <Parallax speed={0.3} className="absolute inset-0">
-        <div className="bg-grid absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse,#000_30%,transparent_75%)]" />
-      </Parallax>
-      <Parallax speed={0.2} className="pointer-events-none absolute inset-0">
-        <div className="absolute top-1/3 left-1/2 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-aqua/10 blur-[120px]" />
-      </Parallax>
+    <section id="automatizaciones" className="relative overflow-hidden border-y border-slate-200 bg-slate-50 py-24 md:py-32">
       <div className="container relative grid items-center gap-16 lg:grid-cols-2">
         <Reveal>
           <SectionTag>Automatizaciones</SectionTag>
           <h2 className="font-display text-3xl leading-tight font-bold md:text-5xl">
-            Deja que el sistema haga el <span className="text-gradient-volt">trabajo repetitivo</span>.
+            Deja que el sistema haga el <span className="text-brand">trabajo repetitivo</span>.
           </h2>
           <p className="mt-5 text-lg text-fog/65">
             Conectamos tus herramientas para que la información fluya sola: menos captura manual, menos errores y más tiempo
@@ -368,7 +350,7 @@ function Automation() {
               return (
                 <Parallax key={n.label} speed={n.speed}>
                   <Reveal delay={i * 90}>
-                    <div className="relative flex items-center gap-4 rounded-2xl border border-white/10 bg-ink-950/80 p-4 backdrop-blur" style={{ marginLeft: `${(i % 2) * 28}px` }}>
+                    <div className="relative flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm" style={{ marginLeft: `${(i % 2) * 28}px` }}>
                       <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl" style={{ background: `${n.color}20`, boxShadow: `inset 0 0 0 1px ${n.color}55` }}>
                         <Icon className="h-5 w-5" style={{ color: n.color }} />
                       </span>
@@ -402,14 +384,14 @@ function About() {
         <Reveal>
           <SectionTag>Nosotros</SectionTag>
           <h2 className="font-display text-3xl leading-tight font-bold md:text-5xl">
-            10 años construyendo tecnología para <span className="text-gradient">negocios que quieren crecer</span>.
+            10 años construyendo tecnología para <span className="text-brand">negocios que quieren crecer</span>.
           </h2>
           <p className="mt-5 text-lg text-fog/65">
             Somos un equipo de desarrollo y soporte en Tijuana, Baja California. Trabajamos de cerca con cada cliente para
             entender su operación y entregar soluciones que realmente se usan.
           </p>
-          <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div className="text-sm font-semibold text-amber">¿Por qué &quot;Hyperion&quot;?</div>
+          <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <div className="text-sm font-semibold text-brand">¿Por qué &quot;Hyperion&quot;?</div>
             <p className="mt-1.5 text-sm text-fog/60">
               Hyperion es el árbol más alto del mundo. Nos gusta la idea: bases sólidas y crecimiento constante. Así
               construimos el software de nuestros clientes.
@@ -419,8 +401,8 @@ function About() {
         <div className="grid grid-cols-2 gap-4">
           {stats.map((s, i) => (
             <Parallax key={s.label} speed={i % 2 ? -0.06 : 0.06}>
-              <Reveal delay={i * 90} className="rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] p-7">
-                <div className="font-display text-4xl font-bold text-gradient md:text-5xl">
+              <Reveal delay={i * 90} className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+                <div className="font-display text-4xl font-bold text-brand md:text-5xl">
                   <CountUp to={s.n} suffix={s.s} />
                 </div>
                 <div className="mt-2 text-sm text-fog/60">{s.label}</div>
@@ -448,18 +430,18 @@ function Process() {
         <Reveal className="mx-auto mb-14 max-w-2xl text-center">
           <SectionTag>Cómo trabajamos</SectionTag>
           <h2 className="font-display text-3xl leading-tight font-bold md:text-5xl">
-            Un proceso <span className="text-gradient-volt">claro</span>, sin sorpresas.
+            Un proceso <span className="text-brand">claro</span>, sin sorpresas.
           </h2>
         </Reveal>
         <div className="relative grid gap-5 md:grid-cols-4">
-          <div className="absolute top-10 right-[12%] left-[12%] hidden h-px bg-gradient-to-r from-volt/0 via-volt/50 to-volt/0 md:block" />
+          <div className="absolute top-10 right-[12%] left-[12%] hidden h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent md:block" />
           {steps.map((s, i) => {
             const Icon = s.icon
             return (
               <Reveal key={s.title} delay={i * 100} className="relative text-center">
-                <div className="relative mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-ink-900">
-                  <Icon className="h-7 w-7 text-volt" />
-                  <span className="absolute -top-2 -right-2 flex h-7 w-7 items-center justify-center rounded-full bg-amber text-xs font-bold text-ink-950">{i + 1}</span>
+                <div className="relative mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-sm">
+                  <Icon className="h-7 w-7 text-brand" />
+                  <span className="absolute -top-2 -right-2 flex h-7 w-7 items-center justify-center rounded-full bg-brand text-xs font-bold text-white">{i + 1}</span>
                 </div>
                 <h3 className="font-display text-xl font-bold">{s.title}</h3>
                 <p className="mx-auto mt-2 max-w-[260px] text-sm text-fog/60">{s.text}</p>
@@ -500,27 +482,23 @@ function Contact() {
   }
 
   const field =
-    "w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3.5 text-fog placeholder:text-fog/30 outline-none transition focus:border-volt/60 focus:ring-4 focus:ring-volt/10"
+    "w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-fog placeholder:text-slate-400 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
   const quick = needs.slice(0, 4)
 
   return (
     <section id="contacto" className="relative overflow-hidden py-24 md:py-32">
-      <Parallax speed={0.2} className="pointer-events-none absolute inset-0">
-        <div className="absolute top-1/4 -left-40 h-[500px] w-[500px] rounded-full bg-volt/10 blur-[120px]" />
-        <div className="absolute -right-40 bottom-0 h-[500px] w-[500px] rounded-full bg-amber/10 blur-[120px]" />
-      </Parallax>
       <div className="container relative grid gap-14 lg:grid-cols-5">
         <div className="lg:col-span-2">
           <Reveal>
             <SectionTag>Contacto</SectionTag>
             <h2 className="font-display text-3xl leading-tight font-bold md:text-5xl">
-              Cuéntanos de tu <span className="text-gradient">proyecto</span>.
+              Cuéntanos de tu <span className="text-brand">proyecto</span>.
             </h2>
             <p className="mt-5 text-lg text-fog/65">Te respondemos con una propuesta clara y sin compromiso.</p>
           </Reveal>
           <Reveal delay={120} className="mt-10 space-y-4">
             <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 rounded-2xl border border-[#25d366]/30 bg-[#25d366]/10 p-5 transition hover:border-[#25d366]/60">
-              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#25d366] text-ink-950">
+              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#25d366] text-white">
                 <MessageCircle className="h-6 w-6" />
               </span>
               <span>
@@ -546,7 +524,7 @@ function Contact() {
                 </>
               )
               return href ? (
-                <a key={label} href={href} className="flex items-center gap-4 rounded-2xl p-2 transition hover:bg-white/[0.03]">
+                <a key={label} href={href} className="flex items-center gap-4 rounded-2xl p-2 transition hover:bg-slate-50">
                   {inner}
                 </a>
               ) : (
@@ -559,7 +537,7 @@ function Contact() {
         </div>
 
         <Reveal delay={150} className="lg:col-span-3">
-          <form onSubmit={onSubmit} className="relative rounded-3xl border border-white/10 bg-ink-900/80 p-6 shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)] backdrop-blur-xl md:p-10">
+          <form onSubmit={onSubmit} className="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-900/5 md:p-10">
             <div className="grid gap-5 md:grid-cols-2">
               <label className="block">
                 <span className="mb-2 block text-sm text-fog/60">Nombre</span>
@@ -581,7 +559,7 @@ function Contact() {
                       type="button"
                       key={n}
                       onClick={() => setForm({ ...form, need: n })}
-                      className={`rounded-full border px-3 py-1.5 text-xs transition ${form.need === n ? "border-amber bg-amber text-ink-950" : "border-white/15 text-fog/70 hover:border-amber/50"}`}
+                      className={`rounded-full border px-3 py-1.5 text-xs transition ${form.need === n ? "border-brand bg-brand text-white" : "border-slate-300 text-fog/70 hover:border-brand/50"}`}
                     >
                       {n}
                     </button>
@@ -591,7 +569,7 @@ function Contact() {
                     value={quick.includes(form.need) ? "" : form.need}
                     onChange={onChange}
                     aria-label="Otro servicio"
-                    className={`rounded-full border bg-transparent px-3 py-1.5 text-xs outline-none ${quick.includes(form.need) ? "border-white/15 text-fog/70" : "border-amber bg-amber text-ink-950"}`}
+                    className={`rounded-full border bg-transparent px-3 py-1.5 text-xs outline-none ${quick.includes(form.need) ? "border-slate-300 text-fog/70" : "border-brand bg-brand text-white"}`}
                   >
                     <option value="" disabled className="bg-ink-900 text-fog">Más…</option>
                     {needs.slice(4).map((n) => (
@@ -608,14 +586,14 @@ function Contact() {
               <textarea name="message" required rows={5} value={form.message} onChange={onChange} placeholder="¿Qué quieres lograr? ¿Qué usas hoy?" className={`${field} resize-none`} />
             </label>
             {status === "error" && (
-              <p className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+              <p className="mt-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-700">
                 No pudimos enviar tu mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.
               </p>
             )}
             <button
               type="submit"
               disabled={status === "sending"}
-              className="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-amber px-8 py-4 font-semibold text-ink-950 shadow-[0_10px_40px_-10px_rgba(245,165,36,0.8)] transition hover:scale-[1.01] disabled:opacity-70"
+              className="group mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 font-semibold text-white shadow-md shadow-blue-900/20 transition hover:scale-[1.01] disabled:opacity-70"
             >
               {status === "sending" ? (
                 <>
@@ -637,7 +615,7 @@ function Contact() {
 /* ───────────────────────── Pie de página ───────────────────────── */
 function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/5 bg-[#03050a] pt-16 pb-10">
+    <footer className="relative overflow-hidden border-t border-slate-200 bg-slate-50 pt-16 pb-10">
       <div className="container relative">
         <div className="grid gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
@@ -648,15 +626,15 @@ function Footer() {
             </p>
           </div>
           <div>
-            <h4 className="mb-4 text-xs font-semibold tracking-[0.2em] text-amber uppercase">Productos</h4>
+            <h4 className="mb-4 text-xs font-semibold tracking-[0.2em] text-brand uppercase">Productos</h4>
             <ul className="space-y-2.5 text-fog/65">
               <li><a href="https://mitiendita.software" target="_blank" rel="noopener noreferrer" className="hover:text-fog">mitiendita.software</a></li>
-              <li className="flex items-center gap-2">mirestaurante.software <span className="rounded-full bg-amber/15 px-2 py-0.5 text-[10px] text-amber">Pronto</span></li>
+              <li className="flex items-center gap-2">mirestaurante.software <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Pronto</span></li>
               <li><a href="https://interships.gg" target="_blank" rel="noopener noreferrer" className="hover:text-fog">interships.gg</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="mb-4 text-xs font-semibold tracking-[0.2em] text-amber uppercase">Servicios</h4>
+            <h4 className="mb-4 text-xs font-semibold tracking-[0.2em] text-brand uppercase">Servicios</h4>
             <ul className="space-y-2.5 text-fog/65">
               <li><Link href="/servicios/sistemas-a-medida" className="hover:text-fog">Sistemas a la medida</Link></li>
               <li><Link href="#productos" className="hover:text-fog">Puntos de venta</Link></li>
@@ -666,7 +644,7 @@ function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/5 pt-8 text-sm text-fog/40 md:flex-row">
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 text-sm text-fog/40 md:flex-row">
           <p>© {new Date().getFullYear()} Hyperion Marketing · Tijuana, B.C.</p>
           <a href="mailto:info@hyperionmkt.com" className="hover:text-fog">info@hyperionmkt.com</a>
         </div>
@@ -695,7 +673,7 @@ export default function Home() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Escríbenos por WhatsApp"
-        className="fixed right-5 bottom-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-ink-950 shadow-[0_10px_30px_-5px_rgba(37,211,102,0.6)] transition hover:scale-110"
+        className="fixed right-5 bottom-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg transition hover:scale-110"
       >
         <MessageCircle className="h-7 w-7" />
       </a>
