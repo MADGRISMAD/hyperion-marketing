@@ -202,9 +202,9 @@ const products = [
     name: "mirestaurante",
     tld: ".software",
     href: MIRESTAURANTE_URL,
-    cta: "Ver avance",
+    cta: "Visitar mirestaurante.software",
     color: "#c8341b",
-    status: "Próximamente",
+    status: "Beta",
     tagline: "Cada comanda, en su lugar.",
     description:
       "Sistema de comandas para restaurantes: del mesero a la cocina y de la cocina a la caja. Toma pedidos desde el celular y míralos llegar al instante, sin papelitos ni gritos.",
@@ -327,9 +327,9 @@ function Products() {
                   <Parallax axis="x" speed={flip ? -0.22 : 0.22}>
                     <Reveal delay={150} className="relative">
                       <p.Mockup />
-                      {p.status === "Próximamente" && (
+                      {p.status === "Beta" && (
                         <div className="float absolute -top-5 -right-3 rotate-6 rounded-xl bg-[#d9480f] px-4 py-2 font-display text-sm font-bold text-white shadow-xl">
-                          ¡Muy pronto!
+                          Versión beta
                         </div>
                       )}
                     </Reveal>
@@ -663,7 +663,7 @@ function Footer() {
             <h4 className="mb-4 text-xs font-semibold tracking-[0.2em] text-brand uppercase">Productos</h4>
             <ul className="space-y-2.5 text-fog/65">
               <li><a href="https://mitiendita.software" target="_blank" rel="noopener noreferrer" className="hover:text-fog">mitiendita.software</a></li>
-              <li className="flex items-center gap-2"><a href={MIRESTAURANTE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">mirestaurante.software</a> <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Pronto</span></li>
+              <li className="flex items-center gap-2"><a href={MIRESTAURANTE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">mirestaurante.software</a> <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Beta</span></li>
               <li><a href="https://internships.gg" target="_blank" rel="noopener noreferrer" className="hover:text-fog">internships.gg</a></li>
               <li><a href={CARESIA_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">caresia</a></li>
             </ul>
