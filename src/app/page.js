@@ -31,8 +31,9 @@ import Hero from "../components/landing/Hero"
 import { Parallax, Reveal, CountUp } from "../components/landing/parallax"
 import { TienditaMockup, RestauranteMockup, InternshipsMockup, CaresiaMockup } from "../components/landing/Mockups"
 
-// URL temporal de caresia: cuando tenga dominio propio, cambiarla solo aquí.
+// URLs temporales: cuando tengan dominio propio, cambiarlas solo aquí.
 const CARESIA_URL = "https://caresia.vercel.app/"
+const MIRESTAURANTE_URL = "https://mirestaurante-ten.vercel.app/"
 
 const WHATSAPP = "https://wa.me/526645798903?text=Hola%20Hyperion%2C%20me%20interesa%20cotizar%20un%20proyecto"
 
@@ -200,13 +201,19 @@ const products = [
   {
     name: "mirestaurante",
     tld: ".software",
-    href: null,
-    color: "#d9480f",
+    href: MIRESTAURANTE_URL,
+    cta: "Ver avance",
+    color: "#c8341b",
     status: "Próximamente",
-    tagline: "Tu restaurante, en orden.",
+    tagline: "Cada comanda, en su lugar.",
     description:
-      "Mesas, comandas y cocina conectadas en un solo sistema. Estamos afinando los últimos detalles; déjanos tus datos y sé de los primeros en probarlo.",
-    features: ["Mapa de mesas", "Comandas directas a cocina", "Cuentas y cobro ágil"],
+      "Sistema de comandas para restaurantes: del mesero a la cocina y de la cocina a la caja. Toma pedidos desde el celular y míralos llegar al instante, sin papelitos ni gritos.",
+    features: [
+      "Pedidos desde el celular, directo a cocina",
+      "Mapa de mesas con estado en vivo: libre, pidiendo, listo, comiendo",
+      "Pase de cocina con el tiempo de cada comanda",
+      "Prueba gratis 14 días, sin instalar nada",
+    ],
     Mockup: RestauranteMockup,
   },
   {
@@ -296,8 +303,7 @@ function Products() {
                           className="group inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-semibold text-white transition hover:scale-[1.03]"
                           style={{ background: p.color }}
                         >
-                          Visitar {p.name}
-                          {p.tld}
+                          {p.cta ?? `Visitar ${p.name}${p.tld}`}
                           <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                         </a>
                       ) : (
@@ -657,7 +663,7 @@ function Footer() {
             <h4 className="mb-4 text-xs font-semibold tracking-[0.2em] text-brand uppercase">Productos</h4>
             <ul className="space-y-2.5 text-fog/65">
               <li><a href="https://mitiendita.software" target="_blank" rel="noopener noreferrer" className="hover:text-fog">mitiendita.software</a></li>
-              <li className="flex items-center gap-2">mirestaurante.software <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Pronto</span></li>
+              <li className="flex items-center gap-2"><a href={MIRESTAURANTE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">mirestaurante.software</a> <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Pronto</span></li>
               <li><a href="https://internships.gg" target="_blank" rel="noopener noreferrer" className="hover:text-fog">internships.gg</a></li>
               <li><a href={CARESIA_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">caresia</a></li>
             </ul>

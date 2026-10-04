@@ -48,39 +48,16 @@ export function TienditaMockup() {
 }
 
 export function RestauranteMockup() {
-  const tables = [
-    ["1", "libre"], ["2", "ocupada"], ["3", "cuenta"], ["4", "ocupada"],
-    ["5", "libre"], ["6", "ocupada"], ["7", "libre"], ["8", "cuenta"],
-  ]
-  const color = { libre: "#7ee2a8", ocupada: "#f2a65a", cuenta: "#ff8a6b" }
   return (
-    <Window url="mirestaurante.software" accent="#f2a65a">
-      <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-5 sm:p-4">
-        <div className="sm:col-span-3">
-          <div className="mb-2 text-[10px] uppercase tracking-widest text-fog/50">Salón principal</div>
-          <div className="grid grid-cols-4 gap-2">
-            {tables.map(([n, s]) => (
-              <div
-                key={n}
-                className="flex aspect-square flex-col items-center justify-center rounded-full border-2 bg-slate-50"
-                style={{ borderColor: color[s] }}
-              >
-                <span className="font-display text-lg font-bold">{n}</span>
-                <span className="text-[8px] uppercase" style={{ color: color[s] }}>{s}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="space-y-2 sm:col-span-2">
-          <div className="text-[10px] uppercase tracking-widest text-fog/50">Cocina</div>
-          {[["Mesa 2", "Tacos al pastor x3", "8 min"], ["Mesa 4", "Enchiladas suizas", "12 min"], ["Mesa 6", "Pozole grande", "4 min"]].map(([m, o, t]) => (
-            <div key={m} className="rounded-lg border-l-2 border-[#d9480f] bg-slate-50 p-2">
-              <div className="flex justify-between text-[10px]"><span className="font-bold">{m}</span><span className="text-brand">{t}</span></div>
-              <div className="truncate text-[10px] text-fog/60">{o}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+    <Window url="mirestaurante.software" accent="#c8341b">
+      <Image
+        src="/productos/mirestaurante-landing.webp"
+        alt="Pase de cocina y mapa de mesas de mirestaurante.software"
+        width={2000}
+        height={1158}
+        sizes="(min-width: 1024px) 560px, 92vw"
+        className="h-auto w-full"
+      />
     </Window>
   )
 }
