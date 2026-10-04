@@ -99,3 +99,29 @@ export function InternshipsMockup() {
     </Window>
   )
 }
+
+export function CaresiaMockup() {
+  return (
+    <Window url="caresia" accent="#0e7490">
+      <div className="relative overflow-hidden p-6">
+        <div className="pointer-events-none absolute -top-16 -right-16 h-52 w-52 rounded-full bg-[#0e7490]/10" />
+        <div className="relative">
+          <div className="font-display text-3xl font-bold text-fog">
+            care<span className="text-[#0e7490]">sia</span>
+          </div>
+          <div className="mt-2 h-2 w-44 rounded bg-slate-200" />
+          <div className="mt-6 grid grid-cols-3 gap-3">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                <div className="mb-3 h-8 w-8 rounded-lg bg-[#0e7490]/15" />
+                <div className="mb-1.5 h-1.5 w-3/4 rounded bg-slate-300" />
+                <div className="h-1.5 w-1/2 rounded bg-slate-200" />
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 inline-block rounded-full bg-[#0e7490] px-5 py-2 text-xs font-semibold text-white">Conocer más</div>
+        </div>
+      </div>
+    </Window>
+  )
+}

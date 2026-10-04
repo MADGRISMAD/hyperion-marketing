@@ -12,7 +12,7 @@ export const metadata = {
   metadataBase: new URL("https://hyperionmkt.com"),
   title: "Hyperion Marketing | Sistemas a medida, puntos de venta y automatización",
   description:
-    "10 años creando sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios. Creadores de mitiendita.software, mirestaurante.software e interships.gg.",
+    "10 años creando sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios. Creadores de mitiendita.software, mirestaurante.software, internships.gg y caresia.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Hyperion Marketing | Sistemas a medida, puntos de venta y automatización",

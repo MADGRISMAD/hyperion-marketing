@@ -29,7 +29,10 @@ import {
 import Navbar, { Logo } from "../components/landing/Navbar"
 import Hero from "../components/landing/Hero"
 import { Parallax, Reveal, CountUp } from "../components/landing/parallax"
-import { TienditaMockup, RestauranteMockup, InternshipsMockup } from "../components/landing/Mockups"
+import { TienditaMockup, RestauranteMockup, InternshipsMockup, CaresiaMockup } from "../components/landing/Mockups"
+
+// URL temporal de caresia: cuando tenga dominio propio, cambiarla solo aquí.
+const CARESIA_URL = "https://caresia.vercel.app/"
 
 const WHATSAPP = "https://wa.me/526645798903?text=Hola%20Hyperion%2C%20me%20interesa%20cotizar%20un%20proyecto"
 
@@ -218,6 +221,17 @@ const products = [
     features: ["Misiones freelance, remotas y por proyecto", "XP y rachas que motivan a seguir avanzando", "Sección para empresas que buscan talento"],
     Mockup: InternshipsMockup,
   },
+  {
+    name: "caresia",
+    tld: "",
+    href: CARESIA_URL,
+    color: "#0e7490",
+    status: "Nuevo",
+    tagline: "Nuestro proyecto más reciente.",
+    description: "Otro producto desarrollado por el equipo de Hyperion. Visita el sitio para conocerlo y ver cómo funciona.",
+    features: [],
+    Mockup: CaresiaMockup,
+  },
 ]
 
 function Products() {
@@ -257,7 +271,7 @@ function Products() {
                     </h3>
                     <p className="mt-3 text-xl font-medium text-fog/85">{p.tagline}</p>
                     <p className="mt-5 text-lg leading-relaxed text-fog/65">{p.description}</p>
-                    <ul className="mt-7 space-y-3">
+                    <ul className={`mt-7 space-y-3 ${p.features.length ? "" : "hidden"}`}>
                       {p.features.map((f) => (
                         <li key={f} className="flex items-center gap-3 text-fog/85">
                           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full" style={{ background: `${p.color}22` }}>
@@ -382,7 +396,7 @@ function Automation() {
 function About() {
   const stats = [
     { n: 10, s: "+", label: "Años de experiencia" },
-    { n: 3, s: "", label: "Productos propios" },
+    { n: 4, s: "", label: "Productos propios" },
     { n: 100, s: "%", label: "Desarrollo a la medida" },
     { n: 1, s: "", label: "Equipo de principio a fin" },
   ]
@@ -639,6 +653,7 @@ function Footer() {
               <li><a href="https://mitiendita.software" target="_blank" rel="noopener noreferrer" className="hover:text-fog">mitiendita.software</a></li>
               <li className="flex items-center gap-2">mirestaurante.software <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Pronto</span></li>
               <li><a href="https://internships.gg" target="_blank" rel="noopener noreferrer" className="hover:text-fog">internships.gg</a></li>
+              <li><a href={CARESIA_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">caresia</a></li>
             </ul>
           </div>
           <div>
