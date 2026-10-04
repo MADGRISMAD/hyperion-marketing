@@ -225,11 +225,17 @@ const products = [
     name: "caresia",
     tld: "",
     href: CARESIA_URL,
-    color: "#0e7490",
-    status: "Nuevo",
-    tagline: "Nuestro proyecto más reciente.",
-    description: "Otro producto desarrollado por el equipo de Hyperion. Visita el sitio para conocerlo y ver cómo funciona.",
-    features: [],
+    color: "#2a5d9f",
+    status: "Disponible",
+    tagline: "Menos papeleo, más consulta.",
+    description:
+      "Agenda, expedientes e historial clínico para clínicas dentales y consultorios médicos. Todo en un solo lugar, sin instalar nada: funciona desde el navegador.",
+    features: [
+      "Agenda compartida por día y por profesional",
+      "Expediente completo: antecedentes, alergias y búsqueda por CURP",
+      "Historial de cada consulta y tratamientos de varias sesiones",
+      "Permisos por rol: recepción agenda, el doctor consulta",
+    ],
     Mockup: CaresiaMockup,
   },
 ]
@@ -271,7 +277,7 @@ function Products() {
                     </h3>
                     <p className="mt-3 text-xl font-medium text-fog/85">{p.tagline}</p>
                     <p className="mt-5 text-lg leading-relaxed text-fog/65">{p.description}</p>
-                    <ul className={`mt-7 space-y-3 ${p.features.length ? "" : "hidden"}`}>
+                    <ul className="mt-7 space-y-3">
                       {p.features.map((f) => (
                         <li key={f} className="flex items-center gap-3 text-fog/85">
                           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full" style={{ background: `${p.color}22` }}>
