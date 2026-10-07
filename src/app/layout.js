@@ -73,7 +73,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
         {/* Umami: visitas sin cookies; alimenta la página pública /trafico. Sin parámetros de la URL (pueden traer datos). */}
-        <Script src={`${UMAMI_URL}/script.js`} data-website-id="2df43349-9f98-473d-936a-7b70b6005039" data-exclude-search="true" strategy="afterInteractive" />
+        <Script src={`${UMAMI_URL}/script.js`} data-website-id="2df43349-9f98-473d-936a-7b70b6005039" data-domains="hyperionmkt.com,www.hyperionmkt.com" data-exclude-search="true" strategy="afterInteractive" />
         <Analytics />
       </body>
     </html>
