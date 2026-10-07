@@ -700,7 +700,10 @@ function Footer() {
         </div>
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 text-sm text-fog/40 md:flex-row">
           <p>© {new Date().getFullYear()} Hyperion Marketing · Tijuana, B.C.</p>
-          <a href="mailto:info@hyperionmkt.com" className="hover:text-fog">info@hyperionmkt.com</a>
+          <div className="flex items-center gap-6">
+            <Link href="/trafico" className="hover:text-fog">Tráfico de nuestros sitios</Link>
+            <a href="mailto:info@hyperionmkt.com" className="hover:text-fog">info@hyperionmkt.com</a>
+          </div>
         </div>
       </div>
     </footer>
