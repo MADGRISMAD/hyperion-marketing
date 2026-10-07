@@ -93,32 +93,16 @@ export function CaresiaMockup() {
 }
 
 export function BeHiveMockup() {
-  const rows = [
-    ["#128", "Impresora sin conexión", "Alta", "#dc2626"],
-    ["#127", "Alta de nuevo usuario", "Media", "#d97706"],
-    ["#126", "Duda sobre facturación", "Baja", "#16a34a"],
-  ]
   return (
     <Window url="behive" accent="#b45309">
-      <div className="p-5">
-        <div className="mb-4 flex items-center justify-between">
-          <div className="font-display text-2xl font-bold text-fog">
-            Be<span className="text-[#b45309]">Hive</span>
-          </div>
-          <div className="rounded-full bg-[#b45309] px-4 py-1.5 text-[11px] font-semibold text-white">+ Nuevo ticket</div>
-        </div>
-        <div className="space-y-2">
-          {rows.map(([id, t, p, c]) => (
-            <div key={id} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3">
-              <span className="text-[11px] font-semibold text-fog/40">{id}</span>
-              <span className="flex-1 truncate text-xs font-medium text-fog">{t}</span>
-              <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold" style={{ color: c, background: `${c}18` }}>
-                {p}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
+      <Image
+        src="/productos/behive-landing.webp"
+        alt="Lista de tickets de BeHive, mesa de ayuda profesional con precio en pesos"
+        width={2000}
+        height={1163}
+        sizes="(min-width: 1024px) 560px, 92vw"
+        className="h-auto w-full"
+      />
     </Window>
   )
 }

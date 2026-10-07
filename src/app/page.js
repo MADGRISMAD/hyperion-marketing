@@ -252,9 +252,15 @@ const products = [
     href: BEHIVE_URL,
     color: "#b45309",
     status: "Beta",
-    tagline: "Nuestro sistema de tickets.",
-    description: "Sistema de tickets para organizar solicitudes, darles seguimiento y resolverlas en equipo. Actualmente en beta.",
-    features: [],
+    tagline: "Mesa de ayuda profesional, con precio en pesos.",
+    description:
+      "Nuestro sistema de tickets: tickets, SLA, centro de ayuda y reportes en una sola herramienta en español. Pensada para empresas en México y actualmente en beta.",
+    features: [
+      "Tickets con prioridad, estados y notas internas",
+      "SLA, centro de ayuda y reportes en un solo lugar",
+      "Todo en español y sin pagar en dólares",
+      "Gratis con 1 agente y hasta 10 personas",
+    ],
     Mockup: BeHiveMockup,
   },
 ]

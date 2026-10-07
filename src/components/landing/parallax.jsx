@@ -76,7 +76,12 @@ export function Parallax({
       if (r.bottom < -vh * 0.5 || r.top > vh * 1.5) return
       d = r.top + r.height / 2 - vh / 2
     }
-    const v = d * speed
+    let v = d * speed
+    if (axis === "x") {
+      // En pantallas chicas el desplazamiento horizontal se limita para no recortar el contenido
+      const max = window.innerWidth < 768 ? 22 : 140
+      v = Math.max(-max, Math.min(max, v))
+    }
     const t = axis === "x" ? `translate3d(${v.toFixed(1)}px,0,0)` : `translate3d(0,${v.toFixed(1)}px,0)`
     el.style.transform = rotate ? `${t} rotate(${(d * rotate).toFixed(2)}deg)` : t
   })
