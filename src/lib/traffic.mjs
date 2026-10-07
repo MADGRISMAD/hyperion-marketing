@@ -3,7 +3,7 @@
 // por eso viven en el código. Lo único que cambia entre entornos es la dirección de Umami.
 export const UMAMI_URL = (process.env.UMAMI_URL || "https://stats.hyperionmkt.com").replace(/\/$/, "")
 export const TZ = "America/Tijuana"
-const DAY = 86400000
+const WEEK_MS = 7 * 86400000
 
 export const SITES = [
   { name: "Mitiendita", href: "https://mitiendita.software", websiteId: "dc14a46f-1716-4d6a-be4b-bbea3eb73811", shareId: "a6b900cc9dd3a89c", color: "#e8750c" },
@@ -31,10 +31,10 @@ export function localMidnight(daysAgo, now = Date.now(), tz = TZ) {
   return wall - offsetMs(wall, tz)
 }
 
-/** Las 7 fechas (AAAA-MM-DD) de la semana medida: de hace 7 días a ayer. */
+/** Las 7 fechas (AAAA-MM-DD) que se muestran: de hace 6 días a hoy (hoy va incompleto). */
 export function weekDates(now = Date.now(), tz = TZ) {
   const p = parts(new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit" }), now)
-  return Array.from({ length: 7 }, (_, i) => new Date(Date.UTC(p.year, p.month - 1, p.day - (7 - i))).toISOString().slice(0, 10))
+  return Array.from({ length: 7 }, (_, i) => new Date(Date.UTC(p.year, p.month - 1, p.day - (6 - i))).toISOString().slice(0, 10))
 }
 
 /** Cambio porcentual contra la semana anterior; null si antes no había visitas (no se puede comparar). */
@@ -45,23 +45,27 @@ export function change(now, before) {
 const num = (v) => (v && typeof v === "object" ? Number(v.value) || 0 : Number(v) || 0)
 
 async function getJson(url, headers) {
-  const res = await fetch(url, { headers, next: { revalidate: 3600 } })
+  const res = await fetch(url, { headers, next: { revalidate: 600 } })
   if (!res.ok) throw new Error(`${res.status} ${url.split("?")[0]}`)
   return res.json()
 }
 
-/** Visitas de la última semana completa de un sitio. Si Umami no responde, devuelve { error: true }. */
+/**
+ * Visitas de los últimos 7 días de un sitio, contando hoy hasta este momento. Se compara con los 7 días
+ * anteriores cortados a la misma hora, para que la comparación sea justa. Si Umami no responde: { error: true }.
+ */
 export async function getTraffic(site, now = Date.now()) {
   try {
     const share = await getJson(`${UMAMI_URL}/api/share/${site.shareId}`)
     const h = { "x-umami-share-token": share.token, "x-umami-share-context": "1" }
-    const start = localMidnight(7, now)
-    const end = localMidnight(0, now) - 1
-    const prevStart = localMidnight(14, now)
+    const start = localMidnight(6, now)
+    const end = now
+    const prevStart = localMidnight(13, now)
+    const prevEnd = now - WEEK_MS
     const base = `${UMAMI_URL}/api/websites/${share.websiteId}`
     const [cur, prev, series] = await Promise.all([
       getJson(`${base}/stats?startAt=${start}&endAt=${end}`, h),
-      getJson(`${base}/stats?startAt=${prevStart}&endAt=${start - 1}`, h),
+      getJson(`${base}/stats?startAt=${prevStart}&endAt=${prevEnd}`, h),
       getJson(`${base}/pageviews?startAt=${start}&endAt=${end}&unit=day&timezone=${TZ}`, h),
     ])
     const byDay = (rows) => Object.fromEntries((rows || []).map((r) => [String(r.x).slice(0, 10), Number(r.y) || 0]))
@@ -78,4 +82,3 @@ export async function getTraffic(site, now = Date.now()) {
   }
 }
 
-export const WEEK_MS = 7 * DAY

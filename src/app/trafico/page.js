@@ -3,8 +3,8 @@ import { ArrowLeft, ArrowUpRight, TrendingDown, TrendingUp } from "lucide-react"
 import { Logo } from "../../components/landing/Navbar"
 import { SITES, change, getTraffic } from "../../lib/traffic.mjs"
 
-// Los números se leen de Umami y se guardan una hora: la página se sirve rápido aunque haya mucha gente.
-export const revalidate = 3600
+// Los números se leen de Umami y se guardan 10 minutos: la página se sirve rápido aunque haya mucha gente.
+export const revalidate = 600
 
 export const metadata = {
   title: "Tráfico de nuestros sitios | Hyperion Marketing",
@@ -19,14 +19,14 @@ const weekday = (date) => new Date(`${date}T12:00:00Z`).toLocaleDateString("es-M
 
 function Delta({ now, before }) {
   const pct = change(now, before)
-  if (pct === null) return <span className="text-xs text-fog/40">sin semana anterior</span>
+  if (pct === null) return <span className="text-xs text-fog/40">sin datos de 7 días antes</span>
   const up = pct >= 0
   const Icon = up ? TrendingUp : TrendingDown
   return (
     <span className={`inline-flex items-center gap-1 text-xs font-semibold ${up ? "text-emerald-600" : "text-rose-600"}`}>
       <Icon className="h-3.5 w-3.5" aria-hidden="true" />
       {up ? "+" : ""}
-      {pct}% vs. semana anterior
+      {pct}% vs. 7 días antes
     </span>
   )
 }
@@ -129,7 +129,7 @@ export default async function Trafico() {
 
         {sinDatos && (
           <p className="mt-8 max-w-2xl rounded-2xl border border-slate-200 bg-white px-6 py-5 text-fog/70">
-            Estamos empezando a medir. Los primeros números aparecen cuando termine el primer día completo; vuelve en unos días.
+            Estamos empezando a medir. Los primeros números aparecen en cuanto entren las primeras visitas; vuelve en un rato.
           </p>
         )}
 
@@ -137,7 +137,7 @@ export default async function Trafico() {
           <p className="mt-8 inline-flex flex-wrap items-baseline gap-x-3 rounded-2xl border border-slate-200 bg-white px-6 py-4">
             <span className="font-display text-4xl font-bold">{fmt.format(total)}</span>
             <span className="text-sm text-fog/60">
-              visitantes en total del {rango} <span className="text-fog/40">(suma de los sitios)</span>
+              visitantes en total, del {rango} <span className="text-fog/40">(suma de los sitios)</span>
             </span>
           </p>
         )}
@@ -151,7 +151,7 @@ export default async function Trafico() {
         )}
 
         <p className="mt-10 max-w-3xl text-sm text-fog/50">
-          {!sinDatos && <>Semana del {rango}, con horario de Tijuana, actualizada cada hora. </>}Contamos visitas con Umami, un contador sin cookies que no guarda
+          {!sinDatos && <>Últimos 7 días, del {rango} (hoy incluido, hasta este momento), con horario de Tijuana, actualizado cada 10 minutos. El cambio se compara con los 7 días anteriores, cortados a la misma hora. </>}Contamos visitas con Umami, un contador sin cookies que no guarda
           datos personales ni identifica a nadie. Un visitante es una persona distinta en ese sitio; si visita varios, cuenta una vez en cada uno.
         </p>
       </main>

@@ -3,10 +3,10 @@ import assert from "node:assert/strict"
 import test from "node:test"
 import { change, localMidnight, weekDates } from "./traffic.mjs"
 
-test("la semana medida son los 7 días completos anteriores a hoy (hora de Tijuana)", () => {
+test("se muestran los últimos 7 días terminando hoy (hora de Tijuana)", () => {
   // 6 oct 2026, 20:00 en Tijuana (PDT, UTC-7) = 7 oct 03:00 UTC: en Tijuana todavía es 6 de octubre
   const now = Date.UTC(2026, 9, 7, 3, 0, 0)
-  assert.deepEqual(weekDates(now), ["2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02", "2026-10-03", "2026-10-04", "2026-10-05"])
+  assert.deepEqual(weekDates(now), ["2026-09-30", "2026-10-01", "2026-10-02", "2026-10-03", "2026-10-04", "2026-10-05", "2026-10-06"])
 })
 
 test("la medianoche de Tijuana cuenta el horario de verano", () => {
