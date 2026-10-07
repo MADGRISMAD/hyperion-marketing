@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
     <html lang="es" suppressHydrationWarning className={`${sora.variable} ${manrope.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
-        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" disableTransitionOnChange>
           {children}
         </ThemeProvider>
 
