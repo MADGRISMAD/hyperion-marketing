@@ -4,6 +4,7 @@ import { Sora, Manrope } from "next/font/google"
 import "../app/globals.css"
 import { ThemeProvider } from "../components/ThemeProvider"
 import { Analytics } from "@vercel/analytics/react"
+import { UMAMI_URL } from "../lib/traffic.mjs"
 
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" })
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" })
@@ -57,7 +58,7 @@ export default function RootLayout({ children }) {
     <html lang="es" suppressHydrationWarning className={`${sora.variable} ${manrope.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
-        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" disableTransitionOnChange>
           {children}
         </ThemeProvider>
 
@@ -71,6 +72,8 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-LZKWCDZ9L1');
           `}
         </Script>
+        {/* Umami: visitas sin cookies; alimenta la página pública /trafico. Sin parámetros de la URL (pueden traer datos). */}
+        <Script src={`${UMAMI_URL}/script.js`} data-website-id="2df43349-9f98-473d-936a-7b70b6005039" data-domains="hyperionmkt.com,www.hyperionmkt.com" data-exclude-search="true" strategy="afterInteractive" />
         <Analytics />
       </body>
     </html>
