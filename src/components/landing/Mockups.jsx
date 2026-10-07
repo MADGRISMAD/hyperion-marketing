@@ -20,16 +20,16 @@ function Window({ url, children, accent = "#7ee2a8" }) {
 export function TienditaMockup() {
   return (
     <div className="relative pt-10 pb-6">
-      {/* Página de mitiendita.software al fondo */}
+      {/* Página de inicio de Mitiendita al fondo */}
       <div className="absolute top-0 -left-4 w-[62%] -rotate-6 overflow-hidden rounded-xl border border-slate-200 opacity-80 shadow-2xl sm:-left-8">
         <Image src="/productos/mitiendita-landing.webp" alt="" width={2000} height={1155} sizes="(min-width: 1024px) 380px, 60vw" className="h-auto w-full" />
       </div>
       {/* Sistema real: pantalla de venta */}
       <div className="relative ml-auto w-[92%]">
-        <Window url="mitiendita.software" accent="#f2a33a">
+        <Window url="mitiendita" accent="#f2a33a">
           <Image
             src="/productos/mitiendita-app.webp"
-            alt="Pantalla de venta del punto de venta mitiendita.software"
+            alt="Pantalla de venta del punto de venta Mitiendita"
             width={2000}
             height={1161}
             sizes="(min-width: 1024px) 560px, 92vw"
@@ -49,10 +49,10 @@ export function TienditaMockup() {
 
 export function RestauranteMockup() {
   return (
-    <Window url="mirestaurante.software" accent="#c8341b">
+    <Window url="mirestaurante" accent="#c8341b">
       <Image
         src="/productos/mirestaurante-landing.webp"
-        alt="Pase de cocina y mapa de mesas de mirestaurante.software"
+        alt="Pase de cocina y mapa de mesas de Mirestaurante"
         width={2000}
         height={1158}
         sizes="(min-width: 1024px) 560px, 92vw"
@@ -88,6 +88,37 @@ export function CaresiaMockup() {
         sizes="(min-width: 1024px) 560px, 92vw"
         className="h-auto w-full"
       />
+    </Window>
+  )
+}
+
+export function BeHiveMockup() {
+  const rows = [
+    ["#128", "Impresora sin conexión", "Alta", "#dc2626"],
+    ["#127", "Alta de nuevo usuario", "Media", "#d97706"],
+    ["#126", "Duda sobre facturación", "Baja", "#16a34a"],
+  ]
+  return (
+    <Window url="behive" accent="#b45309">
+      <div className="p-5">
+        <div className="mb-4 flex items-center justify-between">
+          <div className="font-display text-2xl font-bold text-fog">
+            Be<span className="text-[#b45309]">Hive</span>
+          </div>
+          <div className="rounded-full bg-[#b45309] px-4 py-1.5 text-[11px] font-semibold text-white">+ Nuevo ticket</div>
+        </div>
+        <div className="space-y-2">
+          {rows.map(([id, t, p, c]) => (
+            <div key={id} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3">
+              <span className="text-[11px] font-semibold text-fog/40">{id}</span>
+              <span className="flex-1 truncate text-xs font-medium text-fog">{t}</span>
+              <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold" style={{ color: c, background: `${c}18` }}>
+                {p}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </Window>
   )
 }

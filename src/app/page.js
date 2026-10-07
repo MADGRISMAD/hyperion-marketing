@@ -29,11 +29,12 @@ import {
 import Navbar, { Logo } from "../components/landing/Navbar"
 import Hero from "../components/landing/Hero"
 import { Parallax, Reveal, CountUp } from "../components/landing/parallax"
-import { TienditaMockup, RestauranteMockup, InternshipsMockup, CaresiaMockup } from "../components/landing/Mockups"
+import { TienditaMockup, RestauranteMockup, InternshipsMockup, CaresiaMockup, BeHiveMockup } from "../components/landing/Mockups"
 
 // URLs temporales: cuando tengan dominio propio, cambiarlas solo aquí.
 const CARESIA_URL = "https://caresia.vercel.app/"
 const MIRESTAURANTE_URL = "https://mirestaurante-ten.vercel.app/"
+const BEHIVE_URL = "https://micolmena-eta.vercel.app/"
 
 const WHATSAPP = "https://wa.me/526645798903?text=Hola%20Hyperion%2C%20me%20interesa%20cotizar%20un%20proyecto"
 
@@ -182,8 +183,8 @@ function Services() {
 /* ───────────────────────── Productos ───────────────────────── */
 const products = [
   {
-    name: "mitiendita",
-    tld: ".software",
+    name: "Mitiendita",
+    tld: "",
     href: "https://mitiendita.software",
     color: "#e8750c",
     status: "Disponible",
@@ -199,10 +200,10 @@ const products = [
     Mockup: TienditaMockup,
   },
   {
-    name: "mirestaurante",
-    tld: ".software",
+    name: "Mirestaurante",
+    tld: "",
     href: MIRESTAURANTE_URL,
-    cta: "Visitar mirestaurante.software",
+    cta: "Visitar Mirestaurante",
     color: "#c8341b",
     status: "Beta",
     tagline: "Cada comanda, en su lugar.",
@@ -229,7 +230,7 @@ const products = [
     Mockup: InternshipsMockup,
   },
   {
-    name: "caresia",
+    name: "Caresia",
     tld: "",
     href: CARESIA_URL,
     color: "#2a5d9f",
@@ -244,6 +245,17 @@ const products = [
       "Permisos por rol: recepción agenda, el doctor consulta",
     ],
     Mockup: CaresiaMockup,
+  },
+  {
+    name: "BeHive",
+    tld: "",
+    href: BEHIVE_URL,
+    color: "#b45309",
+    status: "Beta",
+    tagline: "Nuestro sistema de tickets.",
+    description: "Sistema de tickets para organizar solicitudes, darles seguimiento y resolverlas en equipo. Actualmente en beta.",
+    features: [],
+    Mockup: BeHiveMockup,
   },
 ]
 
@@ -284,7 +296,7 @@ function Products() {
                     </h3>
                     <p className="mt-3 text-xl font-medium text-fog/85">{p.tagline}</p>
                     <p className="mt-5 text-lg leading-relaxed text-fog/65">{p.description}</p>
-                    <ul className="mt-7 space-y-3">
+                    <ul className={`mt-7 space-y-3 ${p.features.length ? "" : "hidden"}`}>
                       {p.features.map((f) => (
                         <li key={f} className="flex items-center gap-3 text-fog/85">
                           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full" style={{ background: `${p.color}22` }}>
@@ -408,7 +420,7 @@ function Automation() {
 function About() {
   const stats = [
     { n: 10, s: "+", label: "Años de experiencia" },
-    { n: 4, s: "", label: "Productos propios" },
+    { n: 5, s: "", label: "Productos propios" },
     { n: 100, s: "%", label: "Desarrollo a la medida" },
     { n: 1, s: "", label: "Equipo de principio a fin" },
   ]
@@ -489,7 +501,7 @@ function Process() {
 }
 
 /* ───────────────────────── Contacto ───────────────────────── */
-const needs = ["Sistema a la medida", "Punto de venta", "Automatización", "Servicio técnico", "Sitio web / Marketing", "mirestaurante.software", "Otro"]
+const needs = ["Sistema a la medida", "Punto de venta", "Automatización", "Servicio técnico", "Sitio web / Marketing", "Mirestaurante", "Otro"]
 
 function Contact() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", need: needs[0], message: "" })
@@ -662,10 +674,11 @@ function Footer() {
           <div>
             <h4 className="mb-4 text-xs font-semibold tracking-[0.2em] text-brand uppercase">Productos</h4>
             <ul className="space-y-2.5 text-fog/65">
-              <li><a href="https://mitiendita.software" target="_blank" rel="noopener noreferrer" className="hover:text-fog">mitiendita.software</a></li>
-              <li className="flex items-center gap-2"><a href={MIRESTAURANTE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">mirestaurante.software</a> <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Beta</span></li>
+              <li><a href="https://mitiendita.software" target="_blank" rel="noopener noreferrer" className="hover:text-fog">Mitiendita</a></li>
+              <li className="flex items-center gap-2"><a href={MIRESTAURANTE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">Mirestaurante</a> <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Beta</span></li>
               <li><a href="https://internships.gg" target="_blank" rel="noopener noreferrer" className="hover:text-fog">internships.gg</a></li>
-              <li><a href={CARESIA_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">caresia</a></li>
+              <li><a href={CARESIA_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">Caresia</a></li>
+              <li className="flex items-center gap-2"><a href={BEHIVE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">BeHive</a> <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Beta</span></li>
             </ul>
           </div>
           <div>

@@ -110,7 +110,7 @@ export default function Hero() {
                 </span>
                 <div>
                   <div className="text-xs font-semibold text-fog">Venta cobrada</div>
-                  <div className="text-[11px] text-fog/50">mitiendita.software · $193.00</div>
+                  <div className="text-[11px] text-fog/50">Mitiendita · $193.00</div>
                 </div>
               </div>
             </Card>
