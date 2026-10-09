@@ -106,3 +106,18 @@ export function BeHiveMockup() {
     </Window>
   )
 }
+
+export function MiInfoMockup() {
+  return (
+    <Window url="miinfo" accent="#1f3a5f">
+      <Image
+        src="/productos/miinfo-landing.webp"
+        alt="Página de inicio de Mi Info con una tarjeta de presentación de ejemplo"
+        width={2000}
+        height={1160}
+        sizes="(min-width: 1024px) 560px, 92vw"
+        className="h-auto w-full"
+      />
+    </Window>
+  )
+}

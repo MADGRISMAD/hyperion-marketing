@@ -29,12 +29,13 @@ import {
 import Navbar, { Logo } from "../components/landing/Navbar"
 import Hero from "../components/landing/Hero"
 import { Parallax, Reveal, CountUp } from "../components/landing/parallax"
-import { TienditaMockup, RestauranteMockup, InternshipsMockup, CaresiaMockup, BeHiveMockup } from "../components/landing/Mockups"
+import { TienditaMockup, RestauranteMockup, InternshipsMockup, CaresiaMockup, BeHiveMockup, MiInfoMockup } from "../components/landing/Mockups"
 
 // URLs temporales: cuando tengan dominio propio, cambiarlas solo aquí.
 const CARESIA_URL = "https://caresia.vercel.app/"
 const MIRESTAURANTE_URL = "https://mirestaurante-ten.vercel.app/"
 const BEHIVE_URL = "https://micolmena-eta.vercel.app/"
+const MIINFO_URL = "https://miinfo.15-235-62-27.sslip.io/"
 
 const WHATSAPP = "https://wa.me/526645798903?text=Hola%20Hyperion%2C%20me%20interesa%20cotizar%20un%20proyecto"
 
@@ -247,6 +248,24 @@ const products = [
     Mockup: CaresiaMockup,
   },
   {
+    name: "Mi Info",
+    tld: "",
+    href: MIINFO_URL,
+    cta: "Visitar Mi Info",
+    color: "#1f3a5f",
+    status: "Beta",
+    tagline: "Tu tarjeta de presentación, en un enlace.",
+    description:
+      "Tus datos, tus redes y, si quieres, tu agenda en una sola página. La compartes por WhatsApp o en tu perfil, y tus clientes te guardan en su teléfono con un toque.",
+    features: [
+      "Tarjeta con WhatsApp, teléfono, correo, web y hasta 8 enlaces",
+      "Botón para guardar tu contacto en el teléfono",
+      "Agenda opcional: tú pones los horarios, tus clientes apartan su cita",
+      "Confirmación por correo y enlace para cancelar",
+    ],
+    Mockup: MiInfoMockup,
+  },
+  {
     name: "BeHive",
     tld: "",
     href: BEHIVE_URL,
@@ -426,7 +445,7 @@ function Automation() {
 function About() {
   const stats = [
     { n: 10, s: "+", label: "Años de experiencia" },
-    { n: 5, s: "", label: "Productos propios" },
+    { n: 6, s: "", label: "Productos propios" },
     { n: 100, s: "%", label: "Desarrollo a la medida" },
     { n: 1, s: "", label: "Equipo de principio a fin" },
   ]
@@ -684,6 +703,7 @@ function Footer() {
               <li className="flex items-center gap-2"><a href={MIRESTAURANTE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">Mirestaurante</a> <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Beta</span></li>
               <li><a href="https://internships.gg" target="_blank" rel="noopener noreferrer" className="hover:text-fog">internships.gg</a></li>
               <li><a href={CARESIA_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">Caresia</a></li>
+              <li className="flex items-center gap-2"><a href={MIINFO_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">Mi Info</a> <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Beta</span></li>
               <li className="flex items-center gap-2"><a href={BEHIVE_URL} target="_blank" rel="noopener noreferrer" className="hover:text-fog">BeHive</a> <span className="rounded-full bg-brand/10 px-2 py-0.5 text-[10px] text-brand">Beta</span></li>
             </ul>
           </div>
