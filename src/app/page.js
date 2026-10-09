@@ -32,7 +32,7 @@ import { Parallax, Reveal, CountUp } from "../components/landing/parallax"
 import { TienditaMockup, RestauranteMockup, InternshipsMockup, CaresiaMockup, BeHiveMockup, MiInfoMockup } from "../components/landing/Mockups"
 
 // URLs temporales: cuando tengan dominio propio, cambiarlas solo aquí.
-const CARESIA_URL = "https://caresia.vercel.app/"
+const CARESIA_URL = "https://caresia.mx/"
 const MIRESTAURANTE_URL = "https://mirestaurante-ten.vercel.app/"
 const BEHIVE_URL = "https://micolmena-eta.vercel.app/"
 const MIINFO_URL = "https://miinfo.15-235-62-27.sslip.io/"
