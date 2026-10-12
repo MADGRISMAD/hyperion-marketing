@@ -1,39 +1,40 @@
 import React from "react"
 import Script from "next/script"
-import { Sora, Manrope } from "next/font/google"
+import { Unbounded, Manrope, Space_Mono } from "next/font/google"
 import "../app/globals.css"
 import { ThemeProvider } from "../components/ThemeProvider"
 import { Analytics } from "@vercel/analytics/react"
 import { UMAMI_URL } from "../lib/traffic.mjs"
 
-const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" })
+const unbounded = Unbounded({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-unbounded", display: "swap" })
+const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-space-mono", display: "swap" })
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" })
 
 export const metadata = {
   metadataBase: new URL("https://hyperionmkt.com"),
-  title: "Hyperion Marketing | Sistemas a medida, puntos de venta y automatización",
+  title: "Hyperion Software | Sistemas a medida, puntos de venta y automatización",
   description:
-    "10 años creando sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios. Creadores de Mitiendita, Mirestaurante, Internships.gg, Caresia y BeHive.",
+    "10 años creando sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios. Creadores de Mitiendita, Mirestaurante, Internships.gg, Caresia, Mi Info y BeHive.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Hyperion Marketing | Sistemas a medida, puntos de venta y automatización",
+    title: "Hyperion Software | Sistemas a medida, puntos de venta y automatización",
     description:
       "Sistemas a la medida, puntos de venta, automatizaciones y servicio técnico. 10 años de experiencia.",
     url: "https://hyperionmkt.com",
-    siteName: "Hyperion Marketing",
+    siteName: "Hyperion Software",
     locale: "es_MX",
     type: "website",
   },
 }
 
 export const viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#eef0e7",
 }
 
 const organizationLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Hyperion Marketing",
+  name: "Hyperion Software",
   url: "https://hyperionmkt.com",
   description:
     "Empresa de tecnología con 10 años de experiencia en sistemas a la medida, puntos de venta, automatizaciones y servicio técnico.",
@@ -55,7 +56,7 @@ const organizationLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" suppressHydrationWarning className={`${sora.variable} ${manrope.variable}`}>
+    <html lang="es" suppressHydrationWarning className={`${unbounded.variable} ${manrope.variable} ${spaceMono.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" disableTransitionOnChange>

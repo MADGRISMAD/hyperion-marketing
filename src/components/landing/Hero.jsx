@@ -1,144 +1,124 @@
 "use client"
 import { useRef } from "react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
-import { ArrowRight, CheckCircle2, Wrench, Zap, ShoppingCart, Code2 } from "lucide-react"
-import { Parallax, useScrollFrame } from "./parallax"
-import { HyperionTree, SequoiaSilhouette } from "./Forest"
+import { ArrowRight, ArrowDownRight, Code2, ShoppingCart, Zap, Wrench } from "lucide-react"
+import { useScrollFrame } from "./parallax"
 
-function Card({ className = "", children }) {
-  return <div className={`rounded-2xl border border-slate-200 bg-white/95 shadow-xl shadow-slate-900/10 ${className}`}>{children}</div>
+const HeroScene = dynamic(() => import("./HeroScene"), { ssr: false })
+
+// Sticker circular que gira (texto sobre una ruta)
+function SpinBadge() {
+  return (
+    <div className="relative h-28 w-28 md:h-32 md:w-32">
+      <svg viewBox="0 0 120 120" className="spin-slow absolute inset-0 h-full w-full" aria-hidden="true">
+        <defs>
+          <path id="badge-circle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" />
+        </defs>
+        <circle cx="60" cy="60" r="58" fill="#c6f432" stroke="#0b1a12" strokeWidth="2" />
+        <text className="font-mono" fontSize="10.5" fontWeight="700" letterSpacing="2.2" fill="#0b1a12">
+          <textPath href="#badge-circle">10 AÑOS ✦ HACIENDO SOFTWARE ✦ HECHO EN MX ✦</textPath>
+        </text>
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center font-display leading-none text-ink">
+        <span className="text-3xl font-bold md:text-4xl">10</span>
+        <span className="font-mono text-[9px] font-bold tracking-widest">AÑOS</span>
+      </div>
+    </div>
+  )
 }
+
+const strip = [
+  [Code2, "Sistemas a la medida"],
+  [ShoppingCart, "Puntos de venta"],
+  [Zap, "Automatizaciones"],
+  [Wrench, "Servicio técnico"],
+]
 
 export default function Hero() {
   const content = useRef(null)
 
   useScrollFrame((y, vh, reduced) => {
     const el = content.current
-    if (!el || y > vh * 1.5) return
-    const p = Math.min(1, y / (vh * 0.8))
-    el.style.opacity = String(1 - p)
-    if (!reduced) el.style.transform = `translate3d(0,${(y * 0.3).toFixed(1)}px,0)`
+    // Solo en pantallas grandes: en móvil la escena 3D va debajo del texto y se encimarían
+    if (!el || y > vh * 1.5 || window.innerWidth < 1024) return
+    const p = Math.min(1, y / (vh * 0.85))
+    el.style.opacity = String(1 - p * 0.9)
+    if (!reduced) el.style.transform = `translate3d(0,${(y * 0.25).toFixed(1)}px,0)`
   })
 
   return (
-    <section id="inicio" className="relative w-full overflow-hidden pt-28 lg:min-h-[100svh] lg:pt-24">
-      {/* Fondo: cielo de día y bosque lejano */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#dceafc] via-[#eef5fd] to-white" />
-      <Parallax mode="page" speed={0.45} className="pointer-events-none absolute inset-0">
-        <div className="absolute top-[10%] right-[22%] h-44 w-44 rounded-full bg-[#fff1bd] opacity-80 blur-2xl" />
-      </Parallax>
-      <Parallax mode="page" speed={0.32} className="pointer-events-none absolute inset-0">
-        {[[3, 4, 34], [13, 16, 28], [17, 27, 38], [19, 50, 30], [29, 63, 36], [37, 76, 30], [41, 88, 40]].map(([seed, left, hgt]) => (
-          <SequoiaSilhouette key={seed} seed={seed} color="#e1ecef" className="absolute bottom-0 w-auto" style={{ left: `${left}%`, height: `${hgt}%` }} />
-        ))}
-      </Parallax>
-      <Parallax mode="page" speed={0.22} className="pointer-events-none absolute inset-0">
-        <SequoiaSilhouette seed={7} color="#d6e5e7" className="absolute bottom-0 left-[-4%] h-[56%] w-auto" />
-        <SequoiaSilhouette seed={31} color="#d3e3e4" className="absolute bottom-0 left-[38%] hidden h-[48%] w-auto lg:block" />
-        <SequoiaSilhouette seed={59} color="#c8dbdc" className="absolute right-[-2%] bottom-0 h-[70%] w-auto" />
-      </Parallax>
-
-      <div className="container relative z-10 grid gap-6 lg:min-h-[calc(100svh-6rem)] lg:grid-cols-[1.05fr_1fr] lg:items-end">
+    <section id="inicio" className="y2k-dots relative overflow-hidden pt-24 md:pt-28">
+      <div className="container relative grid items-center gap-4 lg:min-h-[calc(100svh-7rem)] lg:grid-cols-12 lg:gap-8">
         {/* Texto */}
-        <div ref={content} className="text-center will-change-transform lg:self-center lg:pb-20 lg:text-left">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-volt/30 bg-white/70 px-4 py-1.5 text-xs font-semibold tracking-[0.15em] text-brand uppercase">
-            <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-aqua" />
-            10 años desarrollando software
+        <div ref={content} className="relative z-10 pt-6 will-change-transform lg:col-span-7 lg:pt-0">
+          <div className="mb-7 flex flex-wrap items-center gap-2 font-mono text-[11px] tracking-wider text-ink uppercase">
+            <span className="rounded-full border-[1.5px] border-ink bg-white px-3 py-1">[ Hyperion Software ]</span>
+            <span className="rounded-full border-[1.5px] border-ink px-3 py-1">Est. 2016</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-ink bg-ink px-3 py-1 text-lime">
+              <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-lime" /> Tijuana → MX
+            </span>
           </div>
-          <h1 className="font-display text-4xl leading-[1.05] font-bold tracking-tight text-fog sm:text-6xl xl:text-7xl">
-            Tecnología que hace <span className="text-brand">crecer</span> tu negocio.
+
+          <h1 className="font-display text-[12.5vw] leading-[0.9] font-bold tracking-tight text-ink uppercase sm:text-7xl lg:text-[5.4rem] xl:text-[6.4rem]">
+            <span className="block">Software</span>
+            <span className="text-outline block">que hace</span>
+            <span className="my-1 inline-block -rotate-2 rounded-xl border-[1.5px] border-ink bg-lime px-3 shadow-hard md:px-4">crecer</span>
+            <span className="block">tu negocio</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-base text-fog/70 sm:text-lg lg:mx-0">
-            Desarrollamos <strong className="text-fog">sistemas a la medida</strong>, <strong className="text-fog">puntos de venta</strong> y{" "}
-            <strong className="text-fog">automatizaciones</strong>, y damos <strong className="text-fog">servicio técnico</strong> para que
-            vendas más y trabajes menos.
+
+          <p className="mt-8 max-w-xl text-base text-ink/75 sm:text-lg">
+            Desarrollamos <strong className="text-ink">sistemas a la medida</strong>, <strong className="text-ink">puntos de venta</strong> y{" "}
+            <strong className="text-ink">automatizaciones</strong>, y damos <strong className="text-ink">servicio técnico</strong>. Diez años
+            ayudando a negocios a vender más y trabajar menos.
           </p>
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row lg:justify-start">
+
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
               href="#contacto"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-brand px-8 py-4 font-semibold text-white shadow-md shadow-blue-900/20 transition hover:scale-[1.03]"
+              className="press group inline-flex items-center justify-center gap-2 rounded-xl border-[1.5px] border-ink bg-lime px-7 py-4 font-mono text-sm font-bold tracking-wider text-ink uppercase shadow-hard"
             >
               Cotiza tu proyecto
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
             </Link>
             <Link
               href="#productos"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-8 py-4 font-semibold text-fog transition hover:border-brand hover:text-brand"
+              className="press inline-flex items-center justify-center gap-2 rounded-xl border-[1.5px] border-ink bg-white px-7 py-4 font-mono text-sm font-bold tracking-wider text-ink uppercase shadow-hard"
             >
-              Ver nuestros productos
+              Ver productos <ArrowDownRight className="h-4 w-4" />
             </Link>
-          </div>
-          <div className="mt-10 grid grid-cols-2 gap-3 text-left text-sm sm:flex sm:flex-wrap sm:justify-center sm:gap-x-6 lg:justify-start">
-            {[
-              [Code2, "Sistemas a medida"],
-              [ShoppingCart, "Puntos de venta"],
-              [Zap, "Automatizaciones"],
-              [Wrench, "Servicio técnico"],
-            ].map(([Icon, t]) => (
-              <div key={t} className="flex items-center gap-2 whitespace-nowrap text-fog/70">
-                <Icon className="h-4 w-4 shrink-0 text-brand" /> {t}
-              </div>
-            ))}
           </div>
         </div>
 
-        {/* Hyperion con tarjetas flotantes */}
-        <div className="relative mx-auto h-[460px] w-full max-w-[560px] sm:h-[600px] lg:h-[calc(100svh-7rem)] lg:max-h-[860px] lg:max-w-none">
-          <Parallax mode="page" speed={0.12} className="absolute inset-0">
-            <HyperionTree className="absolute inset-0 h-full w-full" />
-          </Parallax>
-
-          <Parallax mode="page" speed={-0.18} className="absolute top-[30%] left-0 w-[58%] sm:w-[46%] lg:left-[-4%]">
-            <Card className="p-4">
-              <div className="mb-2 flex items-center gap-2 text-xs font-semibold text-aqua">
-                <Zap className="h-4 w-4" /> Automatización activa
-              </div>
-              {["Venta registrada", "Inventario actualizado", "Reporte enviado"].map((t) => (
-                <div key={t} className="flex items-center gap-2 py-0.5 text-[11px] text-fog/80 sm:text-xs">
-                  <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-aqua" />
-                  {t}
-                </div>
-              ))}
-            </Card>
-          </Parallax>
-
-          <Parallax mode="page" speed={-0.28} className="absolute top-[52%] right-0 w-[56%] sm:w-[44%] lg:right-[-2%]">
-            <Card className="p-4">
-              <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand/10">
-                  <ShoppingCart className="h-4 w-4 text-brand" />
-                </span>
-                <div>
-                  <div className="text-xs font-semibold text-fog">Venta cobrada</div>
-                  <div className="text-[11px] text-fog/50">Mitiendita · $193.00</div>
-                </div>
-              </div>
-            </Card>
-          </Parallax>
-
-          <Parallax mode="page" speed={-0.12} className="absolute bottom-[14%] left-[4%] hidden w-[42%] sm:block">
-            <Card className="p-4">
-              <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#d9480f]/10">
-                  <Wrench className="h-4 w-4 text-[#d9480f]" />
-                </span>
-                <div>
-                  <div className="text-xs font-semibold text-fog">Servicio técnico</div>
-                  <div className="text-[11px] text-fog/50">Equipo listo para ayudarte</div>
-                </div>
-              </div>
-            </Card>
-          </Parallax>
-
-          <Parallax mode="page" speed={-0.35} className="absolute top-[14%] right-[8%] hidden sm:block">
-            <div className="float flex h-14 w-14 items-center justify-center rounded-full bg-[#ffc94d] font-display text-sm font-bold text-[#5a3a00] shadow-md">
-              +$22
-            </div>
-          </Parallax>
+        {/* Escena 3D */}
+        <div className="relative -mx-4 h-[420px] sm:mx-0 sm:h-[540px] lg:col-span-5 lg:h-[calc(100svh-8rem)] lg:max-h-[760px]">
+          <HeroScene />
+          <div className="pointer-events-none absolute top-2 right-4 md:top-6 md:right-2">
+            <SpinBadge />
+          </div>
+          <div className="pointer-events-none absolute bottom-6 left-4 rounded-lg border-[1.5px] border-ink bg-white px-3 py-2 font-mono text-[10px] leading-relaxed tracking-wider text-ink uppercase shadow-hard md:left-2">
+            <div className="text-forest">● 6 productos en línea</div>
+            <div className="text-ink/60">Hecho por nuestro equipo</div>
+          </div>
         </div>
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-16 bg-gradient-to-b from-transparent to-white" />
+      {/* Franja de servicios */}
+      <div className="relative z-10 mt-6 border-y-[1.5px] border-ink lg:mt-0">
+        <div className="grid grid-cols-2 gap-[1.5px] bg-ink md:grid-cols-4">
+          {strip.map(([Icon, label], i) => (
+            <Link
+              key={label}
+              href="#servicios"
+              className="group flex items-center gap-3 bg-paper px-4 py-5 font-mono text-[11px] tracking-wider text-ink uppercase transition hover:bg-lime md:px-8 md:text-xs"
+            >
+              <span className="text-ink/40">0{i + 1}</span>
+              <Icon className="h-4 w-4 shrink-0 text-forest" />
+              {label}
+            </Link>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

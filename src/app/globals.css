@@ -2,26 +2,37 @@
 
 @theme {
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-unbounded), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, SFMono-Regular, monospace;
 
   /* Tema claro: "ink" son fondos, "fog" es el color de texto */
   --color-ink-950: #ffffff;
-  --color-ink-900: #f8fafc;
-  --color-ink-800: #f1f5f9;
-  --color-ink-700: #e2e8f0;
-  --color-fog: #0f172a;
-  --color-brand: #1d4ed8;
-  --color-volt: #2563eb;
-  --color-aqua: #0d9488;
+  --color-ink-900: #f6f7f2;
+  --color-ink-800: #eceee6;
+  --color-ink-700: #dfe2d8;
+  --color-fog: #0b1a12;
+
+  /* Marca Hyperion Software (verdes del logo) */
+  --color-brand: #1e6b35;
+  --color-volt: #0f4d3a;
+  --color-aqua: #15803d;
+
+  /* Estilo Y2K */
+  --color-paper: #eef0e7;
+  --color-ink: #0b1a12;
+  --color-forest: #1e6b35;
+  --color-pine: #0f4d3a;
+  --color-lime: #c6f432;
+  --color-chrome: #d6dad1;
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--color-ink-950);
+  background: var(--color-paper);
 }
 
 body {
-  background: var(--color-ink-950);
+  background: var(--color-paper);
   color: var(--color-fog);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -29,16 +40,64 @@ body {
 }
 
 ::selection {
-  background: #bfdbfe;
-  color: #0f172a;
+  background: var(--color-lime);
+  color: var(--color-ink);
 }
 
 .container {
-  max-width: 1280px;
+  max-width: 1320px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+@media (min-width: 768px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ── Y2K: papel punteado, contornos y sombras duras ── */
+.y2k-dots {
+  background-image: radial-gradient(rgba(11, 26, 18, 0.13) 1px, transparent 1.3px);
+  background-size: 18px 18px;
+}
+.y2k-grid {
+  background-image:
+    linear-gradient(rgba(11, 26, 18, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 26, 18, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+/* Texto contorneado: el relleno (del color del fondo) se pinta encima del trazo,
+   así se tapan las líneas internas de la fuente y solo queda el contorno exterior. */
+.text-outline {
+  color: var(--outline-bg, var(--color-paper));
+  -webkit-text-stroke: 3px var(--color-ink);
+  paint-order: stroke fill;
+}
+@media (min-width: 768px) {
+  .text-outline {
+    -webkit-text-stroke-width: 4px;
+  }
+}
+.shadow-hard {
+  box-shadow: 4px 4px 0 0 var(--color-ink);
+}
+.shadow-hard-lg {
+  box-shadow: 8px 8px 0 0 var(--color-ink);
+}
+/* Botón o tarjeta que "se hunde" al pasar el cursor */
+.press {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.press:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 var(--color-ink);
+}
+.press:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 var(--color-ink);
 }
 
 /* Revelado al hacer scroll */
@@ -68,6 +127,20 @@ body {
   50% { transform: translateY(-12px); }
 }
 
+.spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+.blink {
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
 .scroll-cue {
   animation: scroll-cue 2s ease-in-out infinite;
 }
@@ -90,12 +163,44 @@ body {
   animation: pulse-dot 2s ease-out infinite;
 }
 @keyframes pulse-dot {
-  0% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.5); }
-  100% { box-shadow: 0 0 0 12px rgba(13, 148, 136, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(30, 107, 53, 0.5); }
+  100% { box-shadow: 0 0 0 12px rgba(30, 107, 53, 0); }
+}
+
+/* ── Animación de entrada del logo ── */
+/* Mientras corre, el logo de la barra se oculta: lo "ocupa" el logo que vuela hacia ella. */
+html.intro-active [data-logo-target] {
+  opacity: 0;
+}
+html.intro-active body {
+  overflow: hidden;
+}
+/* Respaldo: si el JavaScript no corre, la cortina se quita sola. */
+.intro-failsafe {
+  animation: intro-failsafe 0.4s ease 6s forwards;
+}
+@keyframes intro-failsafe {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+.intro-letter {
+  display: inline-block;
+  transform: translateY(110%);
+  animation: intro-letter 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes intro-letter {
+  to { transform: translateY(0); }
+}
+.intro-mark {
+  clip-path: inset(100% 0 0 0);
+  animation: intro-mark 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.1s forwards;
+}
+@keyframes intro-mark {
+  to { clip-path: inset(0 0 0 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .marquee, .float, .scroll-cue, .flow-line, .pulse-dot { animation: none; }
+  .marquee, .float, .scroll-cue, .flow-line, .pulse-dot, .spin-slow, .blink { animation: none; }
+  .press, .press:hover { transition: none; transform: none; }
 }

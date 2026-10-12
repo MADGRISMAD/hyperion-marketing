@@ -51,6 +51,7 @@ export function Parallax({
   mode = "center",
   axis = "y",
   rotate = 0,
+  entry = false,
   className = "",
   innerClassName = "",
   style,
@@ -76,7 +77,8 @@ export function Parallax({
       if (r.bottom < -vh * 0.5 || r.top > vh * 1.5) return
       d = r.top + r.height / 2 - vh / 2
     }
-    let v = d * speed
+    // entry: solo se desplaza mientras entra a la pantalla; ya centrado queda en su lugar
+    let v = (entry ? Math.max(0, d) : d) * speed
     if (axis === "x") {
       // En pantallas chicas el desplazamiento horizontal se limita para no recortar el contenido
       const max = window.innerWidth < 768 ? 22 : 140

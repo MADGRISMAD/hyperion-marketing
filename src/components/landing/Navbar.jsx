@@ -1,24 +1,27 @@
 "use client"
 import { useRef, useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
-import { Menu, X } from "lucide-react"
+import { ArrowUpRight, Menu, X } from "lucide-react"
 import { useScrollFrame } from "./parallax"
 
-export function Logo({ className = "" }) {
+// Símbolo del logo (árbol + H + flecha) con el nombre al lado.
+// `target` marca la instancia de la barra: ahí aterriza el logo de la animación de entrada.
+export function Logo({ className = "", target = false, compact = false }) {
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
-      <svg viewBox="0 0 32 40" className="h-9 w-7" aria-hidden="true">
-        <defs>
-          <linearGradient id="logo-g" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#ffd27a" />
-            <stop offset="1" stopColor="#f5a524" />
-          </linearGradient>
-        </defs>
-        <path d="M16 1 L19 9 L17.5 9 L22 17 L19.5 17 L25 26 L21 26 L27 33 L17.5 33 L17.5 39 L14.5 39 L14.5 33 L5 33 L11 26 L7 26 L12.5 17 L10 17 L14.5 9 L13 9 Z" fill="url(#logo-g)" />
-      </svg>
+      <Image
+        src="/brand/hyperion-mark.png"
+        alt=""
+        width={273}
+        height={480}
+        priority={target}
+        className={compact ? "h-8 w-auto" : "h-10 w-auto"}
+        {...(target ? { "data-logo-target": "" } : {})}
+      />
       <span className="leading-none">
-        <span className="block font-display text-xl font-semibold tracking-tight text-fog">Hyperion</span>
-        <span className="block text-[10px] tracking-[0.35em] text-fog/50 uppercase">Marketing</span>
+        <span className="block font-display text-[1.05rem] font-bold tracking-tight text-ink">HYPERION</span>
+        <span className="mt-1 block font-mono text-[9px] tracking-[0.42em] text-forest uppercase">Software</span>
       </span>
     </span>
   )
@@ -27,9 +30,9 @@ export function Logo({ className = "" }) {
 const links = [
   ["#servicios", "Servicios"],
   ["#productos", "Productos"],
-  ["#automatizaciones", "Automatizaciones"],
+  ["#automatizaciones", "Automatizar"],
   ["#nosotros", "Nosotros"],
-    ["#contacto", "Contacto"],
+  ["#contacto", "Contacto"],
 ]
 
 export default function Navbar() {
@@ -45,59 +48,77 @@ export default function Navbar() {
 
   return (
     <>
-    <header
-      ref={header}
-      className="group fixed inset-x-0 top-0 z-50 transition-all duration-500 [&.is-scrolled]:border-b [&.is-scrolled]:border-slate-200 [&.is-scrolled]:bg-ink-950/75 [&.is-scrolled]:backdrop-blur-xl"
-    >
-      <div className="container flex h-20 items-center justify-between">
-        <Link href="#inicio" aria-label="Hyperion Marketing, inicio">
-          <Logo />
-        </Link>
+      <header ref={header} className="group fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-4">
+        <div className="relative mx-auto flex h-16 max-w-[1320px] items-center justify-between overflow-hidden rounded-2xl border-[1.5px] border-ink bg-paper/85 pr-2 pl-4 backdrop-blur-md transition-shadow duration-300 group-[.is-scrolled]:shadow-hard">
+          <Link href="#inicio" aria-label="Hyperion Software, inicio">
+            <Logo target />
+          </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {links.map(([href, label]) => (
-            <Link key={href} href={href} className="relative text-sm font-medium text-fog/70 transition hover:text-fog after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-brand after:transition-all hover:after:w-full">
-              {label}
+          <nav className="hidden items-center gap-1 lg:flex">
+            {links.map(([href, label]) => (
+              <Link
+                key={href}
+                href={href}
+                className="rounded-lg px-3 py-2 font-mono text-xs tracking-wider text-ink/75 uppercase transition hover:bg-ink hover:text-lime"
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <Link
+              href="#contacto"
+              className="press hidden items-center gap-1.5 rounded-xl border-[1.5px] border-ink bg-lime px-4 py-2.5 font-mono text-xs font-bold tracking-wider text-ink uppercase shadow-hard sm:inline-flex"
+            >
+              Cotizar <ArrowUpRight className="h-4 w-4" />
             </Link>
-          ))}
-        </nav>
-
-        <Link
-          href="#contacto"
-          className="hidden rounded-full bg-fog px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand md:inline-flex"
-        >
-          Cotizar ahora
-        </Link>
-
-        <button className="p-2 text-fog md:hidden" onClick={() => setOpen(true)} aria-label="Abrir menú">
-          <Menu className="h-6 w-6" />
-        </button>
-      </div>
-      <div className="absolute inset-x-0 bottom-0 h-px origin-left bg-brand" ref={bar} style={{ transform: "scaleX(0)" }} />
-    </header>
+            <button
+              className="flex h-11 w-11 items-center justify-center rounded-xl border-[1.5px] border-ink bg-white text-ink lg:hidden"
+              onClick={() => setOpen(true)}
+              aria-label="Abrir menú"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+          </div>
+          {/* Avance de lectura */}
+          <div className="absolute inset-x-0 bottom-0 h-[3px] origin-left bg-forest" ref={bar} style={{ transform: "scaleX(0)" }} />
+        </div>
+      </header>
 
       {/* Menú móvil (fuera del header: backdrop-filter rompería el position: fixed) */}
-      <div className={`fixed inset-0 z-[60] bg-ink-950/97 backdrop-blur-xl transition-all duration-500 md:hidden ${open ? "visible opacity-100" : "invisible opacity-0"}`}>
-        <div className="container flex h-20 items-center justify-between">
+      <div
+        className={`y2k-dots fixed inset-0 z-[60] bg-paper transition-all duration-500 lg:hidden ${open ? "visible opacity-100" : "invisible opacity-0"}`}
+      >
+        <div className="flex h-16 items-center justify-between px-5 pt-3">
           <Logo />
-          <button className="p-2 text-fog" onClick={() => setOpen(false)} aria-label="Cerrar menú">
-            <X className="h-6 w-6" />
+          <button
+            className="flex h-11 w-11 items-center justify-center rounded-xl border-[1.5px] border-ink bg-white"
+            onClick={() => setOpen(false)}
+            aria-label="Cerrar menú"
+          >
+            <X className="h-5 w-5" />
           </button>
         </div>
-        <nav className="container mt-10 flex flex-col gap-6">
+        <nav className="mt-10 flex flex-col px-5">
           {links.map(([href, label], i) => (
             <Link
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className={`font-display text-4xl text-fog transition-all duration-500 hover:text-brand ${open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}`}
-              style={{ transitionDelay: open ? `${100 + i * 60}ms` : "0ms" }}
+              className={`flex items-baseline gap-4 border-b-[1.5px] border-ink py-4 font-display text-3xl font-bold text-ink uppercase transition-all duration-500 ${open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}`}
+              style={{ transitionDelay: open ? `${80 + i * 60}ms` : "0ms" }}
             >
+              <span className="font-mono text-xs text-forest">0{i + 1}</span>
               {label}
             </Link>
           ))}
-          <Link href="#contacto" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-brand py-4 text-center font-semibold text-white">
-            Cotizar ahora
+          <Link
+            href="#contacto"
+            onClick={() => setOpen(false)}
+            className="mt-8 rounded-xl border-[1.5px] border-ink bg-lime py-4 text-center font-mono font-bold tracking-wider text-ink uppercase shadow-hard"
+          >
+            Cotizar proyecto
           </Link>
         </nav>
       </div>

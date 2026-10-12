@@ -1,15 +1,18 @@
 // Ilustraciones de interfaz para los productos.
 import Image from "next/image"
 
-function Window({ url, children, accent = "#7ee2a8" }) {
+// Ventana estilo sistema operativo Y2K: barra de título, botones cuadrados y sombra dura.
+function Window({ url, children, accent = "#c6f432" }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10">
-      <div className="flex items-center gap-2 border-b border-slate-200 px-4 py-3">
-        <span className="h-2.5 w-2.5 rounded-full bg-[#ff6b5a]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#f2c14e]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#5ad17a]" />
-        <div className="ml-3 flex-1 truncate rounded-md bg-slate-100 px-3 py-1 text-xs text-fog/60">
-          <span style={{ color: accent }}>●</span> {url}
+    <div className="overflow-hidden rounded-xl border-[1.5px] border-ink bg-white shadow-hard-lg">
+      <div className="flex items-center gap-3 border-b-[1.5px] border-ink px-3 py-2" style={{ background: accent }}>
+        <span className="flex gap-1.5" aria-hidden="true">
+          <span className="h-3 w-3 rounded-[3px] border-[1.5px] border-ink bg-white" />
+          <span className="h-3 w-3 rounded-[3px] border-[1.5px] border-ink bg-white" />
+          <span className="h-3 w-3 rounded-[3px] border-[1.5px] border-ink bg-ink" />
+        </span>
+        <div className="flex-1 truncate rounded-md border-[1.5px] border-ink bg-white px-2.5 py-0.5 font-mono text-[11px] tracking-wide text-ink">
+          ▸ {url}
         </div>
       </div>
       {children}
@@ -21,7 +24,7 @@ export function TienditaMockup() {
   return (
     <div className="relative pt-10 pb-6">
       {/* Página de inicio de Mitiendita al fondo */}
-      <div className="absolute top-0 -left-4 w-[62%] -rotate-6 overflow-hidden rounded-xl border border-slate-200 opacity-80 shadow-2xl sm:-left-8">
+      <div className="absolute top-0 -left-4 w-[62%] -rotate-6 overflow-hidden rounded-xl border-[1.5px] border-ink shadow-hard sm:-left-8">
         <Image src="/productos/mitiendita-landing.webp" alt="" width={2000} height={1155} sizes="(min-width: 1024px) 380px, 60vw" className="h-auto w-full" />
       </div>
       {/* Sistema real: pantalla de venta */}
@@ -37,10 +40,10 @@ export function TienditaMockup() {
           />
         </Window>
       </div>
-      <div className="float absolute -bottom-1 left-2 flex items-center gap-2 rounded-full border border-slate-200 bg-ink-950/90 px-4 py-2 text-xs font-semibold shadow-xl backdrop-blur sm:left-6">
-        <span className="h-2 w-2 rounded-full bg-aqua" /> Venta guardada en la nube
+      <div className="float absolute -bottom-1 left-2 flex items-center gap-2 rounded-full border-[1.5px] border-ink bg-white px-4 py-2 font-mono text-[11px] font-bold tracking-wide text-ink uppercase shadow-hard sm:left-6">
+        <span className="h-2 w-2 rounded-full bg-forest" /> Venta guardada en la nube
       </div>
-      <div className="float absolute top-2 right-2 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ffd166] to-[#f2a33a] font-display text-sm font-bold text-[#3b2405] shadow-md [animation-delay:1.5s]">
+      <div className="float absolute top-2 right-2 flex h-14 w-14 items-center justify-center rounded-full border-[1.5px] border-ink bg-lime font-display text-sm font-bold text-ink shadow-hard [animation-delay:1.5s]">
         +$22
       </div>
     </div>
