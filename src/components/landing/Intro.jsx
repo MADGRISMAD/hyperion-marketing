@@ -1,7 +1,17 @@
 "use client"
 import { useEffect, useRef, useState } from "react"
 
-// Cortina de entrada: el logo se dibuja, cuenta hasta 100 y vuela a su lugar en la barra.
+// Capas del logo: [archivo, clases de animación, retraso]
+const LAYERS = [
+  ["h", "logo-bar", "0.15s"],
+  ["bar-small", "logo-bar logo-bar-top", "0.42s"],
+  ["bar-tall", "logo-bar", "0.28s"],
+  ["bar-short", "logo-bar", "0.36s"],
+  ["tree", "logo-tree", null],
+  ["arrow", "logo-arrow", null],
+]
+
+// Cortina de entrada: el logo se construye (barras, árbol, flecha), cuenta hasta 100 y vuela a la barra.
 export default function Intro() {
   const [phase, setPhase] = useState("in") // in → fly → done
   const mark = useRef(null)
@@ -24,7 +34,7 @@ export default function Intro() {
 
     // Contador 000 → 100
     const t0 = performance.now()
-    const LOAD = 1500
+    const LOAD = 2200
     let raf
     const tick = (now) => {
       const p = Math.min(1, (now - t0) / LOAD)
@@ -55,7 +65,7 @@ export default function Intro() {
       setPhase("fly")
       endTimer = setTimeout(finish, 1000)
     }
-    flyTimer = setTimeout(fly, LOAD + 250)
+    flyTimer = setTimeout(fly, LOAD + 350)
 
     // Un clic o una tecla adelantan el vuelo del logo
     flyNow.current = fly
@@ -118,19 +128,36 @@ export default function Intro() {
 
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <div ref={mark} className="will-change-transform">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/hyperion-mark.png" alt="" width={273} height={480} className="intro-mark h-[170px] w-auto md:h-[230px]" />
+          {/* El logo se arma por capas: barras → árbol → flecha (ver globals.css) */}
+          <div className="relative aspect-[273/480] h-[170px] md:h-[230px]">
+            {LAYERS.map(([src, cls, delay]) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={src}
+                src={`/brand/parts/${src}.png`}
+                alt=""
+                width={273}
+                height={480}
+                fetchPriority="high"
+                className={`logo-part absolute inset-0 h-full w-full ${cls}`}
+                style={delay ? { animationDelay: delay } : undefined}
+              />
+            ))}
+            <svg viewBox="0 0 24 24" className="logo-spark absolute top-[27%] left-[99%] h-9 w-9 md:h-11 md:w-11" aria-hidden="true">
+              <path d="M12 0 L14.2 9.8 L24 12 L14.2 14.2 L12 24 L9.8 14.2 L0 12 L9.8 9.8 Z" fill="#c6f432" stroke="#0b1a12" strokeWidth="1.2" />
+            </svg>
+          </div>
         </div>
         <div className={`mt-6 text-center transition-opacity duration-300 ${flying ? "opacity-0" : "opacity-100"}`}>
           <div className="overflow-hidden font-display text-4xl font-bold tracking-tight text-ink md:text-6xl">
             {"HYPERION".split("").map((c, i) => (
-              <span key={i} className="intro-letter" style={{ animationDelay: `${450 + i * 55}ms` }}>
+              <span key={i} className="intro-letter" style={{ animationDelay: `${1250 + i * 55}ms` }}>
                 {c}
               </span>
             ))}
           </div>
           <div className="mt-2 overflow-hidden font-mono text-xs tracking-[0.6em] text-forest uppercase md:text-sm">
-            <span className="intro-letter" style={{ animationDelay: "950ms" }}>
+            <span className="intro-letter" style={{ animationDelay: "1800ms" }}>
               Software
             </span>
           </div>
