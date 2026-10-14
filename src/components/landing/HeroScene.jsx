@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js"
 
-const PAPER = "#eef0e7"
+const PAPER = "#d4cff6"
 
 // Estrella de 4 puntas (destello Y2K)
 function sparkleShape(r = 1, inner = 0.22) {
@@ -39,8 +39,8 @@ function shadowTexture() {
   c.width = c.height = 128
   const g = c.getContext("2d")
   const grd = g.createRadialGradient(64, 64, 0, 64, 64, 64)
-  grd.addColorStop(0, "rgba(11,26,18,0.45)")
-  grd.addColorStop(1, "rgba(11,26,18,0)")
+  grd.addColorStop(0, "rgba(58,44,153,0.4)")
+  grd.addColorStop(1, "rgba(58,44,153,0)")
   g.fillStyle = grd
   g.fillRect(0, 0, 128, 128)
   const t = new THREE.CanvasTexture(c)
@@ -55,13 +55,38 @@ function buildScene(isSmall) {
   const track = (x) => (disposables.push(x), x)
 
   // ── Materiales ──
-  // Follaje mate y facetado (low-poly); el cromo queda para los objetos flotantes.
-  const greens = ["#17552f", "#1f6b3a", "#0f4a2c", "#2a7d45"].map((c) =>
-    track(new THREE.MeshStandardMaterial({ color: c, metalness: 0.1, roughness: 0.62, flatShading: true }))
+  // Follaje facetado (low-poly) en cromo iridiscente lavanda; las facetas reflejan el ambiente.
+  const greens = ["#c9c2f5", "#b4c4fa", "#e2d2fc", "#a69ee6"].map((c) =>
+    track(
+      new THREE.MeshPhysicalMaterial({
+        color: c,
+        metalness: 0.85,
+        roughness: 0.16,
+        clearcoat: 1,
+        iridescence: 1,
+        iridescenceIOR: 1.4,
+        iridescenceThicknessRange: [180, 620],
+        flatShading: true,
+      })
+    )
   )
-  const bark = track(new THREE.MeshStandardMaterial({ color: "#6e3320", metalness: 0.15, roughness: 0.7, flatShading: true }))
-  const lime = track(new THREE.MeshPhysicalMaterial({ color: "#c6f432", metalness: 0.45, roughness: 0.22, clearcoat: 1 }))
-  const chrome = track(new THREE.MeshPhysicalMaterial({ color: "#eef1ea", metalness: 1, roughness: 0.08, clearcoat: 1 }))
+  const bark = track(
+    new THREE.MeshPhysicalMaterial({ color: "#a9a1e0", metalness: 0.6, roughness: 0.22, clearcoat: 1, iridescence: 0.6, flatShading: true })
+  )
+  const lime = track(
+    new THREE.MeshPhysicalMaterial({
+      color: "#f2e6ff",
+      metalness: 0.9,
+      roughness: 0.1,
+      clearcoat: 1,
+      iridescence: 1,
+      iridescenceIOR: 1.6,
+      iridescenceThicknessRange: [250, 800],
+    })
+  )
+  const chrome = track(
+    new THREE.MeshPhysicalMaterial({ color: "#f1efff", metalness: 1, roughness: 0.06, clearcoat: 1, iridescence: 0.35 })
+  )
 
   // ── Secuoya low-poly: tronco alto y recto, copa columnar a partir de un tercio de altura ──
   let seed = 116
@@ -179,9 +204,9 @@ function buildScene(isSmall) {
   )
 
   // Piso de cuadrícula Y2K
-  const grid = new THREE.GridHelper(44, 44, "#1e6b35", "#1e6b35")
+  const grid = new THREE.GridHelper(44, 44, "#ffffff", "#ffffff")
   grid.material.transparent = true
-  grid.material.opacity = 0.28
+  grid.material.opacity = 0.55
   track(grid.geometry)
   track(grid.material)
   scene.add(grid)
@@ -189,7 +214,9 @@ function buildScene(isSmall) {
   // Luces (el ambiente da los reflejos; estas dan brillo y volumen)
   const key = new THREE.DirectionalLight("#ffffff", 1.6)
   key.position.set(5, 9, 6)
-  scene.add(key, new THREE.HemisphereLight("#ffffff", "#b9c9b0", 0.7))
+  const rim = new THREE.DirectionalLight("#b9a8ff", 1.2)
+  rim.position.set(-6, 5, -4)
+  scene.add(key, rim, new THREE.HemisphereLight("#ffffff", "#b3a9ef", 0.7))
 
   return { scene, tree, tiers, ring, arrow, sparks, balls, disposables }
 }
@@ -213,7 +240,7 @@ function setupScene(canvas, parent, onFail) {
   const envRT = pmrem.fromScene(new RoomEnvironment(), 0.04)
   const { scene, tree, tiers, ring, arrow, sparks, balls, disposables } = buildScene(isSmall)
   scene.environment = envRT.texture
-  scene.environmentIntensity = 0.75
+  scene.environmentIntensity = 1
 
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100)
   const lookAt = new THREE.Vector3(0, 3.4, 0)

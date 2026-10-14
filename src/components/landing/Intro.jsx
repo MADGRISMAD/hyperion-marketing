@@ -104,10 +104,10 @@ export default function Intro() {
       />
 
       <div className={`absolute inset-0 transition-opacity duration-300 ${flying ? "opacity-0" : "opacity-100"}`}>
-        <div className="absolute top-5 left-5 font-mono text-[11px] tracking-widest text-ink/60 uppercase md:top-8 md:left-8">
+        <div className="absolute top-5 left-5 font-tech text-[10px] tracking-[0.2em] text-ink/60 uppercase md:top-8 md:left-8">
           hyperion_software.exe
         </div>
-        <div className="absolute top-5 right-5 font-mono text-[11px] tracking-widest text-ink/60 uppercase md:top-8 md:right-8">
+        <div className="absolute top-5 right-5 font-tech text-[10px] tracking-[0.2em] text-ink/60 uppercase md:top-8 md:right-8">
           Tijuana · MX
         </div>
         <div className="absolute inset-x-5 bottom-6 md:inset-x-8 md:bottom-8">
@@ -115,13 +115,13 @@ export default function Intro() {
             <span className="text-[11px] tracking-widest text-ink/60">
               Cargando<span className="blink">_</span>
             </span>
-            <span className="font-display text-4xl font-bold md:text-6xl">
+            <span className="chrome-3d font-chrome text-5xl md:text-7xl">
               <span ref={counter}>000</span>
               <span className="text-forest">%</span>
             </span>
           </div>
-          <div className="h-3 overflow-hidden rounded-full border-[1.5px] border-ink bg-white">
-            <div ref={bar} className="h-full origin-left bg-lime" style={{ transform: "scaleX(0)" }} />
+          <div className="h-3 overflow-hidden rounded-full border border-white/90 bg-white/50 shadow-glass">
+            <div ref={bar} className="h-full origin-left bg-holo" style={{ transform: "scaleX(0)" }} />
           </div>
         </div>
       </div>
@@ -144,19 +144,19 @@ export default function Intro() {
               />
             ))}
             <svg viewBox="0 0 24 24" className="logo-spark absolute top-[27%] left-[99%] h-9 w-9 md:h-11 md:w-11" aria-hidden="true">
-              <path d="M12 0 L14.2 9.8 L24 12 L14.2 14.2 L12 24 L9.8 14.2 L0 12 L9.8 9.8 Z" fill="#c6f432" stroke="#0b1a12" strokeWidth="1.2" />
+              <path d="M12 0 L14.2 9.8 L24 12 L14.2 14.2 L12 24 L9.8 14.2 L0 12 L9.8 9.8 Z" fill="#dcd4ff" stroke="#1f1a4d" strokeWidth="1.2" />
             </svg>
           </div>
         </div>
         <div className={`mt-6 text-center transition-opacity duration-300 ${flying ? "opacity-0" : "opacity-100"}`}>
-          <div className="overflow-hidden font-display text-4xl font-bold tracking-tight text-ink md:text-6xl">
+          <div className="overflow-hidden py-2 font-chrome text-5xl md:text-7xl">
             {"HYPERION".split("").map((c, i) => (
-              <span key={i} className="intro-letter" style={{ animationDelay: `${1250 + i * 55}ms` }}>
+              <span key={i} className="intro-letter chrome-3d" style={{ animationDelay: `${1250 + i * 55}ms` }}>
                 {c}
               </span>
             ))}
           </div>
-          <div className="mt-2 overflow-hidden font-mono text-xs tracking-[0.6em] text-forest uppercase md:text-sm">
+          <div className="mt-2 overflow-hidden font-tech text-xs tracking-[0.6em] text-forest uppercase md:text-sm">
             <span className="intro-letter" style={{ animationDelay: "1800ms" }}>
               Software
             </span>

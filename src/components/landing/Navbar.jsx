@@ -20,8 +20,8 @@ export function Logo({ className = "", target = false, compact = false }) {
         {...(target ? { "data-logo-target": "" } : {})}
       />
       <span className="leading-none">
-        <span className="block font-display text-[1.05rem] font-bold tracking-tight text-ink">HYPERION</span>
-        <span className="mt-1 block font-mono text-[9px] tracking-[0.42em] text-forest uppercase">Software</span>
+        <span className="block font-chrome text-[1.15rem] tracking-tight text-ink">HYPERION</span>
+        <span className="mt-1 block font-tech text-[8px] tracking-[0.42em] text-forest uppercase">Software</span>
       </span>
     </span>
   )
@@ -49,7 +49,7 @@ export default function Navbar() {
   return (
     <>
       <header ref={header} className="group fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-4">
-        <div className="relative mx-auto flex h-16 max-w-[1320px] items-center justify-between overflow-hidden rounded-2xl border-[1.5px] border-ink bg-paper/85 pr-2 pl-4 backdrop-blur-md transition-shadow duration-300 group-[.is-scrolled]:shadow-hard">
+        <div className="relative mx-auto flex h-16 max-w-[1320px] items-center justify-between overflow-hidden rounded-full border border-white/90 bg-white/35 pr-2 pl-5 shadow-glass backdrop-blur-xl">
           <Link href="#inicio" aria-label="Hyperion Software, inicio">
             <Logo target />
           </Link>
@@ -59,7 +59,7 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
-                className="rounded-lg px-3 py-2 font-mono text-xs tracking-wider text-ink/75 uppercase transition hover:bg-ink hover:text-lime"
+                className="rounded-full px-3.5 py-2 font-tech text-[10px] tracking-[0.18em] text-ink/80 uppercase transition hover:bg-white/60 hover:text-ink"
               >
                 {label}
               </Link>
@@ -69,12 +69,12 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             <Link
               href="#contacto"
-              className="press hidden items-center gap-1.5 rounded-xl border-[1.5px] border-ink bg-lime px-4 py-2.5 font-mono text-xs font-bold tracking-wider text-ink uppercase shadow-hard sm:inline-flex"
+              className="press hidden items-center gap-1.5 rounded-full border border-white/90 bg-holo px-5 py-2.5 font-tech text-[10px] tracking-[0.18em] text-ink uppercase shadow-glass sm:inline-flex"
             >
               Cotizar <ArrowUpRight className="h-4 w-4" />
             </Link>
             <button
-              className="flex h-11 w-11 items-center justify-center rounded-xl border-[1.5px] border-ink bg-white text-ink lg:hidden"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/90 bg-white/50 text-ink lg:hidden"
               onClick={() => setOpen(true)}
               aria-label="Abrir menú"
             >
@@ -82,7 +82,7 @@ export default function Navbar() {
             </button>
           </div>
           {/* Avance de lectura */}
-          <div className="absolute inset-x-0 bottom-0 h-[3px] origin-left bg-forest" ref={bar} style={{ transform: "scaleX(0)" }} />
+          <div className="absolute inset-x-0 bottom-0 h-[3px] origin-left bg-holo" ref={bar} style={{ transform: "scaleX(0)" }} />
         </div>
       </header>
 
@@ -93,7 +93,7 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between px-5 pt-3">
           <Logo />
           <button
-            className="flex h-11 w-11 items-center justify-center rounded-xl border-[1.5px] border-ink bg-white"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/90 bg-white/50"
             onClick={() => setOpen(false)}
             aria-label="Cerrar menú"
           >
@@ -106,17 +106,17 @@ export default function Navbar() {
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className={`flex items-baseline gap-4 border-b-[1.5px] border-ink py-4 font-display text-3xl font-bold text-ink uppercase transition-all duration-500 ${open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}`}
+              className={`flex items-baseline gap-4 border-b border-white/70 py-4 font-chrome text-4xl uppercase transition-all duration-500 ${open ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}`}
               style={{ transitionDelay: open ? `${80 + i * 60}ms` : "0ms" }}
             >
-              <span className="font-mono text-xs text-forest">0{i + 1}</span>
-              {label}
+              <span className="font-tech text-xs text-forest">0{i + 1}</span>
+              <span className="chrome-3d">{label}</span>
             </Link>
           ))}
           <Link
             href="#contacto"
             onClick={() => setOpen(false)}
-            className="mt-8 rounded-xl border-[1.5px] border-ink bg-lime py-4 text-center font-mono font-bold tracking-wider text-ink uppercase shadow-hard"
+            className="mt-8 rounded-full border border-white/90 bg-holo py-4 text-center font-tech text-xs tracking-[0.2em] text-ink uppercase shadow-glass"
           >
             Cotizar proyecto
           </Link>
