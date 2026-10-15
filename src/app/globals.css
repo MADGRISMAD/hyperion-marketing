@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-chakra), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-schibsted), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
 
   /* Páginas secundarias (servicios, tráfico): tema claro de siempre */
@@ -14,238 +14,168 @@
   --color-brand: #1e6b35;
   --color-volt: #0f4d3a;
   --color-aqua: #15803d;
-  --color-ink: #121015;
 
-  /* Portada: interfaz táctica holográfica sobre una ciudad de noche */
-  --color-night: #030806; /* cielo y fondo */
-  --color-panel: #06110d; /* relleno de los paneles */
-  --color-phos: #4dff9a; /* fósforo verde: acentos, activos */
-  --color-mint: #c8f7dc; /* texto principal sobre el holograma */
-  --color-sage: #8cc4a6; /* texto secundario */
-  --color-alert: #ff4d4d; /* único rojo: botón del dispositivo, grabación */
-  --color-amber: #ffc56b; /* luces de la ciudad, estado beta */
+  /* Portada: lienzo cálido, tinta casi negra y un color por producto, como los acabados de un teléfono */
+  --color-canvas: #f5f4f0;
+  --color-paper: #ffffff;
+  --color-ink: #111114;
+  --color-graphite: #3d3d44;
+  --color-mist: #74747c;
+  --color-line: #e3e1db;
+  --color-sequoia: #1f6b45; /* verde del logo, el color de la marca */
+  --color-tangerine: #e8742a; /* Mitiendita */
+  --color-tomato: #d9472f; /* Mirestaurante */
+  --color-mint: #1f9d6f; /* internships.gg */
+  --color-cobalt: #2f5fd0; /* Caresia */
+  --color-iris: #6a55e0; /* Mi Info */
+  --color-honey: #d99a13; /* BeHive */
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--color-night);
+  background: var(--color-canvas);
 }
 
-/* sin fondo propio: la ciudad 3D (z-index negativo) se ve a través del body */
 body {
-  color: var(--color-mint);
+  background: var(--color-canvas);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 ::selection {
-  background: var(--color-phos);
-  color: #021008;
+  background: var(--color-sequoia);
+  color: #fff;
 }
 
 .container {
-  max-width: 1320px;
+  max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 @media (min-width: 768px) {
   .container {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
 }
 
-/* ── Holograma ── */
-/* Panel: vidrio verde con retícula fina y borde de luz */
-.hud {
-  position: relative;
-  background:
-    linear-gradient(rgba(77, 255, 154, 0.035) 1px, transparent 1px) 0 0 / 22px 22px,
-    linear-gradient(90deg, rgba(77, 255, 154, 0.035) 1px, transparent 1px) 0 0 / 22px 22px,
-    linear-gradient(160deg, rgba(12, 42, 29, 0.86), rgba(3, 12, 8, 0.9));
-  border: 1px solid rgba(124, 255, 180, 0.3);
-  box-shadow:
-    inset 0 0 0 1px rgba(0, 0, 0, 0.4),
-    inset 0 0 60px rgba(77, 255, 154, 0.06),
-    0 0 40px -12px rgba(77, 255, 154, 0.3);
+/* ── Tipografía ── */
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
 }
-/* Esquinas en L más brillantes que el borde: un elemento encima del panel */
-.brackets {
-  --b: var(--color-phos);
-  --l: 14px;
-  position: absolute;
-  inset: -1px;
-  pointer-events: none;
-  background:
-    linear-gradient(var(--b), var(--b)) top left / var(--l) 2px,
-    linear-gradient(var(--b), var(--b)) top left / 2px var(--l),
-    linear-gradient(var(--b), var(--b)) top right / var(--l) 2px,
-    linear-gradient(var(--b), var(--b)) top right / 2px var(--l),
-    linear-gradient(var(--b), var(--b)) bottom left / var(--l) 2px,
-    linear-gradient(var(--b), var(--b)) bottom left / 2px var(--l),
-    linear-gradient(var(--b), var(--b)) bottom right / var(--l) 2px,
-    linear-gradient(var(--b), var(--b)) bottom right / 2px var(--l);
-  background-repeat: no-repeat;
-  filter: drop-shadow(0 0 4px rgba(77, 255, 154, 0.7));
-}
-/* Líneas de barrido del proyector, encima del contenido */
-.scan::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(180deg, rgba(200, 255, 220, 0.04) 0 1px, transparent 1px 3px);
-}
-
-/* Texto con brillo de fósforo */
-.glow {
-  color: #dcffe9;
-  text-shadow:
-    0 0 1px rgba(220, 255, 233, 0.9),
-    0 0 14px rgba(77, 255, 154, 0.55),
-    0 0 40px rgba(77, 255, 154, 0.25);
-}
-.glow-soft {
-  text-shadow: 0 0 10px rgba(77, 255, 154, 0.4);
-}
-
-/* Etiqueta de lectura del sistema */
-.readout {
+.eyebrow {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+/* Palabra con degradado: el único gesto de color en los titulares */
+.grad {
+  background: linear-gradient(100deg, var(--grad-a, #1f6b45), var(--grad-b, #2f5fd0) 55%, var(--grad-c, #6a55e0));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ── Botones ── */
-/* Opción de menú: la activa se enciende como en un menú de pausa */
-.menu-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 1.1rem;
-  padding: 0.9rem 1.25rem;
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-mint);
-  border: 1px solid rgba(124, 255, 180, 0.2);
-  background: rgba(6, 22, 15, 0.55);
-  transition:
-    color 160ms ease,
-    background-color 160ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease;
-}
-.menu-item[data-active] {
-  color: #021008;
-  border-color: var(--color-phos);
-  background: linear-gradient(90deg, #45ec90, #2bc874 70%, #38dc86);
-  box-shadow:
-    0 0 0 1px rgba(77, 255, 154, 0.4),
-    0 0 30px rgba(77, 255, 154, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35);
-}
-.menu-item:focus-visible {
-  outline: 2px solid var(--color-mint);
-  outline-offset: 3px;
-}
-
-.btn-hud,
-.btn-ghost {
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  padding: 0.9rem 1.5rem;
-  font-family: var(--font-display);
+  gap: 0.5rem;
+  height: 3rem;
+  padding: 0 1.4rem;
+  border-radius: 999px;
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
   transition:
-    filter 160ms ease,
-    border-color 160ms ease,
-    background-color 160ms ease,
-    transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+    transform 160ms var(--ease-out),
+    background-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
 }
-.btn-hud {
-  color: #021008;
-  background: linear-gradient(90deg, #45ec90, #2bc874);
-  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-}
-.btn-ghost {
-  color: var(--color-mint);
-  border: 1px solid rgba(124, 255, 180, 0.4);
-  background: rgba(6, 22, 15, 0.55);
-}
-@media (hover: hover) and (pointer: fine) {
-  .btn-hud:hover {
-    filter: brightness(1.12);
-  }
-  .btn-ghost:hover {
-    border-color: var(--color-phos);
-    background: rgba(20, 70, 45, 0.6);
-  }
-}
-.btn-hud:active,
-.btn-ghost:active {
+.btn:active {
   transform: scale(0.97);
 }
-.btn-hud:focus-visible,
-.btn-ghost:focus-visible {
-  outline: 2px solid var(--color-mint);
+.btn:focus-visible {
+  outline: 2px solid var(--color-cobalt);
   outline-offset: 3px;
 }
-
-/* Logo pintado en fósforo: el PNG del logo funciona como molde */
-.holo-mask {
-  background: linear-gradient(180deg, #e9fff2 0%, #7dffb4 45%, #2bc874 100%);
-  -webkit-mask: var(--mask) center / contain no-repeat;
-  mask: var(--mask) center / contain no-repeat;
+.btn-ink {
+  background: var(--color-ink);
+  color: #fff;
+}
+.btn-light {
+  background: #fff;
+  color: var(--color-ink);
+  box-shadow: inset 0 0 0 1px var(--color-line);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-ink:hover {
+    background: #2a2a31;
+  }
+  .btn-light:hover {
+    box-shadow: inset 0 0 0 1px #c9c6be;
+  }
+}
+/* Enlace al estilo Apple: texto con flecha que avanza */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+}
+.link-arrow svg {
+  transition: transform 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .link-arrow:hover svg {
+    transform: translateX(3px);
+  }
 }
 
-/* Viñeta de visión nocturna sobre la ciudad */
-.vignette {
-  background:
-    radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(0, 0, 0, 0.7) 100%),
-    repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 3px);
+/* ── Superficies ── */
+.card {
+  background: #fff;
+  border-radius: 28px;
+  box-shadow:
+    0 1px 0 rgba(17, 17, 20, 0.04),
+    0 20px 50px -30px rgba(17, 17, 20, 0.25);
+}
+.notif {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(18px) saturate(1.6);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 1px rgba(17, 17, 20, 0.05),
+    0 18px 40px -16px rgba(17, 17, 20, 0.35);
 }
 
-/* Barrido de luz que recorre un panel al aparecer */
-.sweep {
-  overflow: hidden;
-}
-.sweep::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(180deg, transparent 40%, rgba(77, 255, 154, 0.14) 49%, rgba(220, 255, 233, 0.32) 50%, transparent 51%);
-  transform: translateY(-100%);
-  opacity: 0;
-}
-.reveal.is-visible .sweep::before,
-.reveal.is-visible.sweep::before {
-  animation: sweep 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
-}
-@keyframes sweep {
-  0% { transform: translateY(-60%); opacity: 1; }
-  100% { transform: translateY(60%); opacity: 0; }
+/* Parallax con el cursor: cada capa se mueve según su profundidad (--d), sin JS por elemento */
+.depth {
+  translate: calc(var(--mx, 0) * var(--d, 10) * 1px) calc(var(--my, 0) * var(--d, 10) * 1px);
 }
 
 /* Revelado al hacer scroll */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(28px);
   transition:
-    opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1),
-    transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity 0.9s var(--ease-out),
+    transform 0.9s var(--ease-out);
 }
 .reveal.is-visible {
   opacity: 1;
@@ -253,116 +183,22 @@ body {
 }
 
 .marquee {
-  animation: marquee 50s linear infinite;
+  animation: marquee 45s linear infinite;
 }
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
 
-.blink {
-  animation: blink 1s steps(1) infinite;
-}
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-/* Pulso de "en línea" */
-.pulse {
-  animation: pulse 2s ease-out infinite;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(77, 255, 154, 0.6); }
-  100% { box-shadow: 0 0 0 8px rgba(77, 255, 154, 0); }
-}
-
-/* Paquete de datos que viaja por la red (automatizaciones) */
-.flow-line {
-  stroke-dasharray: 3 18;
-  animation: flow 1.2s linear infinite;
-}
-@keyframes flow {
-  to { stroke-dashoffset: -42; }
-}
-
-/* Encendido del holograma: parpadea un instante y se queda */
-.flicker {
-  animation: flicker 1.4s steps(1) 0.2s both;
-}
-@keyframes flicker {
-  0% { opacity: 0; }
-  10% { opacity: 0.7; }
-  14% { opacity: 0.15; }
-  22% { opacity: 0.95; }
-  26% { opacity: 0.5; }
-  34%, 100% { opacity: 1; }
-}
-
-/* ── Animación de entrada (arranque del sistema) ── */
-html.intro-active [data-logo-target] {
-  opacity: 0;
-}
-html.intro-active body {
-  overflow: hidden;
-}
-.intro-failsafe {
-  animation: intro-failsafe 0.4s ease 8s forwards;
-}
-@keyframes intro-failsafe {
-  to { opacity: 0; visibility: hidden; pointer-events: none; }
-}
-.intro-line {
-  animation: intro-line 0.05s linear both;
-}
-@keyframes intro-line {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.logo-part {
-  animation-fill-mode: both;
-  will-change: transform, clip-path;
-}
-.logo-bar {
-  transform-origin: 50% 100%;
-  animation: logo-bar 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) both;
-}
-.logo-bar-top {
-  transform-origin: 50% 68.4%;
-}
-@keyframes logo-bar {
-  from { transform: scaleY(0); }
-  to { transform: scaleY(1); }
-}
-.logo-tree {
-  transform-origin: 50% 100%;
-  animation: logo-tree 1.15s cubic-bezier(0.2, 0.8, 0.25, 1) 0.55s both;
-}
-@keyframes logo-tree {
-  0% { clip-path: inset(100% 0 0 0); transform: scaleY(0.35); }
-  62% { clip-path: inset(0 0 0 0); transform: scaleY(1.05); }
-  78% { transform: scaleY(0.98) rotate(-1.6deg); }
-  90% { transform: rotate(0.8deg); }
-  100% { clip-path: inset(0 0 0 0); transform: none; }
-}
-.logo-arrow {
-  animation: logo-arrow 0.55s cubic-bezier(0.7, 0, 0.2, 1) 1.45s both;
-}
-@keyframes logo-arrow {
-  0% {
-    clip-path: polygon(-200% -192%, 300% 308%, 300% 600%, -200% 600%);
-    transform: translate(-4%, 4%);
-  }
-  100% {
-    clip-path: polygon(-200% -300%, 300% 200%, 300% 600%, -200% 600%);
-    transform: none;
-  }
+/* Notificación que llega: baja y se asienta */
+@keyframes notif-in {
+  from { opacity: 0; transform: translateY(-14px) scale(0.96); }
+  to { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .reveal.is-visible .sweep::before,
-  .reveal.is-visible.sweep::before { animation: none; }
-  .marquee, .flow-line, .blink, .pulse, .flicker { animation: none; }
-  .logo-part { animation: none; }
+  .marquee { animation: none; }
+  .depth { translate: none; }
 }

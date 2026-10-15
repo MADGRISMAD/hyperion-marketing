@@ -6,18 +6,9 @@ import { ThemeProvider } from "../components/ThemeProvider"
 import { Analytics } from "@vercel/analytics/react"
 import { UMAMI_URL } from "../lib/traffic.mjs"
 
-// Chakra Petch: titulares y menús de la interfaz táctica. Plex Sans: texto. Plex Mono: lecturas y etiquetas.
+// Schibsted Grotesk (variable): titulares y texto. Plex Mono: etiquetas pequeñas.
 // Van dentro del proyecto (juego latino) para que la compilación no dependa de descargarlas de Google.
-const chakra = localFont({
-  src: [
-    { path: "./fonts/chakra-500.woff2", weight: "500" },
-    { path: "./fonts/chakra-600.woff2", weight: "600" },
-    { path: "./fonts/chakra-700.woff2", weight: "700" },
-  ],
-  variable: "--font-chakra",
-  display: "swap",
-})
-const plexSans = localFont({ src: "./fonts/plex-sans.woff2", weight: "100 700", variable: "--font-plex-sans", display: "swap" })
+const schibsted = localFont({ src: "./fonts/schibsted.woff2", weight: "400 900", variable: "--font-schibsted", display: "swap" })
 const plex = localFont({
   src: [
     { path: "./fonts/plex-mono-400.woff2", weight: "400" },
@@ -45,7 +36,7 @@ export const metadata = {
 }
 
 export const viewport = {
-  themeColor: "#030806",
+  themeColor: "#f5f4f0",
 }
 
 const organizationLd = {
@@ -73,7 +64,7 @@ const organizationLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" suppressHydrationWarning className={`${chakra.variable} ${plexSans.variable} ${plex.variable}`}>
+    <html lang="es" suppressHydrationWarning className={`${schibsted.variable} ${plex.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" disableTransitionOnChange>
