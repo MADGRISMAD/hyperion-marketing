@@ -1,17 +1,11 @@
 "use client"
 import { useState } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import {
   ArrowRight,
   ArrowUpRight,
   Code2,
-  Globe,
-  Mail,
-  Megaphone,
   MessageCircle,
-  Phone,
-  MapPin,
   ShoppingCart,
   Wrench,
   Zap,
@@ -19,31 +13,12 @@ import {
   PenTool,
   Rocket,
   LifeBuoy,
-  Send,
   Loader2,
-  FileText,
-  Database,
-  BarChart3,
-  Bell,
 } from "lucide-react"
 import Navbar, { Logo } from "../components/landing/Navbar"
 import Hero from "../components/landing/Hero"
 import Intro from "../components/landing/Intro"
-import { Parallax, Reveal, CountUp } from "../components/landing/parallax"
-import Sparkle from "../components/landing/Sparkle"
-import {
-  Barcode,
-  ChromeBlob,
-  ChromeRing,
-  ChromeSquiggle,
-  DotsIcon,
-  Glass,
-  LoadingWindow,
-  SmileySticker,
-  StarSticker,
-  WireGlobe,
-  WireTorus,
-} from "../components/landing/Y2K"
+import { Reveal, CountUp } from "../components/landing/parallax"
 import { TienditaMockup, RestauranteMockup, InternshipsMockup, CaresiaMockup, BeHiveMockup, MiInfoMockup } from "../components/landing/Mockups"
 
 // URLs temporales: cuando tengan dominio propio, cambiarlas solo aquí.
@@ -54,39 +29,23 @@ const MIINFO_URL = "https://miinfo.15-235-62-27.sslip.io/"
 
 const WHATSAPP = "https://wa.me/526645798903?text=Hola%20Hyperion%2C%20me%20interesa%20cotizar%20un%20proyecto"
 
-const tech = "font-tech text-[10px] tracking-[0.2em] text-ink uppercase md:text-[11px]"
-const holoBtn =
-  "press group inline-flex items-center justify-center gap-2 rounded-full border border-white/90 bg-holo px-6 py-3.5 font-tech text-[11px] tracking-[0.18em] text-ink uppercase shadow-glass"
-
-// Encabezado tipo revista: número de volumen, título de cromo y nota en vidrio
-function SectionHead({ index, tag, title, accent, aside }) {
+// Encabezado de lámina: número de sección, rótulo y titular. `dark` = sobre la noche (titular en cromo).
+function SectionHead({ index, tag, title, text, dark = false, compact = false }) {
   return (
-    <Reveal className="mb-14">
-      <div className="flex items-center gap-3">
-        <span className={`${tech} rounded-full border border-white/90 bg-glass px-3 py-1 shadow-glass`}>Vol. 10 — {index}</span>
-        <span className={tech}>{tag}</span>
-        <span className="hidden h-px flex-1 bg-white/80 sm:block" />
-        <Sparkle className="twinkle h-6 w-6" />
-        <DotsIcon className="hidden sm:grid" />
-      </div>
-      <div className={`mt-7 grid gap-8 lg:items-end ${aside ? "lg:grid-cols-[1.5fr_1fr]" : ""}`}>
-        <h2 className="font-chrome text-[2.6rem] leading-[0.92] uppercase sm:text-6xl lg:text-7xl">
-          <span className="chrome-3d">{title}</span>
-          {accent && (
-            <span className="mt-4 block">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/90 bg-holo px-4 py-1.5 font-tech text-xs tracking-[0.25em] text-ink shadow-glass md:text-sm">
-                <Sparkle className="h-3.5 w-3.5" /> {accent}
-              </span>
-            </span>
-          )}
+    <Reveal className={`mb-14 grid gap-6 md:mb-20 lg:items-end ${compact ? "" : "lg:grid-cols-[1.4fr_1fr]"}`}>
+      <div>
+        <div className={`spec flex items-center gap-4 ${dark ? "text-paper/50" : "text-ink/50"}`}>
+          <span className="text-coral">§{index}</span>
+          <span className={`h-px w-10 ${dark ? "bg-paper/25" : "bg-ink/25"}`} />
+          <span>{tag}</span>
+        </div>
+        <h2
+          className={`mt-6 font-display text-[2.05rem] leading-[0.95] font-extrabold tracking-[-0.03em] uppercase sm:text-6xl ${compact ? "lg:text-[3.4rem]" : "lg:text-[4.6rem]"} ${dark ? "" : "text-ink"}`}
+        >
+          {dark ? <span className="chrome">{title}</span> : title}
         </h2>
-        {aside && (
-          <Glass className="p-5 md:p-6">
-            <div className={`${tech} mb-2 text-ink/50`}>{"// nota"}</div>
-            <p className="text-ink/75 md:text-lg">{aside}</p>
-          </Glass>
-        )}
       </div>
+      {text && <p className={`max-w-md text-[17px] leading-relaxed lg:justify-self-end ${dark ? "text-paper/65" : "text-ink/70"}`}>{text}</p>}
     </Reveal>
   )
 }
@@ -94,30 +53,20 @@ function SectionHead({ index, tag, title, accent, aside }) {
 /* ───────────────────────── Marquesina ───────────────────────── */
 function Marquee() {
   const items = ["Sistemas a la medida", "Puntos de venta", "Automatizaciones", "Servicio técnico", "Desarrollo web", "Marketing digital"]
-  const row = [...items, ...items, ...items]
-  const Row = ({ speed, chrome }) => (
-    <Parallax speed={speed} axis="x" className="w-full">
-      <div className="-ml-[40%] flex w-max items-center gap-8 whitespace-nowrap">
+  const row = [...items, ...items]
+  return (
+    <div className="overflow-hidden border-y border-white/10 bg-night py-5" aria-hidden="true">
+      <div className="marquee flex w-max items-center whitespace-nowrap">
         {row.map((t, i) => (
-          <span key={i} className="flex items-center gap-8">
-            {chrome ? (
-              <span className="chrome-3d font-chrome text-3xl uppercase md:text-5xl">{t}</span>
-            ) : (
-              <span className="font-tech text-sm tracking-[0.3em] text-ink uppercase md:text-base">{t}</span>
-            )}
-            <Sparkle className={chrome ? "h-7 w-7" : "h-4 w-4"} />
+          <span key={i} className="flex items-center">
+            <span className="px-8 font-display text-2xl font-extrabold uppercase md:text-4xl">
+              <span className="chrome">{t}</span>
+            </span>
+            <span className="relative block h-6 w-6">
+              <span className="glint" style={{ left: "50%", top: "50%", "--s": "26px", "--d": `${(i % 6) * 0.9}s` }} />
+            </span>
           </span>
         ))}
-      </div>
-    </Parallax>
-  )
-  return (
-    <div className="relative z-10 overflow-hidden py-6">
-      <div className="-rotate-1 border-y border-white/80 bg-glass py-5 shadow-glass">
-        <Row speed={-0.6} chrome />
-      </div>
-      <div className="mt-[-4px] rotate-[0.6deg] border-y border-white/80 bg-holo py-3">
-        <Row speed={0.6} />
       </div>
     </div>
   )
@@ -155,92 +104,50 @@ const services = [
   },
 ]
 
-// Ícono dentro de una gota de cromo
-function ChromeIcon({ icon: Icon, size = "h-20 w-20", shape = "drop" }) {
-  return (
-    <span className={`relative flex shrink-0 items-center justify-center ${size}`}>
-      <ChromeBlob shape={shape} className="absolute inset-0 h-full w-full" />
-      <span className="relative flex h-9 w-9 items-center justify-center rounded-full border border-white/90 bg-white/70 backdrop-blur">
-        <Icon className="h-4.5 w-4.5 text-ink" strokeWidth={2.2} />
-      </span>
-    </span>
-  )
-}
-
+// Índice de catálogo: una fila por servicio, que se invierte a tinta al pasar el cursor
 function Services() {
   return (
-    <section id="servicios" className="relative overflow-hidden py-24 md:py-32">
-      <ChromeSquiggle className="pointer-events-none absolute top-24 -right-16 hidden h-28 w-60 rotate-12 lg:block" />
-      <div className="container relative">
+    <section id="servicios" className="grain bg-paper py-24 text-ink md:py-32">
+      <div className="container">
         <SectionHead
           index="01"
           tag="Servicios"
           title="Todo lo que tu negocio necesita"
-          accent="en tecnología"
-          aside="Diseñamos, desarrollamos, instalamos y damos soporte. Un solo equipo que conoce tu negocio y te acompaña de principio a fin."
+          text="Diseñamos, desarrollamos, instalamos y damos soporte. Un solo equipo que conoce tu negocio y te acompaña de principio a fin."
         />
-
-        <div className="grid gap-6 md:grid-cols-2">
-          {services.map((s, i) => {
-            const featured = i === 0
-            return (
-              <Parallax key={s.title} axis="x" entry speed={i % 2 ? 0.16 : -0.16}>
-                <Reveal delay={(i % 2) * 100} className="h-full">
-                  <Link
-                    href={s.href}
-                    className={`press group relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/90 p-7 shadow-glass md:p-8 ${featured ? "bg-holo" : "bg-glass"}`}
-                  >
-                    <WireTorus className="pointer-events-none absolute -right-8 -bottom-6 h-32 w-48 text-white/80" />
-                    <div className="relative mb-6 flex items-start justify-between">
-                      <ChromeIcon icon={s.icon} shape={i % 2 ? "pebble" : "drop"} />
-                      <div className="flex flex-col items-end gap-2">
-                        <span className={`${tech} rounded-full border border-white/90 bg-white/40 px-2.5 py-0.5`}>S/0{i + 1}</span>
-                        <Barcode className="h-6" />
-                      </div>
-                    </div>
-                    <h3 className="relative font-chrome text-3xl leading-none text-ink uppercase md:text-4xl">{s.title}</h3>
-                    <p className="relative mt-3 text-ink/70">{s.text}</p>
-                    <ul className="relative mt-6 flex flex-wrap gap-2">
-                      {s.points.map((p) => (
-                        <li key={p} className="rounded-full border border-white/90 bg-white/45 px-3 py-1.5 text-[13px] font-medium text-ink">
-                          ✦ {p}
-                        </li>
-                      ))}
-                    </ul>
-                    <span className="relative mt-auto flex items-center gap-4 pt-8">
-                      <span className={tech}>Conocer más</span>
-                      <span className="flex flex-1 gap-[3px]" aria-hidden="true">
-                        {Array.from({ length: 14 }, (_, k) => (
-                          <span key={k} className={`h-2.5 flex-1 -skew-x-12 rounded-[1px] ${k < 9 ? "bg-ink/60" : "bg-white/80"}`} />
-                        ))}
-                      </span>
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/90 bg-white/60 transition group-hover:rotate-[-45deg]">
-                        <ArrowRight className="h-4 w-4 text-ink" />
-                      </span>
-                    </span>
-                  </Link>
-                </Reveal>
-              </Parallax>
-            )
-          })}
-        </div>
-
-        <Reveal delay={100} className="mt-6 grid gap-6 md:grid-cols-2">
-          {[
-            { icon: Globe, title: "Desarrollo web", text: "Sitios rápidos y atractivos que convierten visitas en clientes.", href: "/servicios/desarrollo-web" },
-            { icon: Megaphone, title: "Marketing digital", text: "Estrategia, contenido y campañas para que tu negocio se vea.", href: "/servicios/marketing-digital" },
-          ].map(({ icon, title, text, href }) => (
-            <Link key={title} href={href} className="press group block rounded-[22px]">
-              <LoadingWindow title={`${title.toLowerCase().replace(" ", "_")}.exe`} bodyClassName="flex items-center gap-4 p-4">
-                <ChromeIcon icon={icon} size="h-14 w-14" />
-                <div className="flex-1">
-                  <div className="font-chrome text-xl text-ink uppercase">{title}</div>
-                  <div className="text-sm text-ink/65">{text}</div>
-                </div>
-                <ArrowUpRight className="h-5 w-5 text-ink transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </LoadingWindow>
-            </Link>
+        <ul className="border-b border-ink/15">
+          {services.map((s, i) => (
+            <li key={s.title}>
+              <Reveal delay={i * 60}>
+                <Link
+                  href={s.href}
+                  className="group grid gap-3 border-t border-ink/15 py-7 transition-colors duration-200 md:grid-cols-[72px_1.1fr_1.4fr_1fr_40px] md:items-baseline md:gap-8 md:px-4 md:py-9 md:hover:bg-ink md:hover:text-paper"
+                >
+                  <span className="spec text-coral">0{i + 1}</span>
+                  <h3 className="font-display text-2xl leading-tight font-extrabold uppercase md:text-[1.7rem]">{s.title}</h3>
+                  <p className="text-ink/70 transition-colors group-hover:text-current md:group-hover:text-paper/70">{s.text}</p>
+                  <ul className="spec space-y-1.5 text-ink/55 md:group-hover:text-paper/55">
+                    {s.points.map((p) => (
+                      <li key={p}>— {p}</li>
+                    ))}
+                  </ul>
+                  <ArrowUpRight className="hidden h-5 w-5 justify-self-end transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 md:block" />
+                </Link>
+              </Reveal>
+            </li>
           ))}
+        </ul>
+        <Reveal className="spec mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-ink/55">
+          <span>También:</span>
+          <Link href="/servicios/desarrollo-web" className="text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-coral">
+            Desarrollo web
+          </Link>
+          <Link href="/servicios/marketing-digital" className="text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-coral">
+            Marketing digital
+          </Link>
+          <Link href="/servicios/consultoria-it" className="text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-coral">
+            Consultoría IT
+          </Link>
         </Reveal>
       </div>
     </section>
@@ -350,93 +257,67 @@ const products = [
   },
 ]
 
+// Cada producto es una lámina: nombre en cromo, ficha técnica y la captura real en su monitor
 function Products() {
   return (
-    <section id="productos" className="y2k-dots relative overflow-hidden py-24 md:py-32">
-      <div className="container relative">
+    <section id="productos" className="grain bg-night py-24 md:py-32">
+      <div className="container">
         <SectionHead
+          dark
           index="02"
           tag="Productos propios"
           title="Software propio"
-          accent="probado en negocios reales"
-          aside="Además de crear sistemas para nuestros clientes, desarrollamos y operamos nuestras propias plataformas. Lo que aprendemos en ellas lo llevamos a cada proyecto."
+          text="Además de crear sistemas para nuestros clientes, desarrollamos y operamos nuestras propias plataformas. Lo que aprendemos en ellas lo llevamos a cada proyecto."
         />
-
-        {/* Índice rápido */}
-        <Reveal className="mb-20 flex flex-wrap gap-2">
+        <Reveal as="nav" aria-label="Productos" className="spec mb-20 flex flex-wrap gap-x-6 gap-y-3 text-paper/45">
           {products.map((p, i) => (
-            <a
-              key={p.name}
-              href={`#producto-${i + 1}`}
-              className={`press inline-flex items-center gap-2 rounded-full border border-white/90 bg-glass px-4 py-2 shadow-glass ${tech}`}
-            >
-              <span className="text-ink/40">0{i + 1}</span>
-              <span className="h-2.5 w-2.5 rounded-full ring-2 ring-white" style={{ background: p.color }} />
-              {p.name}
+            <a key={p.name} href={`#producto-${i + 1}`} className="transition-colors hover:text-paper">
+              <span className="text-coral">0{i + 1}</span> {p.name}
               {p.tld}
             </a>
           ))}
         </Reveal>
 
-        <div className="space-y-28 md:space-y-36">
+        <div className="space-y-28 md:space-y-40">
           {products.map((p, i) => {
             const flip = i % 2 === 1
             const beta = p.status === "Beta"
             return (
-              <div key={p.name} id={`producto-${i + 1}`} className="grid scroll-mt-28 grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
-                <div className={`min-w-0 ${flip ? "lg:order-2" : ""}`}>
-                  <Reveal>
-                    <Glass className="relative p-7 md:p-9">
-                      <div className="mb-6 flex items-center gap-3">
-                        <span className={`${tech} text-ink/50`}>P/0{i + 1}</span>
-                        <span className={`${tech} rounded-full border border-white/90 px-3 py-1 ${beta ? "bg-white/50" : "bg-holo"}`}>
-                          {beta ? "Beta ✦" : "● En línea"}
-                        </span>
-                        <span className="h-px flex-1 bg-white/80" />
-                        <Barcode className="h-5" />
+              <article key={p.name} id={`producto-${i + 1}`} className="grid scroll-mt-28 items-center gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
+                <Reveal className={`min-w-0 ${flip ? "lg:order-2" : ""}`}>
+                  <div className="spec flex items-center gap-3 text-paper/50">
+                    <span>Lámina 0{i + 1}</span>
+                    <span className="h-px w-8 bg-paper/25" />
+                    <span className="flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full" style={{ background: beta ? "var(--color-apricot)" : "#4ade80" }} />
+                      {beta ? "Beta abierta" : "En línea"}
+                    </span>
+                  </div>
+                  <h3 className="mt-5 font-display text-[1.75rem] leading-none font-extrabold tracking-[-0.03em] uppercase [overflow-wrap:anywhere] sm:text-5xl xl:text-[3.6rem]">
+                    <span className="chrome">
+                      {p.name}
+                      {p.tld}
+                    </span>
+                  </h3>
+                  <p className="mt-6 text-xl font-medium text-paper">{p.tagline}</p>
+                  <p className="mt-4 max-w-xl leading-relaxed text-paper/65">{p.description}</p>
+                  <dl className="mt-8 border-t border-white/10">
+                    {p.features.map((f, k) => (
+                      <div key={f} className="grid grid-cols-[36px_1fr] gap-3 border-b border-white/10 py-3 text-[15px]">
+                        <dt className="spec pt-0.5 text-paper/35">{String(k + 1).padStart(2, "0")}</dt>
+                        <dd className="text-paper/85">{f}</dd>
                       </div>
-                      <h3 className="chrome-3d font-chrome text-[2.6rem] leading-none uppercase [overflow-wrap:anywhere] sm:text-5xl xl:text-6xl">
-                        {p.name}
-                        {p.tld}
-                      </h3>
-                      <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/90 bg-white/50 px-4 py-1.5 font-semibold text-ink">
-                        <span className="h-2.5 w-2.5 rounded-full" style={{ background: p.color }} />
-                        {p.tagline}
-                      </p>
-                      <p className="mt-5 text-lg leading-relaxed text-ink/70">{p.description}</p>
-                      <ul className="mt-6 space-y-2.5">
-                        {p.features.map((f) => (
-                          <li key={f} className="flex items-start gap-3 text-ink/85">
-                            <Sparkle className="mt-1 h-3.5 w-3.5 shrink-0" />
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-                      <a href={p.href} target="_blank" rel="noopener noreferrer" className={`${holoBtn} mt-8`}>
-                        <span className="h-2.5 w-2.5 rounded-full ring-2 ring-white" style={{ background: p.color }} />
-                        {p.cta ?? `Visitar ${p.name}${p.tld}`}
-                        <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                      </a>
-                    </Glass>
-                  </Reveal>
-                </div>
-
-                <div className={`relative min-w-0 ${flip ? "lg:order-1" : ""}`}>
-                  <Parallax speed={0.08} className="pointer-events-none absolute inset-0">
-                    <ChromeRing className="absolute top-[10%] left-[-6%] h-[80%] w-[112%] opacity-90" />
-                    <ChromeBlob
-                      shape={flip ? "pebble" : "drop"}
-                      className={`float absolute -bottom-6 h-20 w-20 ${flip ? "-right-4" : "-left-4"}`}
-                    />
-                  </Parallax>
-                  <Parallax axis="x" entry speed={flip ? -0.22 : 0.22}>
-                    <Reveal delay={150} className="relative">
-                      <p.Mockup />
-                      {beta && <StarSticker lines={["Beta", "abierta"]} className="float absolute -top-12 -right-4 z-10 h-32 w-32" />}
-                    </Reveal>
-                  </Parallax>
-                </div>
-              </div>
+                    ))}
+                  </dl>
+                  <a href={p.href} target="_blank" rel="noopener noreferrer" className="btn-chrome group mt-9">
+                    {p.cta ?? `Visitar ${p.name}${p.tld}`}
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                </Reveal>
+                <Reveal delay={120} className={`min-w-0 ${flip ? "lg:order-1" : ""}`}>
+                  <p.Mockup />
+                </Reveal>
+              </article>
             )
           })}
         </div>
@@ -446,71 +327,63 @@ function Products() {
 }
 
 /* ───────────────────────── Automatizaciones ───────────────────────── */
+// Diagrama de señal, como el de un manual de equipo de audio: cada módulo pasa el dato al siguiente
 function Automation() {
   const nodes = [
-    { icon: ShoppingCart, label: "Nueva venta", meta: "evento" },
-    { icon: Database, label: "Inventario", meta: "se actualiza" },
-    { icon: FileText, label: "Factura", meta: "se genera" },
-    { icon: BarChart3, label: "Reporte diario", meta: "por correo" },
-    { icon: Bell, label: "Aviso a tu celular", meta: "al instante" },
+    ["Nueva venta", "Entrada"],
+    ["Inventario", "Se actualiza"],
+    ["Factura", "Se genera"],
+    ["Reporte diario", "Por correo"],
+    ["Aviso a tu celular", "Al instante"],
   ]
   return (
-    <section id="automatizaciones" className="y2k-grid relative overflow-hidden py-24 md:py-32">
-      <div className="container relative grid items-center gap-16 lg:grid-cols-2">
+    <section id="automatizaciones" className="bg-sunset grain overflow-hidden pt-24 pb-14 [--h:97%] md:pt-32 md:pb-16">
+      <div className="container grid items-center gap-16 lg:grid-cols-2">
         <div>
-          <SectionHead index="03" tag="Automatizaciones" title="Deja que el sistema trabaje" accent="por ti" />
-          <Reveal className="-mt-6">
-            <p className="text-lg text-ink/70">
+          <SectionHead dark compact index="03" tag="Automatizaciones" title="Deja que el sistema trabaje" />
+          <Reveal className="-mt-6 md:-mt-10">
+            <p className="max-w-lg text-[17px] leading-relaxed text-paper/75">
               Conectamos tus herramientas para que la información fluya sola: menos captura manual, menos errores y más tiempo para
               atender a tus clientes.
             </p>
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+            <ul className="spec mt-8 grid gap-x-8 gap-y-3 text-paper/70 sm:grid-cols-2">
               {["Reportes automáticos por correo", "Inventario sincronizado", "Integraciones entre sistemas", "Respaldos y alertas"].map((t) => (
-                <li key={t} className="flex items-center gap-2 rounded-full border border-white/90 bg-glass px-4 py-2.5 text-sm font-medium text-ink shadow-glass">
-                  <Sparkle className="h-3.5 w-3.5 shrink-0" /> {t}
+                <li key={t} className="border-t border-paper/15 pt-3">
+                  {t}
                 </li>
               ))}
             </ul>
           </Reveal>
         </div>
 
-        <div className="relative mx-auto w-full max-w-md">
-          {/* Tubo de cromo que une los pasos */}
-          <svg className="absolute top-8 bottom-8 left-[38px] w-4" aria-hidden="true">
+        <Reveal delay={120} className="relative mx-auto w-full max-w-md">
+          {/* cable de cromo por donde corre la señal */}
+          <svg className="absolute top-6 bottom-6 left-[27px] w-[6px]" aria-hidden="true">
             <defs>
-              <linearGradient id="auto-tube" x1="0" x2="1">
-                <stop offset="0" stopColor="#6c66a6" />
-                <stop offset="0.35" stopColor="#ffffff" />
-                <stop offset="0.6" stopColor="#a8a4d6" />
-                <stop offset="1" stopColor="#3b3577" />
+              <linearGradient id="auto-cable" x1="0" x2="1">
+                <stop offset="0" stopColor="#3d3a4a" />
+                <stop offset="0.45" stopColor="#f4f5f7" />
+                <stop offset="1" stopColor="#6b6f7a" />
               </linearGradient>
             </defs>
-            <rect x="2" y="0" width="12" height="100%" rx="6" fill="url(#auto-tube)" />
-            <line x1="8" y1="0" x2="8" y2="100%" stroke="#fff" strokeWidth="2" className="flow-line" />
+            <rect width="6" height="100%" rx="3" fill="url(#auto-cable)" />
+            <line x1="3" y1="0" x2="3" y2="100%" stroke="#ff5a47" strokeWidth="3" strokeLinecap="round" className="flow-line" />
           </svg>
-          <div className="space-y-4">
-            {nodes.map((n, i) => (
-              <Parallax key={n.label} axis="x" entry speed={i % 2 ? -0.12 : 0.12}>
-                <Reveal delay={i * 90}>
-                  <div
-                    className={`relative flex items-center gap-4 rounded-full border border-white/90 p-2 pr-3 shadow-glass ${i === 0 ? "bg-holo" : "bg-glass"}`}
-                    style={{ marginLeft: `${(i % 2) * 28}px` }}
-                  >
-                    <ChromeIcon icon={n.icon} size="h-14 w-14" shape={i % 2 ? "pebble" : "drop"} />
-                    <span>
-                      <span className="block font-chrome text-lg text-ink uppercase">{n.label}</span>
-                      <span className={`${tech} text-ink/55`}>{n.meta}</span>
-                    </span>
-                    <span className={`${tech} ml-auto flex items-center gap-1.5 rounded-full border border-white/90 bg-white/60 px-2.5 py-1`}>
-                      <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-forest" /> Auto
-                    </span>
-                  </div>
-                </Reveal>
-              </Parallax>
+          <ol className="relative space-y-4">
+            {nodes.map(([label, meta], i) => (
+              <li
+                key={label}
+                className="flex items-center gap-5 rounded-2xl border border-white/10 bg-night/85 p-3 pr-5 backdrop-blur-sm"
+              >
+                <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(180deg,#fff_0%,#cfd3da_45%,#7d828d_52%,#e2e4e8_100%)] shadow-[inset_0_1px_0_#fff,0_0_0_1px_rgba(0,0,0,0.6)]">
+                  <span className="spec text-[10px] text-ink">{i + 1}</span>
+                </span>
+                <span className="flex-1 font-display text-base font-extrabold uppercase md:text-lg">{label}</span>
+                <span className="spec text-paper/45">{meta}</span>
+              </li>
             ))}
-          </div>
-          <StarSticker lines={["100%", "auto"]} className="float absolute -top-16 -right-6 h-28 w-28" />
-        </div>
+          </ol>
+        </Reveal>
       </div>
     </section>
   )
@@ -525,46 +398,36 @@ function About() {
     { n: 1, s: "", label: "Equipo de principio a fin" },
   ]
   return (
-    <section id="nosotros" className="relative overflow-hidden py-24 md:py-32">
-      <div className="container grid items-center gap-14 lg:grid-cols-2">
+    <section id="nosotros" className="grain bg-paper py-24 text-ink md:py-32">
+      <div className="container grid gap-16 lg:grid-cols-2 lg:gap-24 [&>*]:min-w-0">
         <div>
-          <SectionHead index="04" tag="Nosotros" title="10 años construyendo" accent="tecnología que crece" />
-          <Reveal className="-mt-6">
-            <p className="text-lg text-ink/70">
+          <SectionHead compact index="04" tag="Nosotros" title="10 años construyendo" />
+          <Reveal className="-mt-6 space-y-6 md:-mt-10">
+            <p className="max-w-lg text-[17px] leading-relaxed text-ink/75">
               Somos un equipo de desarrollo y soporte en Tijuana, Baja California. Trabajamos de cerca con cada cliente para entender su
               operación y entregar soluciones que realmente se usan.
             </p>
-            <LoadingWindow title="por_que_hyperion.txt" className="mt-8" bodyClassName="flex items-center gap-5 p-5">
-              <Image src="/brand/hyperion-mark.png" alt="" width={273} height={480} className="h-20 w-auto shrink-0" />
-              <div>
-                <div className={`${tech} text-forest`}>¿Por qué &quot;Hyperion&quot;?</div>
-                <p className="mt-1.5 text-sm text-ink/70">
-                  Hyperion es el árbol más alto del mundo. Nos gusta la idea: bases sólidas y crecimiento constante. Así construimos el
-                  software de nuestros clientes.
-                </p>
-              </div>
-            </LoadingWindow>
+            <div className="flex max-w-lg gap-5 border-t border-ink/15 pt-6">
+              <Logo compact className="shrink-0 [&>span:last-child]:hidden" />
+              <p className="text-[15px] leading-relaxed text-ink/70">
+                <strong className="font-bold text-ink">¿Por qué &quot;Hyperion&quot;?</strong> Hyperion es el árbol más alto del mundo. Nos
+                gusta la idea: bases sólidas y crecimiento constante. Así construimos el software de nuestros clientes.
+              </p>
+            </div>
           </Reveal>
         </div>
-        <div className="relative">
-          <SmileySticker className="absolute -top-14 -right-4 z-10 h-28 w-28 md:h-32 md:w-32" />
-          <div className="grid grid-cols-2 gap-4">
-            {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 90}>
-                <Glass className={`relative h-full overflow-hidden p-6 md:p-8 ${i === 0 ? "bg-holo" : ""}`}>
-                  <div className="flex items-center justify-between">
-                    <span className={`${tech} text-ink/50`}>0{i + 1}</span>
-                    <Sparkle className="h-4 w-4" />
-                  </div>
-                  <div className="chrome-3d mt-4 font-chrome text-5xl leading-none md:text-7xl">
-                    <CountUp to={s.n} suffix={s.s} />
-                  </div>
-                  <div className={`${tech} mt-4 text-ink/70`}>{s.label}</div>
-                </Glass>
-              </Reveal>
-            ))}
-          </div>
-        </div>
+        <dl className="grid grid-cols-2 self-end border-t border-l border-ink/15">
+          {stats.map((s, i) => (
+            <Reveal key={s.label} delay={i * 70} className="border-r border-b border-ink/15 p-6 md:p-8">
+              <dd className="font-display text-5xl leading-none font-extrabold tracking-[-0.04em] tabular-nums md:text-7xl">
+                <span className="chrome chrome-on-paper">
+                  <CountUp to={s.n} suffix={s.s} />
+                </span>
+              </dd>
+              <dt className="spec mt-5 text-ink/60">{s.label}</dt>
+            </Reveal>
+          ))}
+        </dl>
       </div>
     </section>
   )
@@ -580,30 +443,24 @@ const steps = [
 
 function Process() {
   return (
-    <section id="proceso" className="relative overflow-hidden py-24 md:py-28">
-      <div className="container relative">
-        <SectionHead index="05" tag="Cómo trabajamos" title="Un proceso claro" accent="sin sorpresas" />
-        <div className="relative grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((s, i) => (
-            <Parallax key={s.title} speed={i % 2 ? -0.05 : 0.05}>
-              <Reveal delay={i * 100} className="h-full">
-                <Glass className="flex h-full flex-col p-6">
-                  <div className="flex items-start justify-between">
-                    <span className="chrome-3d font-chrome text-7xl leading-none">0{i + 1}</span>
-                    <ChromeIcon icon={s.icon} size="h-14 w-14" shape={i % 2 ? "pebble" : "drop"} />
-                  </div>
-                  <h3 className="mt-8 font-chrome text-2xl text-ink uppercase">{s.title}</h3>
-                  <p className="mt-2 text-sm text-ink/65">{s.text}</p>
-                  <span className="mt-auto flex gap-[3px] pt-6" aria-hidden="true">
-                    {Array.from({ length: 4 }, (_, k) => (
-                      <span key={k} className={`h-1.5 flex-1 rounded-full ${k <= i ? "bg-holo" : "bg-white/70"}`} />
-                    ))}
-                  </span>
-                </Glass>
-              </Reveal>
-            </Parallax>
-          ))}
+    <section id="proceso" className="grain bg-paper pb-24 text-ink md:pb-32">
+      <div className="container">
+        <div className="border-t border-ink/15 pt-16 md:pt-24">
+          <SectionHead index="05" tag="Cómo trabajamos" title="Un proceso claro" text="Sin sorpresas: sabes qué sigue, cuánto cuesta y cuándo llega." />
         </div>
+        <ol className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          {steps.map((s, i) => (
+            <Reveal as="li" key={s.title} delay={i * 80}>
+              <div className="flex items-center gap-3">
+                <span className="h-2.5 w-2.5 rounded-full border-2 border-coral" />
+                <span className="h-px flex-1 bg-ink/20" />
+              </div>
+              <div className="spec mt-5 text-coral">Paso 0{i + 1}</div>
+              <h3 className="mt-2 font-display text-2xl font-extrabold uppercase">{s.title}</h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-ink/70">{s.text}</p>
+            </Reveal>
+          ))}
+        </ol>
       </div>
     </section>
   )
@@ -637,146 +494,114 @@ function Contact() {
   }
 
   const field =
-    "w-full rounded-2xl border border-white/90 bg-white/45 px-4 py-3.5 text-ink placeholder:text-ink/40 outline-none transition focus:bg-white/80 focus:shadow-glass"
-  const label = `mb-2 block ${tech}`
-  const quick = needs.slice(0, 4)
+    "w-full rounded-xl border border-white/12 bg-night-2 px-4 py-3.5 text-[16px] text-paper placeholder:text-paper/30 outline-none transition-[border-color] focus:border-coral"
+  const label = "spec mb-2 block text-paper/55"
 
   return (
-    <section id="contacto" className="y2k-dots relative overflow-hidden py-24 md:py-32">
-      <div className="pointer-events-none absolute inset-x-[-30%] bottom-0 h-64" aria-hidden="true">
-        <div className="grid-floor absolute inset-0" />
-      </div>
-      <div className="container relative grid gap-14 lg:grid-cols-5">
-        <div className="lg:col-span-2">
-          <SectionHead index="06" tag="Contacto" title="Cuéntanos de tu proyecto" />
-          <Reveal className="-mt-6">
-            <p className="text-lg text-ink/70">Te respondemos con una propuesta clara y sin compromiso.</p>
-          </Reveal>
-          <Reveal delay={120} className="mt-10 space-y-4">
+    <section id="contacto" className="grain bg-night py-24 md:py-32">
+      <div className="container grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+        <div>
+          <SectionHead dark compact index="06" tag="Contacto" title="Cuéntanos de tu proyecto" />
+          <Reveal className="-mt-6 md:-mt-10">
+            <p className="text-[17px] text-paper/70">Te respondemos con una propuesta clara y sin compromiso.</p>
             <a
               href={WHATSAPP}
               target="_blank"
               rel="noopener noreferrer"
-              className="press group flex items-center gap-4 rounded-full border border-white/90 bg-holo p-2 pr-5 shadow-glass"
+              className="group mt-10 flex items-center gap-4 border-y border-white/10 py-5 transition-colors hover:text-paper"
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#25d366] text-white ring-2 ring-white">
-                <MessageCircle className="h-6 w-6" />
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25d366] text-white">
+                <MessageCircle className="h-5 w-5" />
               </span>
-              <span className="text-ink">
-                <span className="block font-chrome text-lg uppercase">Escríbenos por WhatsApp</span>
-                <span className={`${tech} text-ink/60`}>Respuesta rápida</span>
+              <span className="flex-1">
+                <span className="block font-display text-lg font-extrabold uppercase">Escríbenos por WhatsApp</span>
+                <span className="spec text-paper/45">Respuesta rápida</span>
               </span>
-              <ArrowUpRight className="ml-auto h-5 w-5 text-ink transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="h-5 w-5 text-paper/60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
-            {[
-              { icon: Mail, label: "Email", value: "info@hyperionmkt.com", href: "mailto:info@hyperionmkt.com" },
-              { icon: Phone, label: "Teléfono", value: "+52 664 579 8903", href: "tel:+526645798903" },
-              { icon: MapPin, label: "Ubicación", value: "Tijuana, Baja California, México" },
-            ].map(({ icon, label: l, value, href }) => {
-              const inner = (
-                <>
-                  <ChromeIcon icon={icon} size="h-12 w-12" />
-                  <span>
-                    <span className={`block ${tech} text-ink/50`}>{l}</span>
-                    <span className="font-medium text-ink">{value}</span>
-                  </span>
-                </>
-              )
-              return href ? (
-                <a key={l} href={href} className="flex items-center gap-4 rounded-full p-1.5 transition hover:bg-white/40">
-                  {inner}
-                </a>
-              ) : (
-                <div key={l} className="flex items-center gap-4 p-1.5">
-                  {inner}
+            <dl className="mt-2">
+              {[
+                ["Email", "info@hyperionmkt.com", "mailto:info@hyperionmkt.com"],
+                ["Teléfono", "+52 664 579 8903", "tel:+526645798903"],
+                ["Ubicación", "Tijuana, Baja California, México"],
+              ].map(([l, value, href]) => (
+                <div key={l} className="grid grid-cols-[110px_1fr] items-baseline border-b border-white/10 py-4">
+                  <dt className="spec text-paper/40">{l}</dt>
+                  <dd className="text-paper/90">
+                    {href ? (
+                      <a href={href} className="underline decoration-paper/25 underline-offset-4 hover:decoration-coral">
+                        {value}
+                      </a>
+                    ) : (
+                      value
+                    )}
+                  </dd>
                 </div>
-              )
-            })}
+              ))}
+            </dl>
           </Reveal>
         </div>
 
-        <Reveal delay={150} className="relative lg:col-span-3">
-          <StarSticker lines={["Sin", "compromiso"]} className="float absolute -top-12 -right-4 z-10 h-28 w-28" />
-          <form onSubmit={onSubmit}>
-            <LoadingWindow title="nuevo_proyecto.exe — cargando futuro…" bodyClassName="p-6 md:p-9">
-              <div className="grid gap-5 md:grid-cols-2">
-                <label className="block">
-                  <span className={label}>Nombre</span>
-                  <input name="name" required value={form.name} onChange={onChange} placeholder="Tu nombre" className={field} />
-                </label>
-                <label className="block">
-                  <span className={label}>Email</span>
-                  <input name="email" type="email" required value={form.email} onChange={onChange} placeholder="tu@email.com" className={field} />
-                </label>
-                <label className="block">
-                  <span className={label}>Teléfono (opcional)</span>
-                  <input name="phone" type="tel" value={form.phone} onChange={onChange} placeholder="664 000 0000" className={field} />
-                </label>
-                <div className="block">
-                  <span className={label}>¿Qué necesitas?</span>
-                  <div className="flex flex-wrap gap-2">
-                    {quick.map((n) => (
-                      <button
-                        type="button"
-                        key={n}
-                        onClick={() => setForm({ ...form, need: n })}
-                        className={`rounded-full border border-white/90 px-3 py-1.5 text-xs font-semibold transition ${
-                          form.need === n ? "bg-ink text-white" : "bg-white/45 text-ink hover:bg-holo"
-                        }`}
-                      >
-                        {n}
-                      </button>
-                    ))}
-                    <select
-                      name="need"
-                      value={quick.includes(form.need) ? "" : form.need}
-                      onChange={onChange}
-                      aria-label="Otro servicio"
-                      className={`rounded-full border border-white/90 px-3 py-1.5 text-xs font-semibold outline-none ${
-                        quick.includes(form.need) ? "bg-white/45 text-ink" : "bg-ink text-white"
-                      }`}
-                    >
-                      <option value="" disabled className="bg-white text-ink">
-                        Más…
-                      </option>
-                      {needs.slice(4).map((n) => (
-                        <option key={n} value={n} className="bg-white text-ink">
-                          {n}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <label className="mt-5 block">
-                <span className={label}>Cuéntanos de tu proyecto</span>
-                <textarea
-                  name="message"
-                  required
-                  rows={5}
-                  value={form.message}
-                  onChange={onChange}
-                  placeholder="¿Qué quieres lograr? ¿Qué usas hoy?"
-                  className={`${field} resize-none`}
-                />
+        <Reveal delay={120}>
+          <form onSubmit={onSubmit} className="rounded-[24px] border border-white/10 bg-night-2/60 p-6 md:p-9">
+            <div className="grid gap-5 md:grid-cols-2">
+              <label className="block">
+                <span className={label}>Nombre</span>
+                <input name="name" required value={form.name} onChange={onChange} autoComplete="name" className={field} />
               </label>
-              {status === "error" && (
-                <p className="mt-4 rounded-2xl border border-white/90 bg-[#ffd9e6] px-4 py-3 text-sm text-ink">
-                  No pudimos enviar tu mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.
-                </p>
+              <label className="block">
+                <span className={label}>Email</span>
+                <input name="email" type="email" required value={form.email} onChange={onChange} autoComplete="email" className={field} />
+              </label>
+              <label className="block md:col-span-2">
+                <span className={label}>Teléfono (opcional)</span>
+                <input name="phone" type="tel" value={form.phone} onChange={onChange} autoComplete="tel" className={field} />
+              </label>
+            </div>
+            <fieldset className="mt-6">
+              <legend className={label}>¿Qué necesitas?</legend>
+              <div className="flex flex-wrap gap-2">
+                {needs.map((n) => (
+                  <label
+                    key={n}
+                    className={`cursor-pointer rounded-full border px-3.5 py-2 text-[13px] transition-colors has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-coral ${
+                      form.need === n ? "border-paper bg-paper text-ink" : "border-white/15 text-paper/75 hover:border-white/35"
+                    }`}
+                  >
+                    <input type="radio" name="need" value={n} checked={form.need === n} onChange={onChange} className="sr-only" />
+                    {n}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <label className="mt-6 block">
+              <span className={label}>Cuéntanos de tu proyecto</span>
+              <textarea
+                name="message"
+                required
+                rows={5}
+                value={form.message}
+                onChange={onChange}
+                placeholder="¿Qué quieres lograr? ¿Qué usas hoy?"
+                className={`${field} resize-none`}
+              />
+            </label>
+            {status === "error" && (
+              <p role="alert" className="mt-4 rounded-xl border border-coral/40 bg-coral/10 px-4 py-3 text-sm text-paper">
+                No pudimos enviar tu mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.
+              </p>
+            )}
+            <button type="submit" disabled={status === "sending"} className="btn-chrome mt-8 w-full disabled:opacity-70">
+              {status === "sending" ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" /> Enviando…
+                </>
+              ) : (
+                <>
+                  Enviar mensaje <ArrowRight className="h-4 w-4" />
+                </>
               )}
-              <button type="submit" disabled={status === "sending"} className={`${holoBtn} mt-8 w-full py-4 disabled:opacity-70`}>
-                {status === "sending" ? (
-                  <>
-                    <Loader2 className="h-5 w-5 animate-spin" /> Enviando…
-                  </>
-                ) : (
-                  <>
-                    Enviar mensaje <Send className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </>
-                )}
-              </button>
-            </LoadingWindow>
+            </button>
           </form>
         </Reveal>
       </div>
@@ -787,31 +612,28 @@ function Contact() {
 /* ───────────────────────── Pie de página ───────────────────────── */
 function Footer() {
   const product = (href, name, beta) => (
-    <li key={name} className="flex items-center gap-2">
-      <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-forest">
+    <li key={name}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-paper">
         {name}
       </a>
-      {beta && <span className="rounded-full bg-holo px-2 text-[9px] font-bold">BETA</span>}
+      {beta && <span className="spec ml-2 text-[9px] text-apricot">Beta</span>}
     </li>
   )
-  const linkCls = "hover:text-forest"
+  const linkCls = "transition-colors hover:text-paper"
   return (
-    <footer className="relative overflow-hidden pt-16 pb-8">
-      <div className="pointer-events-none absolute inset-x-[-25%] bottom-0 h-72" aria-hidden="true">
-        <div className="grid-floor absolute inset-0" />
-      </div>
-      <div className="container relative">
-        <Glass className="grid gap-12 p-8 md:grid-cols-[1.4fr_1fr_1fr_auto] md:p-10">
+    <footer className="bg-sunset grain overflow-hidden pt-20 [--h:84%]">
+      <div className="container">
+        <div className="grid gap-12 border-b border-white/10 pb-14 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Logo />
-            <p className="mt-5 max-w-sm text-ink/65">
+            <Logo chrome />
+            <p className="mt-5 max-w-sm text-paper/60">
               10 años desarrollando sistemas a la medida, puntos de venta, automatizaciones y dando servicio técnico a negocios en Tijuana y
               todo México.
             </p>
           </div>
           <div>
-            <h4 className={`${tech} mb-4`}>[ Productos ]</h4>
-            <ul className="space-y-2.5 text-sm text-ink/75">
+            <h4 className="spec mb-4 text-paper/40">Productos</h4>
+            <ul className="space-y-2.5 text-sm text-paper/70">
               {product("https://mitiendita.software", "Mitiendita")}
               {product(MIRESTAURANTE_URL, "Mirestaurante", true)}
               {product("https://internships.gg", "internships.gg")}
@@ -821,8 +643,8 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className={`${tech} mb-4`}>[ Servicios ]</h4>
-            <ul className="space-y-2.5 text-sm text-ink/75">
+            <h4 className="spec mb-4 text-paper/40">Servicios</h4>
+            <ul className="space-y-2.5 text-sm text-paper/70">
               <li><Link href="/servicios/sistemas-a-medida" className={linkCls}>Sistemas a la medida</Link></li>
               <li><Link href="#productos" className={linkCls}>Puntos de venta</Link></li>
               <li><Link href="#automatizaciones" className={linkCls}>Automatizaciones</Link></li>
@@ -830,26 +652,22 @@ function Footer() {
               <li><Link href="/servicios/desarrollo-web" className={linkCls}>Desarrollo web</Link></li>
             </ul>
           </div>
-          <div className="hidden flex-col items-center justify-between gap-4 rounded-2xl border border-white/90 bg-white/40 px-4 py-5 md:flex">
-            <span className={`${tech} [writing-mode:vertical-rl] rotate-180`}>Hyperion</span>
-            <Barcode className="h-14 rotate-90" />
-            <WireGlobe className="h-5 w-5 text-ink" />
-          </div>
-        </Glass>
+        </div>
 
-        {/* Nombre gigante que sube un poco con el scroll */}
-        <Parallax speed={-0.12} className="relative mt-14 select-none">
-          <ChromeRing className="pointer-events-none absolute top-[5%] left-[-3%] h-[90%] w-[106%]" />
-          <div className="chrome-3d relative text-center font-chrome text-[17vw] leading-[0.9] uppercase xl:text-[14rem]" aria-hidden="true">
-            Hyperion
+        {/* El nombre en cromo, recortado por el borde inferior como un letrero al atardecer */}
+        <div className="relative mt-10 select-none" aria-hidden="true">
+          <div className="text-center font-display text-[12.4vw] leading-[0.8] font-extrabold tracking-[-0.05em] uppercase xl:text-[12.5rem]">
+            <span className="chrome">Hyperion</span>
           </div>
-        </Parallax>
+          <span className="glint" style={{ left: "13%", top: "16%", "--s": "70px" }} />
+          <span className="glint" style={{ left: "82%", top: "62%", "--s": "40px", "--d": "2.6s" }} />
+        </div>
 
-        <div className={`${tech} mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/70 pt-6 text-ink/60 md:flex-row`}>
+        <div className="spec flex flex-col items-center justify-between gap-4 py-8 text-paper/45 md:flex-row">
           <p>© {new Date().getFullYear()} Hyperion Software · Tijuana, B.C.</p>
           <div className="flex items-center gap-6">
-            <Link href="/trafico" className="hover:text-ink">Tráfico de nuestros sitios</Link>
-            <a href="mailto:info@hyperionmkt.com" className="hover:text-ink">info@hyperionmkt.com</a>
+            <Link href="/trafico" className="hover:text-paper">Tráfico de nuestros sitios</Link>
+            <a href="mailto:info@hyperionmkt.com" className="hover:text-paper">info@hyperionmkt.com</a>
           </div>
         </div>
       </div>
@@ -859,7 +677,7 @@ function Footer() {
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen text-ink">
+    <div className="relative min-h-screen">
       <Intro />
       <Navbar />
       <main>
@@ -878,9 +696,9 @@ export default function Home() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Escríbenos por WhatsApp"
-        className="press fixed right-5 bottom-5 z-50 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-[#25d366] text-white shadow-glass"
+        className="fixed right-5 bottom-5 z-50 flex h-13 w-13 items-center justify-center rounded-full bg-[#25d366] text-white shadow-[0_0_0_3px_#0b0a0d,0_0_0_4px_rgba(255,255,255,0.35),0_12px_30px_-8px_rgba(0,0,0,0.7)] transition-transform active:scale-95"
       >
-        <MessageCircle className="h-7 w-7" />
+        <MessageCircle className="h-6 w-6" />
       </a>
     </div>
   )

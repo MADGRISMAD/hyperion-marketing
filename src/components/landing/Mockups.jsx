@@ -1,126 +1,50 @@
-// Ilustraciones de interfaz para los productos.
+// Capturas reales de cada producto, montadas en un monitor de bisel metálico.
 import Image from "next/image"
 
-// Ventana estilo sistema operativo Y2K: barra de título, botones cuadrados y sombra dura.
-function Window({ url, children, accent = "#dcd4ff" }) {
+// Bisel de aluminio con pantalla oscura, foco de encendido del color del producto y número de modelo grabado.
+function Monitor({ model, color, children }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-ink/15 bg-white shadow-hard-lg">
-      <div className="flex items-center gap-3 border-b border-ink/10 px-3 py-2" style={{ background: accent }}>
-        <span className="flex gap-1.5" aria-hidden="true">
-          <span className="h-3 w-3 rounded-[3px] border border-ink/15 bg-white" />
-          <span className="h-3 w-3 rounded-[3px] border border-ink/15 bg-white" />
-          <span className="h-3 w-3 rounded-[3px] border border-ink/15 bg-ink" />
-        </span>
-        <div className="flex-1 truncate rounded-md border border-ink/15 bg-white px-2.5 py-0.5 font-mono text-[11px] tracking-wide text-ink">
-          ▸ {url}
-        </div>
-      </div>
-      {children}
-    </div>
+    <figure className="rounded-[22px] bg-[linear-gradient(180deg,#f3f4f6_0%,#c7cbd3_48%,#8d939e_52%,#d3d6dc_100%)] p-[10px] shadow-[inset_0_1px_0_#fff,inset_0_-1px_0_rgba(0,0,0,0.35),0_0_0_1px_rgba(0,0,0,0.6),0_40px_80px_-30px_rgba(0,0,0,0.9)] md:p-3.5">
+      <div className="overflow-hidden rounded-[12px] bg-black ring-1 ring-black">{children}</div>
+      <figcaption className="flex items-center justify-between px-2 pt-2.5 pb-0.5 font-mono text-[10px] tracking-[0.2em] text-[#4b4f58] uppercase">
+        <span>Hyperion · {model}</span>
+        <span className="h-1.5 w-1.5 rounded-full shadow-[0_0_8px_currentColor]" style={{ background: color, color }} aria-hidden="true" />
+      </figcaption>
+    </figure>
   )
 }
 
-export function TienditaMockup() {
-  return (
-    <div className="relative pt-10 pb-6">
-      {/* Página de inicio de Mitiendita al fondo */}
-      <div className="absolute top-0 -left-4 w-[62%] -rotate-6 overflow-hidden rounded-xl border border-ink/15 shadow-hard sm:-left-8">
-        <Image src="/productos/mitiendita-landing.webp" alt="" width={2000} height={1155} sizes="(min-width: 1024px) 380px, 60vw" className="h-auto w-full" />
-      </div>
-      {/* Sistema real: pantalla de venta */}
-      <div className="relative ml-auto w-[92%]">
-        <Window url="mitiendita" accent="#f2a33a">
-          <Image
-            src="/productos/mitiendita-app.webp"
-            alt="Pantalla de venta del punto de venta Mitiendita"
-            width={2000}
-            height={1161}
-            sizes="(min-width: 1024px) 560px, 92vw"
-            className="h-auto w-full"
-          />
-        </Window>
-      </div>
-      <div className="float absolute -bottom-1 left-2 flex items-center gap-2 rounded-full border border-ink/15 bg-white px-4 py-2 font-mono text-[11px] font-bold tracking-wide text-ink uppercase shadow-hard sm:left-6">
-        <span className="h-2 w-2 rounded-full bg-forest" /> Venta guardada en la nube
-      </div>
-      <div className="float absolute top-2 right-2 flex h-14 w-14 items-center justify-center rounded-full border border-ink/15 bg-holo font-display text-sm font-bold text-ink shadow-hard [animation-delay:1.5s]">
-        +$22
-      </div>
-    </div>
-  )
-}
+const shot = (src, alt, w, h) => (
+  <Image src={src} alt={alt} width={w} height={h} sizes="(min-width: 1024px) 600px, 92vw" className="h-auto w-full" />
+)
 
-export function RestauranteMockup() {
-  return (
-    <Window url="mirestaurante" accent="#c8341b">
-      <Image
-        src="/productos/mirestaurante-landing.webp"
-        alt="Pase de cocina y mapa de mesas de Mirestaurante"
-        width={2000}
-        height={1158}
-        sizes="(min-width: 1024px) 560px, 92vw"
-        className="h-auto w-full"
-      />
-    </Window>
-  )
-}
-
-export function InternshipsMockup() {
-  return (
-    <Window url="internships.gg" accent="#10b981">
-      <Image
-        src="/productos/internships-landing.png"
-        alt="Página de inicio de internships.gg"
-        width={1440}
-        height={900}
-        sizes="(min-width: 1024px) 560px, 92vw"
-        className="h-auto w-full"
-      />
-    </Window>
-  )
-}
-
-export function CaresiaMockup() {
-  return (
-    <Window url="caresia" accent="#2a5d9f">
-      <Image
-        src="/productos/caresia-landing.webp"
-        alt="Agenda de citas de Caresia, software para clínicas dentales y consultorios médicos"
-        width={2000}
-        height={1159}
-        sizes="(min-width: 1024px) 560px, 92vw"
-        className="h-auto w-full"
-      />
-    </Window>
-  )
-}
-
-export function BeHiveMockup() {
-  return (
-    <Window url="behive" accent="#b45309">
-      <Image
-        src="/productos/behive-landing.webp"
-        alt="Lista de tickets de BeHive, mesa de ayuda profesional con precio en pesos"
-        width={2000}
-        height={1163}
-        sizes="(min-width: 1024px) 560px, 92vw"
-        className="h-auto w-full"
-      />
-    </Window>
-  )
-}
-
-export function MiInfoMockup() {
-  return (
-    <Window url="miinfo" accent="#1f3a5f">
-      <Image
-        src="/productos/miinfo-landing.webp"
-        alt="Página de inicio de Mi Info con una tarjeta de presentación de ejemplo"
-        width={2000}
-        height={1160}
-        sizes="(min-width: 1024px) 560px, 92vw"
-        className="h-auto w-full"
-      />
-    </Window>
-  )
-}
+export const TienditaMockup = () => (
+  <Monitor model="HY-01" color="#e8750c">
+    {shot("/productos/mitiendita-app.webp", "Pantalla de venta del punto de venta Mitiendita", 2000, 1161)}
+  </Monitor>
+)
+export const RestauranteMockup = () => (
+  <Monitor model="HY-02" color="#c8341b">
+    {shot("/productos/mirestaurante-landing.webp", "Pase de cocina y mapa de mesas de Mirestaurante", 2000, 1158)}
+  </Monitor>
+)
+export const InternshipsMockup = () => (
+  <Monitor model="HY-03" color="#10b981">
+    {shot("/productos/internships-landing.png", "Página de inicio de internships.gg", 1440, 900)}
+  </Monitor>
+)
+export const CaresiaMockup = () => (
+  <Monitor model="HY-04" color="#2a5d9f">
+    {shot("/productos/caresia-landing.webp", "Agenda de citas de Caresia, software para clínicas dentales y consultorios médicos", 2000, 1159)}
+  </Monitor>
+)
+export const MiInfoMockup = () => (
+  <Monitor model="HY-05" color="#1f3a5f">
+    {shot("/productos/miinfo-landing.webp", "Página de inicio de Mi Info con una tarjeta de presentación de ejemplo", 2000, 1160)}
+  </Monitor>
+)
+export const BeHiveMockup = () => (
+  <Monitor model="HY-06" color="#b45309">
+    {shot("/productos/behive-landing.webp", "Lista de tickets de BeHive, mesa de ayuda profesional con precio en pesos", 2000, 1163)}
+  </Monitor>
+)

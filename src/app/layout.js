@@ -1,16 +1,15 @@
 import React from "react"
 import Script from "next/script"
-import { Unbounded, Manrope, Space_Mono, Tilt_Warp, Michroma } from "next/font/google"
+import { Unbounded, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google"
 import "../app/globals.css"
 import { ThemeProvider } from "../components/ThemeProvider"
 import { Analytics } from "@vercel/analytics/react"
 import { UMAMI_URL } from "../lib/traffic.mjs"
 
-const unbounded = Unbounded({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-unbounded", display: "swap" })
-const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-space-mono", display: "swap" })
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" })
-const tiltWarp = Tilt_Warp({ subsets: ["latin"], variable: "--font-tilt-warp", display: "swap" })
-const michroma = Michroma({ subsets: ["latin"], weight: "400", variable: "--font-michroma", display: "swap" })
+// Unbounded: titulares de cromo. Plex Sans: texto. Plex Mono: fichas técnicas.
+const unbounded = Unbounded({ subsets: ["latin"], weight: ["500", "800"], variable: "--font-unbounded", display: "swap" })
+const plexSans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-plex-sans", display: "swap" })
+const plex = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-plex", display: "swap" })
 
 export const metadata = {
   metadataBase: new URL("https://hyperionmkt.com"),
@@ -30,7 +29,7 @@ export const metadata = {
 }
 
 export const viewport = {
-  themeColor: "#d9d3f8",
+  themeColor: "#0b0a0d",
 }
 
 const organizationLd = {
@@ -58,7 +57,7 @@ const organizationLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" suppressHydrationWarning className={`${unbounded.variable} ${manrope.variable} ${spaceMono.variable} ${tiltWarp.variable} ${michroma.variable}`}>
+    <html lang="es" suppressHydrationWarning className={`${unbounded.variable} ${plexSans.variable} ${plex.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" disableTransitionOnChange>

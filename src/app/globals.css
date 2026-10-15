@@ -1,66 +1,48 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans), "Hiragino Sans", "Yu Gothic", ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-unbounded), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-space-mono), ui-monospace, SFMono-Regular, monospace;
-  --font-chrome: var(--font-tilt-warp), var(--font-unbounded), ui-sans-serif, sans-serif;
-  --font-tech: var(--font-michroma), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
+  --font-chrome: var(--font-unbounded), ui-sans-serif, sans-serif;
+  --font-tech: var(--font-plex), ui-monospace, monospace;
 
-  /* Tema claro: "ink" son fondos, "fog" es el color de texto */
+  /* Páginas secundarias (servicios, tráfico): tema claro de siempre */
   --color-ink-950: #ffffff;
   --color-ink-900: #f6f7f2;
   --color-ink-800: #eceee6;
   --color-ink-700: #dfe2d8;
   --color-fog: #0b1a12;
-
-  /* Marca Hyperion Software (verdes del logo) */
   --color-brand: #1e6b35;
   --color-volt: #0f4d3a;
   --color-aqua: #15803d;
 
-  /* Estilo Y2K cromado: lavanda, vidrio y holográfico */
-  --color-paper: #dcd7f7;
-  --color-ink: #1f1a4d;
-  --color-forest: #6a4cf0;
-  --color-pine: #3a2c99;
-  --color-lime: #e4ebff;
-  --color-chrome: #e9e8f6;
-}
-
-@utility bg-holo {
-  background-color: #dcd4ff;
-  background-image: linear-gradient(115deg, #c6efff 0%, #d8c8ff 32%, #ffd3f0 56%, #cddcff 80%, #c9fff1 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
-}
-@utility bg-glass {
-  background-color: rgba(255, 255, 255, 0.36);
-  background-image: linear-gradient(160deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.12));
-  backdrop-filter: blur(14px) saturate(1.4);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  /* Portada: ilustración aerografiada de cromo (Hajime Sorayama) sobre catálogo japonés de los 80 */
+  --color-night: #0b0a0d; /* fondo de las láminas oscuras */
+  --color-night-2: #16131b; /* paneles sobre la noche */
+  --color-paper: #ece8e1; /* papel del catálogo */
+  --color-ink: #121015; /* texto sobre papel */
+  --color-coral: #ff5a47; /* laca roja: el único acento */
+  --color-apricot: #ffb27a; /* reflejo cálido del horizonte */
+  --color-steel: #a7aebb;
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--color-paper);
+  background: var(--color-night);
 }
 
 body {
-  background:
-    radial-gradient(900px 700px at 10% 0%, #f4ecff 0%, transparent 60%),
-    radial-gradient(900px 700px at 95% 25%, #bfd0ff 0%, transparent 60%),
-    radial-gradient(800px 600px at 20% 80%, #e9d6ff 0%, transparent 60%),
-    linear-gradient(180deg, #d9d3f8 0%, #c8c9f4 50%, #dcd3f8 100%);
-  background-attachment: fixed;
-  color: var(--color-ink);
+  background: var(--color-night);
+  color: var(--color-paper);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--color-lime);
-  color: var(--color-ink);
+  background: var(--color-coral);
+  color: #fff;
 }
 
 .container {
@@ -77,121 +59,160 @@ body {
   }
 }
 
-/* ── Y2K cromado: puntos de luz, cuadrícula, cromo y vidrio ── */
-.y2k-dots {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1.4px);
-  background-size: 18px 18px;
-}
-.y2k-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-/* Piso de cuadrícula en perspectiva, como un horizonte digital */
-.grid-floor {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.7) 1px, transparent 1px);
-  background-size: 56px 56px;
-  transform: perspective(420px) rotateX(62deg);
-  transform-origin: 50% 100%;
-  mask-image: linear-gradient(to top, #000 10%, transparent 85%);
-  -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 85%);
-}
-/* Texto cromado: degradado metálico recortado al texto, con canto claro y sombra violeta */
-.text-outline,
-.text-chrome {
-  color: transparent;
-  background-image: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #d9d6f2 20%,
-    #7a74b4 44%,
-    #f6f5ff 53%,
-    #b3afdc 70%,
-    #6c66a6 86%,
-    #e9e7ff 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.9)) drop-shadow(0 1.5px 0 rgba(58, 44, 153, 0.55))
-    drop-shadow(0 10px 18px rgba(58, 44, 153, 0.28));
-}
-/* Cromo líquido 3D (títulos del póster): horizonte oscuro a media altura, canto blanco y extrusión violeta */
-.chrome-3d {
-  color: transparent;
-  background-image: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #f1f0ff 16%,
-    #a8a4d6 34%,
-    #3b3577 49%,
-    #8d88c6 54%,
-    #ffffff 66%,
-    #d9d6f5 80%,
-    #7b75b8 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  filter: drop-shadow(0 -1px 0 #ffffff) drop-shadow(0 1px 0 #c9c4f2) drop-shadow(0 2px 0 #a39de0) drop-shadow(0 3px 0 #7f78c6)
-    drop-shadow(0 4px 0 #5c55a6) drop-shadow(0 14px 22px rgba(40, 25, 120, 0.45));
-}
-.shadow-glass {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
-    0 20px 50px -24px rgba(58, 44, 153, 0.55);
-}
-.text-holo {
-  color: transparent;
-  background-image: linear-gradient(100deg, #7d5cff, #3fa4ff 35%, #ff6fd2 70%, #7d5cff);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-/* Sombras suaves con brillo interior (vidrio) */
-.shadow-hard {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 10px 30px -12px rgba(58, 44, 153, 0.45);
-}
-.shadow-hard-lg {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    0 24px 60px -20px rgba(58, 44, 153, 0.5);
-}
-/* Botón o tarjeta que flota al pasar el cursor */
-.press {
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
-}
-.press:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    0 18px 40px -12px rgba(106, 76, 240, 0.55);
-}
-.press:active {
-  transform: translateY(0) scale(0.98);
+/* ── Atardecer aerografiado: cielo violeta, horizonte duro y suelo oscuro ── */
+/* La altura del horizonte se ajusta por sección con [--h:60%] */
+.bg-sunset {
+  background:
+    radial-gradient(60% 30% at 62% var(--h, 74%), rgba(255, 178, 122, 0.55), transparent 70%),
+    linear-gradient(
+      180deg,
+      #0b0a0d 0%,
+      #1a1028 calc(var(--h, 74%) - 52%),
+      #44193f calc(var(--h, 74%) - 30%),
+      #a3344f calc(var(--h, 74%) - 12%),
+      #ff7457 calc(var(--h, 74%) - 3%),
+      #ffc08d var(--h, 74%),
+      #24151f calc(var(--h, 74%) + 0.3%),
+      #120d14 calc(var(--h, 74%) + 8%),
+      #0b0a0d 100%
+    );
 }
 
-/* Destellos de 4 puntas */
-.twinkle {
-  animation: twinkle 3.2s ease-in-out infinite;
+/* Grano de impresión: quita lo "digital" a los degradados */
+.grain {
+  position: relative;
+  isolation: isolate;
 }
-@keyframes twinkle {
-  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
-  50% { transform: scale(0.7) rotate(25deg); opacity: 0.65; }
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.grain > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Cromo: cielo frío arriba, horizonte oscuro a media altura y suelo cálido abajo ── */
+.chrome {
+  color: transparent;
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #eef1f7 16%,
+    #b6c0d1 38%,
+    #59607a 47%,
+    #17121d 50%,
+    #3a1b2c 53%,
+    #c4485a 62%,
+    #ff9a74 74%,
+    #ffdcb4 88%,
+    #fff6ea 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.35)) drop-shadow(0 2px 0 #000);
+}
+/* Sobre papel el canto se oscurece para que el metal "pese" */
+.chrome-on-paper {
+  filter: drop-shadow(0 1px 0 #fff) drop-shadow(0 2px 0 #2c2530) drop-shadow(0 3px 0 #120e15);
+}
+/* Logo en cromo: el PNG del logo funciona como molde */
+.chrome-mask {
+  background: linear-gradient(180deg, #ffffff 0%, #c9d0dc 40%, #3d3a4a 50%, #c4485a 60%, #ffb27a 78%, #fff1e0 100%);
+  -webkit-mask: var(--mask) center / contain no-repeat;
+  mask: var(--mask) center / contain no-repeat;
+}
+
+/* ── Destello de 4 puntas: el brillo que deja el aerógrafo donde el cromo refleja una luz ── */
+.glint {
+  position: absolute;
+  width: var(--s, 34px);
+  height: var(--s, 34px);
+  translate: -50% -50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(closest-side, #fff 0 8%, rgba(255, 236, 214, 0.55) 16%, transparent 42%),
+    linear-gradient(90deg, transparent, #fff 50%, transparent) center / 100% 1.5px no-repeat,
+    linear-gradient(0deg, transparent, #fff 50%, transparent) center / 1.5px 100% no-repeat;
+  animation: glint 5.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  animation-delay: var(--d, 0s);
+}
+@keyframes glint {
+  0%, 70%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  80% { transform: scale(0.55) rotate(18deg); opacity: 0.7; }
+}
+
+/* ── Botón de cromo cepillado, como las teclas de un equipo de audio ── */
+.btn-chrome {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  padding: 0.95rem 1.6rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #121015;
+  background: linear-gradient(180deg, #ffffff 0%, #e4e7ec 44%, #a9afba 50%, #d9dce2 72%, #f4f5f7 100%);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(0, 0, 0, 0.55),
+    0 10px 24px -10px rgba(0, 0, 0, 0.7);
+  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), filter 160ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-chrome:hover {
+    filter: brightness(1.06);
+  }
+}
+.btn-chrome:active {
+  transform: translateY(1px) scale(0.98);
+  background: linear-gradient(180deg, #c9cdd5 0%, #eef0f3 55%, #ffffff 100%);
+}
+.btn-chrome:focus-visible,
+.btn-line:focus-visible {
+  outline: 2px solid var(--color-coral);
+  outline-offset: 3px;
+}
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.95rem 0.25rem;
+  border-bottom: 1px solid currentColor;
+  transition: color 160ms ease;
+}
+
+/* Etiqueta de ficha técnica */
+.spec {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 /* Revelado al hacer scroll */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .reveal.is-visible {
   opacity: 1;
@@ -199,26 +220,11 @@ body {
 }
 
 .marquee {
-  animation: marquee 38s linear infinite;
+  animation: marquee 48s linear infinite;
 }
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
-}
-
-.float {
-  animation: float 6s ease-in-out infinite;
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-.spin-slow {
-  animation: spin-slow 18s linear infinite;
-}
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
 }
 
 .blink {
@@ -228,30 +234,13 @@ body {
   50% { opacity: 0; }
 }
 
-.scroll-cue {
-  animation: scroll-cue 2s ease-in-out infinite;
-}
-@keyframes scroll-cue {
-  0% { transform: translateY(0); opacity: 0; }
-  30% { opacity: 1; }
-  100% { transform: translateY(12px); opacity: 0; }
-}
-
-/* Línea de flujo animada (automatizaciones) */
+/* Señal que corre por el cable (automatizaciones) */
 .flow-line {
-  stroke-dasharray: 6 8;
-  animation: flow 1.2s linear infinite;
+  stroke-dasharray: 2 14;
+  animation: flow 1.4s linear infinite;
 }
 @keyframes flow {
-  to { stroke-dashoffset: -28; }
-}
-
-.pulse-dot {
-  animation: pulse-dot 2s ease-out infinite;
-}
-@keyframes pulse-dot {
-  0% { box-shadow: 0 0 0 0 rgba(106, 76, 240, 0.5); }
-  100% { box-shadow: 0 0 0 12px rgba(106, 76, 240, 0); }
+  to { stroke-dashoffset: -32; }
 }
 
 /* ── Animación de entrada del logo ── */
@@ -272,7 +261,7 @@ html.intro-active body {
 .intro-letter {
   display: inline-block;
   transform: translateY(110%);
-  animation: intro-letter 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: intro-letter 0.55s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 @keyframes intro-letter {
   to { transform: translateY(0); }
@@ -282,19 +271,17 @@ html.intro-active body {
   animation-fill-mode: both;
   will-change: transform, clip-path;
 }
-/* Barras: suben desde su base como una gráfica */
 .logo-bar {
   transform-origin: 50% 100%;
   animation: logo-bar 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) both;
 }
 .logo-bar-top {
-  transform-origin: 50% 68.4%; /* la barrita superior "flota": su base está a 68% de altura */
+  transform-origin: 50% 68.4%;
 }
 @keyframes logo-bar {
   from { transform: scaleY(0); }
   to { transform: scaleY(1); }
 }
-/* Árbol: crece desde la raíz, se estira un poco y se mece al terminar */
 .logo-tree {
   transform-origin: 50% 100%;
   animation: logo-tree 1.15s cubic-bezier(0.2, 0.8, 0.25, 1) 0.55s both;
@@ -306,7 +293,6 @@ html.intro-active body {
   90% { transform: rotate(0.8deg); }
   100% { clip-path: inset(0 0 0 0); transform: none; }
 }
-/* Flecha: se dibuja en diagonal, de la cola a la punta */
 .logo-arrow {
   animation: logo-arrow 0.55s cubic-bezier(0.7, 0, 0.2, 1) 1.45s both;
 }
@@ -320,20 +306,18 @@ html.intro-active body {
     transform: none;
   }
 }
-/* Destello en la punta de la flecha */
 .logo-spark {
-  animation: logo-spark 0.7s ease-out 1.9s both;
+  animation: logo-spark 0.8s ease-out 1.9s both;
 }
 @keyframes logo-spark {
-  0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
-  60% { transform: translate(-50%, -50%) scale(1.15) rotate(70deg); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(0.2) rotate(110deg); opacity: 0; }
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  55% { transform: scale(1.2) rotate(45deg); opacity: 1; }
+  100% { transform: scale(0.3) rotate(90deg); opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .marquee, .float, .scroll-cue, .flow-line, .pulse-dot, .spin-slow, .blink, .twinkle { animation: none; }
+  .marquee, .flow-line, .blink, .glint { animation: none; }
   .logo-part, .logo-spark { animation: none; }
-  .press, .press:hover { transition: none; transform: none; }
 }

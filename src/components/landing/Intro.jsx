@@ -99,29 +99,29 @@ export default function Intro() {
 
       {/* Fondo que se desvanece mientras el logo vuela */}
       <div
-        className="y2k-dots absolute inset-0 bg-paper transition-opacity duration-700"
+        className="bg-sunset absolute inset-0 transition-opacity duration-700"
         style={{ opacity: flying ? 0 : 1, transitionDelay: flying ? "250ms" : "0ms" }}
       />
 
       <div className={`absolute inset-0 transition-opacity duration-300 ${flying ? "opacity-0" : "opacity-100"}`}>
-        <div className="absolute top-5 left-5 font-tech text-[10px] tracking-[0.2em] text-ink/60 uppercase md:top-8 md:left-8">
+        <div className="spec absolute top-5 left-5 text-paper/50 md:top-8 md:left-8">
           hyperion_software.exe
         </div>
-        <div className="absolute top-5 right-5 font-tech text-[10px] tracking-[0.2em] text-ink/60 uppercase md:top-8 md:right-8">
+        <div className="spec absolute top-5 right-5 text-paper/50 md:top-8 md:right-8">
           Tijuana · MX
         </div>
         <div className="absolute inset-x-5 bottom-6 md:inset-x-8 md:bottom-8">
-          <div className="mb-2 flex items-end justify-between font-mono text-ink uppercase">
-            <span className="text-[11px] tracking-widest text-ink/60">
+          <div className="mb-3 flex items-end justify-between font-mono uppercase">
+            <span className="text-[11px] tracking-widest text-paper/55">
               Cargando<span className="blink">_</span>
             </span>
-            <span className="chrome-3d font-chrome text-5xl md:text-7xl">
+            <span className="chrome font-display text-5xl font-extrabold md:text-7xl">
               <span ref={counter}>000</span>
-              <span className="text-forest">%</span>
+              %
             </span>
           </div>
-          <div className="h-3 overflow-hidden rounded-full border border-white/90 bg-white/50 shadow-glass">
-            <div ref={bar} className="h-full origin-left bg-holo" style={{ transform: "scaleX(0)" }} />
+          <div className="h-px bg-paper/15">
+            <div ref={bar} className="h-full origin-left bg-coral" style={{ transform: "scaleX(0)" }} />
           </div>
         </div>
       </div>
@@ -131,32 +131,27 @@ export default function Intro() {
           {/* El logo se arma por capas: barras → árbol → flecha (ver globals.css) */}
           <div className="relative aspect-[273/480] h-[170px] md:h-[230px]">
             {LAYERS.map(([src, cls, delay]) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              // cada pieza del logo es un molde pintado en cromo
+              <span
                 key={src}
-                src={`/brand/parts/${src}.png`}
-                alt=""
-                width={273}
-                height={480}
-                fetchPriority="high"
-                className={`logo-part absolute inset-0 h-full w-full ${cls}`}
-                style={delay ? { animationDelay: delay } : undefined}
+                className={`chrome-mask logo-part absolute inset-0 h-full w-full ${cls}`}
+                style={{ "--mask": `url(/brand/parts/${src}.png)`, ...(delay ? { animationDelay: delay } : {}) }}
               />
             ))}
-            <svg viewBox="0 0 24 24" className="logo-spark absolute top-[27%] left-[99%] h-9 w-9 md:h-11 md:w-11" aria-hidden="true">
-              <path d="M12 0 L14.2 9.8 L24 12 L14.2 14.2 L12 24 L9.8 14.2 L0 12 L9.8 9.8 Z" fill="#dcd4ff" stroke="#1f1a4d" strokeWidth="1.2" />
-            </svg>
+            <span className="absolute top-[27%] left-[99%]">
+              <span className="logo-spark glint block" style={{ "--s": "64px" }} />
+            </span>
           </div>
         </div>
         <div className={`mt-6 text-center transition-opacity duration-300 ${flying ? "opacity-0" : "opacity-100"}`}>
-          <div className="overflow-hidden py-2 font-chrome text-5xl md:text-7xl">
+          <div className="overflow-hidden py-2 font-display text-5xl font-extrabold md:text-7xl">
             {"HYPERION".split("").map((c, i) => (
-              <span key={i} className="intro-letter chrome-3d" style={{ animationDelay: `${1250 + i * 55}ms` }}>
+              <span key={i} className="intro-letter chrome" style={{ animationDelay: `${1250 + i * 55}ms` }}>
                 {c}
               </span>
             ))}
           </div>
-          <div className="mt-2 overflow-hidden font-tech text-xs tracking-[0.6em] text-forest uppercase md:text-sm">
+          <div className="mt-2 overflow-hidden font-mono text-xs tracking-[0.6em] text-paper/60 uppercase md:text-sm">
             <span className="intro-letter" style={{ animationDelay: "1800ms" }}>
               Software
             </span>
