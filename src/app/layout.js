@@ -1,15 +1,23 @@
 import React from "react"
 import Script from "next/script"
-import { Unbounded, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google"
+import localFont from "next/font/local"
 import "../app/globals.css"
 import { ThemeProvider } from "../components/ThemeProvider"
 import { Analytics } from "@vercel/analytics/react"
 import { UMAMI_URL } from "../lib/traffic.mjs"
 
 // Unbounded: titulares de cromo. Plex Sans: texto. Plex Mono: fichas técnicas.
-const unbounded = Unbounded({ subsets: ["latin"], weight: ["500", "800"], variable: "--font-unbounded", display: "swap" })
-const plexSans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-plex-sans", display: "swap" })
-const plex = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-plex", display: "swap" })
+// Van dentro del proyecto (juego latino) para que la compilación no dependa de descargarlas de Google.
+const unbounded = localFont({ src: "./fonts/unbounded.woff2", weight: "200 900", variable: "--font-unbounded", display: "swap" })
+const plexSans = localFont({ src: "./fonts/plex-sans.woff2", weight: "100 700", variable: "--font-plex-sans", display: "swap" })
+const plex = localFont({
+  src: [
+    { path: "./fonts/plex-mono-400.woff2", weight: "400" },
+    { path: "./fonts/plex-mono-500.woff2", weight: "500" },
+  ],
+  variable: "--font-plex",
+  display: "swap",
+})
 
 export const metadata = {
   metadataBase: new URL("https://hyperionmkt.com"),
