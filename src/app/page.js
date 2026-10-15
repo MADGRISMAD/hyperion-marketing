@@ -14,11 +14,13 @@ import {
   Rocket,
   LifeBuoy,
   Loader2,
+  Send,
 } from "lucide-react"
 import Navbar, { Logo } from "../components/landing/Navbar"
-import Hero from "../components/landing/Hero"
+import Hero, { HoloGlobe } from "../components/landing/Hero"
 import Intro from "../components/landing/Intro"
-import { Reveal, CountUp } from "../components/landing/parallax"
+import CityScene from "../components/landing/CityScene"
+import { Parallax, Reveal, CountUp } from "../components/landing/parallax"
 import { TienditaMockup, RestauranteMockup, InternshipsMockup, CaresiaMockup, BeHiveMockup, MiInfoMockup } from "../components/landing/Mockups"
 
 // URLs temporales: cuando tengan dominio propio, cambiarlas solo aquí.
@@ -29,42 +31,38 @@ const MIINFO_URL = "https://miinfo.15-235-62-27.sslip.io/"
 
 const WHATSAPP = "https://wa.me/526645798903?text=Hola%20Hyperion%2C%20me%20interesa%20cotizar%20un%20proyecto"
 
-// Encabezado de lámina: número de sección, rótulo y titular. `dark` = sobre la noche (titular en cromo).
-function SectionHead({ index, tag, title, text, dark = false, compact = false }) {
+// Encabezado de sección: código del sistema, titular con brillo y una nota
+function SectionHead({ index, tag, title, text, compact = false }) {
   return (
-    <Reveal className={`mb-14 grid gap-6 md:mb-20 lg:items-end ${compact ? "" : "lg:grid-cols-[1.4fr_1fr]"}`}>
+    <Reveal className={`mb-12 grid gap-6 md:mb-16 lg:items-end ${compact ? "" : "lg:grid-cols-[1.3fr_1fr]"}`}>
       <div>
-        <div className={`spec flex items-center gap-4 ${dark ? "text-paper/50" : "text-ink/50"}`}>
-          <span className="text-coral">§{index}</span>
-          <span className={`h-px w-10 ${dark ? "bg-paper/25" : "bg-ink/25"}`} />
+        <div className="readout flex items-center gap-3 text-sage">
+          <span className="text-phos">§{index}</span>
+          <span className="h-px w-10 bg-phos/40" />
           <span>{tag}</span>
         </div>
         <h2
-          className={`mt-6 font-display text-[2.05rem] leading-[0.95] font-extrabold tracking-[-0.03em] uppercase sm:text-6xl ${compact ? "lg:text-[3.4rem]" : "lg:text-[4.6rem]"} ${dark ? "" : "text-ink"}`}
+          className={`glow mt-5 font-display text-[2.3rem] leading-[0.95] font-bold tracking-[0.02em] uppercase sm:text-6xl ${compact ? "lg:text-[3.6rem]" : "lg:text-[4.4rem]"}`}
         >
-          {dark ? <span className="chrome">{title}</span> : title}
+          {title}
         </h2>
       </div>
-      {text && <p className={`max-w-md text-[17px] leading-relaxed lg:justify-self-end ${dark ? "text-paper/65" : "text-ink/70"}`}>{text}</p>}
+      {text && <p className="max-w-md text-[17px] leading-relaxed text-sage lg:justify-self-end">{text}</p>}
     </Reveal>
   )
 }
 
 /* ───────────────────────── Marquesina ───────────────────────── */
-function Marquee() {
+function Ticker() {
   const items = ["Sistemas a la medida", "Puntos de venta", "Automatizaciones", "Servicio técnico", "Desarrollo web", "Marketing digital"]
   const row = [...items, ...items]
   return (
-    <div className="overflow-hidden border-y border-white/10 bg-night py-5" aria-hidden="true">
+    <div className="relative overflow-hidden border-y border-phos/20 bg-night/80 py-4" aria-hidden="true">
       <div className="marquee flex w-max items-center whitespace-nowrap">
         {row.map((t, i) => (
-          <span key={i} className="flex items-center">
-            <span className="px-8 font-display text-2xl font-extrabold uppercase md:text-4xl">
-              <span className="chrome">{t}</span>
-            </span>
-            <span className="relative block h-6 w-6">
-              <span className="glint" style={{ left: "50%", top: "50%", "--s": "26px", "--d": `${(i % 6) * 0.9}s` }} />
-            </span>
+          <span key={i} className="readout flex items-center gap-6 px-6 text-[13px] text-mint">
+            <span className="text-phos">▸</span> {t}
+            <span className="text-sage/50">{`// TX-${String(i + 1).padStart(3, "0")}`}</span>
           </span>
         ))}
       </div>
@@ -104,50 +102,64 @@ const services = [
   },
 ]
 
-// Índice de catálogo: una fila por servicio, que se invierte a tinta al pasar el cursor
 function Services() {
   return (
-    <section id="servicios" className="grain bg-paper py-24 text-ink md:py-32">
+    <section id="servicios" className="relative py-24 md:py-32">
       <div className="container">
         <SectionHead
           index="01"
-          tag="Servicios"
+          tag="Módulos"
           title="Todo lo que tu negocio necesita"
           text="Diseñamos, desarrollamos, instalamos y damos soporte. Un solo equipo que conoce tu negocio y te acompaña de principio a fin."
         />
-        <ul className="border-b border-ink/15">
-          {services.map((s, i) => (
-            <li key={s.title}>
-              <Reveal delay={i * 60}>
-                <Link
-                  href={s.href}
-                  className="group grid gap-3 border-t border-ink/15 py-7 transition-colors duration-200 md:grid-cols-[72px_1.1fr_1.4fr_1fr_40px] md:items-baseline md:gap-8 md:px-4 md:py-9 md:hover:bg-ink md:hover:text-paper"
-                >
-                  <span className="spec text-coral">0{i + 1}</span>
-                  <h3 className="font-display text-2xl leading-tight font-extrabold uppercase md:text-[1.7rem]">{s.title}</h3>
-                  <p className="text-ink/70 transition-colors group-hover:text-current md:group-hover:text-paper/70">{s.text}</p>
-                  <ul className="spec space-y-1.5 text-ink/55 md:group-hover:text-paper/55">
-                    {s.points.map((p) => (
-                      <li key={p}>— {p}</li>
-                    ))}
-                  </ul>
-                  <ArrowUpRight className="hidden h-5 w-5 justify-self-end transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 md:block" />
-                </Link>
-              </Reveal>
-            </li>
+        <div className="grid gap-5 md:grid-cols-2">
+          {services.map((s, i) => {
+            const Icon = s.icon
+            return (
+              <Parallax key={s.title} speed={i % 2 ? -0.06 : 0.04}>
+                <Reveal delay={(i % 2) * 90} className="h-full">
+                  <Link href={s.href} className="group hud sweep scan flex h-full flex-col p-6 transition-[box-shadow,border-color] duration-200 hover:border-phos/70 hover:shadow-[0_0_50px_-10px_rgba(77,255,154,0.5)] md:p-8">
+                    <span className="brackets" />
+                    <div className="readout flex items-center justify-between text-sage">
+                      <span>Mód-0{i + 1}</span>
+                      <span className="flex items-center gap-1.5 text-phos">
+                        <span className="pulse h-1.5 w-1.5 rounded-full bg-phos" /> Activo
+                      </span>
+                    </div>
+                    <div className="mt-7 flex items-center gap-4">
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center border border-phos/40 text-phos">
+                        <Icon className="h-6 w-6" />
+                      </span>
+                      <h3 className="font-display text-2xl leading-tight font-bold tracking-[0.04em] text-mint uppercase md:text-3xl">{s.title}</h3>
+                    </div>
+                    <p className="mt-4 leading-relaxed text-sage">{s.text}</p>
+                    <ul className="readout mt-6 space-y-2 text-[11px] text-mint/80">
+                      {s.points.map((p) => (
+                        <li key={p}>
+                          <span className="text-phos">▸</span> {p}
+                        </li>
+                      ))}
+                    </ul>
+                    <span className="readout mt-auto flex items-center gap-2 pt-8 text-phos">
+                      Desplegar módulo <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </Link>
+                </Reveal>
+              </Parallax>
+            )
+          })}
+        </div>
+        <Reveal className="readout mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sage">
+          <span>Módulos extra:</span>
+          {[
+            ["/servicios/desarrollo-web", "Desarrollo web"],
+            ["/servicios/marketing-digital", "Marketing digital"],
+            ["/servicios/consultoria-it", "Consultoría IT"],
+          ].map(([href, l]) => (
+            <Link key={href} href={href} className="text-mint underline decoration-phos/40 underline-offset-4 hover:decoration-phos">
+              {l}
+            </Link>
           ))}
-        </ul>
-        <Reveal className="spec mt-8 flex flex-wrap items-center gap-x-8 gap-y-3 text-ink/55">
-          <span>También:</span>
-          <Link href="/servicios/desarrollo-web" className="text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-coral">
-            Desarrollo web
-          </Link>
-          <Link href="/servicios/marketing-digital" className="text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-coral">
-            Marketing digital
-          </Link>
-          <Link href="/servicios/consultoria-it" className="text-ink underline decoration-ink/30 underline-offset-4 hover:decoration-coral">
-            Consultoría IT
-          </Link>
         </Reveal>
       </div>
     </section>
@@ -257,66 +269,71 @@ const products = [
   },
 ]
 
-// Cada producto es una lámina: nombre en cromo, ficha técnica y la captura real en su monitor
+// Cada producto es un expediente: ficha a un lado y la transmisión de la pantalla real al otro, a distinta profundidad
 function Products() {
   return (
-    <section id="productos" className="grain bg-night py-24 md:py-32">
+    <section id="productos" className="relative py-24 md:py-32">
       <div className="container">
         <SectionHead
-          dark
           index="02"
-          tag="Productos propios"
+          tag="Expedientes"
           title="Software propio"
           text="Además de crear sistemas para nuestros clientes, desarrollamos y operamos nuestras propias plataformas. Lo que aprendemos en ellas lo llevamos a cada proyecto."
         />
-        <Reveal as="nav" aria-label="Productos" className="spec mb-20 flex flex-wrap gap-x-6 gap-y-3 text-paper/45">
+        <Reveal as="nav" aria-label="Productos" className="readout mb-16 flex flex-wrap gap-2">
           {products.map((p, i) => (
-            <a key={p.name} href={`#producto-${i + 1}`} className="transition-colors hover:text-paper">
-              <span className="text-coral">0{i + 1}</span> {p.name}
+            <a key={p.name} href={`#producto-${i + 1}`} className="border border-phos/25 bg-night/70 px-3 py-2 text-mint/80 transition-colors hover:border-phos hover:text-mint">
+              <span className="text-phos">EXP-0{i + 1}</span> {p.name}
               {p.tld}
             </a>
           ))}
         </Reveal>
 
-        <div className="space-y-28 md:space-y-40">
+        <div className="space-y-24 md:space-y-36">
           {products.map((p, i) => {
             const flip = i % 2 === 1
             const beta = p.status === "Beta"
             return (
-              <article key={p.name} id={`producto-${i + 1}`} className="grid scroll-mt-28 items-center gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
-                <Reveal className={`min-w-0 ${flip ? "lg:order-2" : ""}`}>
-                  <div className="spec flex items-center gap-3 text-paper/50">
-                    <span>Lámina 0{i + 1}</span>
-                    <span className="h-px w-8 bg-paper/25" />
-                    <span className="flex items-center gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full" style={{ background: beta ? "var(--color-apricot)" : "#4ade80" }} />
-                      {beta ? "Beta abierta" : "En línea"}
-                    </span>
-                  </div>
-                  <h3 className="mt-5 font-display text-[1.75rem] leading-none font-extrabold tracking-[-0.03em] uppercase [overflow-wrap:anywhere] sm:text-5xl xl:text-[3.6rem]">
-                    <span className="chrome">
-                      {p.name}
-                      {p.tld}
-                    </span>
-                  </h3>
-                  <p className="mt-6 text-xl font-medium text-paper">{p.tagline}</p>
-                  <p className="mt-4 max-w-xl leading-relaxed text-paper/65">{p.description}</p>
-                  <dl className="mt-8 border-t border-white/10">
-                    {p.features.map((f, k) => (
-                      <div key={f} className="grid grid-cols-[36px_1fr] gap-3 border-b border-white/10 py-3 text-[15px]">
-                        <dt className="spec pt-0.5 text-paper/35">{String(k + 1).padStart(2, "0")}</dt>
-                        <dd className="text-paper/85">{f}</dd>
+              <article key={p.name} id={`producto-${i + 1}`} className="grid scroll-mt-28 items-center gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-14">
+                <Parallax speed={0.05} className={`min-w-0 ${flip ? "lg:order-2" : ""}`}>
+                  <Reveal>
+                    <div className="hud sweep scan p-6 md:p-8">
+                      <span className="brackets" />
+                      <div className="readout flex items-center justify-between text-sage">
+                        <span>Expediente 0{i + 1}</span>
+                        <span className={`flex items-center gap-1.5 ${beta ? "text-amber" : "text-phos"}`}>
+                          <span className={`h-1.5 w-1.5 rounded-full ${beta ? "bg-amber" : "pulse bg-phos"}`} />
+                          {beta ? "Beta abierta" : "En línea"}
+                        </span>
                       </div>
-                    ))}
-                  </dl>
-                  <a href={p.href} target="_blank" rel="noopener noreferrer" className="btn-chrome group mt-9">
-                    {p.cta ?? `Visitar ${p.name}${p.tld}`}
-                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </a>
-                </Reveal>
-                <Reveal delay={120} className={`min-w-0 ${flip ? "lg:order-1" : ""}`}>
-                  <p.Mockup />
-                </Reveal>
+                      <h3 className="glow mt-5 font-display text-[2.2rem] leading-none font-bold tracking-[0.03em] uppercase [overflow-wrap:anywhere] sm:text-5xl xl:text-6xl">
+                        {p.name}
+                        {p.tld}
+                      </h3>
+                      <p className="mt-4 font-display text-xl font-medium tracking-[0.02em] text-mint">{p.tagline}</p>
+                      <p className="mt-3 leading-relaxed text-sage">{p.description}</p>
+                      <ul className="mt-6 border-t border-phos/15">
+                        {p.features.map((f, k) => (
+                          <li key={f} className="grid grid-cols-[42px_1fr] gap-2 border-b border-phos/15 py-2.5 text-[15px] text-mint/90">
+                            <span className="readout pt-0.5 text-phos/80">▸ {String(k + 1).padStart(2, "0")}</span>
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                      <a href={p.href} target="_blank" rel="noopener noreferrer" className="btn-hud group mt-8">
+                        {p.cta ?? `Visitar ${p.name}${p.tld}`}
+                        <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </a>
+                    </div>
+                  </Reveal>
+                </Parallax>
+                <Parallax speed={-0.08} className={`min-w-0 ${flip ? "lg:order-1" : ""}`}>
+                  <Reveal delay={120}>
+                    <div className={flip ? "lg:[transform:perspective(1600px)_rotateY(7deg)]" : "lg:[transform:perspective(1600px)_rotateY(-7deg)]"}>
+                      <p.Mockup />
+                    </div>
+                  </Reveal>
+                </Parallax>
               </article>
             )
           })}
@@ -327,7 +344,7 @@ function Products() {
 }
 
 /* ───────────────────────── Automatizaciones ───────────────────────── */
-// Diagrama de señal, como el de un manual de equipo de audio: cada módulo pasa el dato al siguiente
+// Red de datos: cada nodo pasa la señal al siguiente
 function Automation() {
   const nodes = [
     ["Nueva venta", "Entrada"],
@@ -337,53 +354,51 @@ function Automation() {
     ["Aviso a tu celular", "Al instante"],
   ]
   return (
-    <section id="automatizaciones" className="bg-sunset grain overflow-hidden pt-24 pb-14 [--h:97%] md:pt-32 md:pb-16">
-      <div className="container grid items-center gap-16 lg:grid-cols-2">
+    <section id="automatizaciones" className="relative py-24 md:py-32">
+      <div className="container grid items-center gap-14 lg:grid-cols-2">
         <div>
-          <SectionHead dark compact index="03" tag="Automatizaciones" title="Deja que el sistema trabaje" />
-          <Reveal className="-mt-6 md:-mt-10">
-            <p className="max-w-lg text-[17px] leading-relaxed text-paper/75">
+          <SectionHead compact index="03" tag="Red automática" title="Deja que el sistema trabaje" />
+          <Reveal className="-mt-4 md:-mt-8">
+            <p className="max-w-lg text-[17px] leading-relaxed text-sage">
               Conectamos tus herramientas para que la información fluya sola: menos captura manual, menos errores y más tiempo para
               atender a tus clientes.
             </p>
-            <ul className="spec mt-8 grid gap-x-8 gap-y-3 text-paper/70 sm:grid-cols-2">
+            <ul className="readout mt-8 grid gap-3 text-[11px] text-mint/85 sm:grid-cols-2">
               {["Reportes automáticos por correo", "Inventario sincronizado", "Integraciones entre sistemas", "Respaldos y alertas"].map((t) => (
-                <li key={t} className="border-t border-paper/15 pt-3">
-                  {t}
+                <li key={t} className="border border-phos/20 bg-night/70 px-3 py-2.5">
+                  <span className="text-phos">✓</span> {t}
                 </li>
               ))}
             </ul>
           </Reveal>
         </div>
 
-        <Reveal delay={120} className="relative mx-auto w-full max-w-md">
-          {/* cable de cromo por donde corre la señal */}
-          <svg className="absolute top-6 bottom-6 left-[27px] w-[6px]" aria-hidden="true">
-            <defs>
-              <linearGradient id="auto-cable" x1="0" x2="1">
-                <stop offset="0" stopColor="#3d3a4a" />
-                <stop offset="0.45" stopColor="#f4f5f7" />
-                <stop offset="1" stopColor="#6b6f7a" />
-              </linearGradient>
-            </defs>
-            <rect width="6" height="100%" rx="3" fill="url(#auto-cable)" />
-            <line x1="3" y1="0" x2="3" y2="100%" stroke="#ff5a47" strokeWidth="3" strokeLinecap="round" className="flow-line" />
-          </svg>
-          <ol className="relative space-y-4">
-            {nodes.map(([label, meta], i) => (
-              <li
-                key={label}
-                className="flex items-center gap-5 rounded-2xl border border-white/10 bg-night/85 p-3 pr-5 backdrop-blur-sm"
-              >
-                <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(180deg,#fff_0%,#cfd3da_45%,#7d828d_52%,#e2e4e8_100%)] shadow-[inset_0_1px_0_#fff,0_0_0_1px_rgba(0,0,0,0.6)]">
-                  <span className="spec text-[10px] text-ink">{i + 1}</span>
-                </span>
-                <span className="flex-1 font-display text-base font-extrabold uppercase md:text-lg">{label}</span>
-                <span className="spec text-paper/45">{meta}</span>
-              </li>
-            ))}
-          </ol>
-        </Reveal>
+        <Parallax speed={-0.06}>
+          <Reveal delay={120} className="hud sweep scan relative mx-auto w-full max-w-md p-6">
+            <span className="brackets" />
+            <div className="readout mb-5 flex items-center justify-between text-sage">
+              <span>Flujo · venta → aviso</span>
+              <span className="text-phos">Latencia 0.2 s</span>
+            </div>
+            <div className="relative">
+              <svg className="absolute top-5 bottom-5 left-[19px] w-[3px]" aria-hidden="true">
+                <line x1="1.5" y1="0" x2="1.5" y2="100%" stroke="rgba(124,255,180,0.25)" strokeWidth="3" />
+                <line x1="1.5" y1="0" x2="1.5" y2="100%" stroke="#4dff9a" strokeWidth="3" strokeLinecap="round" className="flow-line" />
+              </svg>
+              <ol className="relative space-y-3">
+                {nodes.map(([label, meta], i) => (
+                  <li key={label} className="flex items-center gap-4 border border-phos/20 bg-night/80 p-2.5 pr-4">
+                    <span className="readout flex h-7 w-7 shrink-0 items-center justify-center border border-phos bg-[#0c2a1b] text-[10px] text-phos shadow-[0_0_12px_rgba(77,255,154,0.35)]">
+                      {i + 1}
+                    </span>
+                    <span className="flex-1 font-display text-base font-semibold tracking-[0.04em] text-mint uppercase md:text-lg">{label}</span>
+                    <span className="readout text-[10px] text-sage">{meta}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </Reveal>
+        </Parallax>
       </div>
     </section>
   )
@@ -392,42 +407,65 @@ function Automation() {
 /* ───────────────────────── Nosotros + cifras ───────────────────────── */
 function About() {
   const stats = [
-    { n: 10, s: "+", label: "Años de experiencia" },
-    { n: 6, s: "", label: "Productos propios" },
-    { n: 100, s: "%", label: "Desarrollo a la medida" },
-    { n: 1, s: "", label: "Equipo de principio a fin" },
+    { n: 10, s: "+", label: "Años de experiencia", bar: 100 },
+    { n: 6, s: "", label: "Productos propios", bar: 60 },
+    { n: 100, s: "%", label: "Desarrollo a la medida", bar: 100 },
+    { n: 1, s: "", label: "Equipo de principio a fin", bar: 100 },
   ]
   return (
-    <section id="nosotros" className="grain bg-paper py-24 text-ink md:py-32">
-      <div className="container grid gap-16 lg:grid-cols-2 lg:gap-24 [&>*]:min-w-0">
+    <section id="nosotros" className="relative py-24 md:py-32">
+      <div className="container grid gap-14 lg:grid-cols-2 lg:gap-20 [&>*]:min-w-0">
         <div>
-          <SectionHead compact index="04" tag="Nosotros" title="10 años construyendo" />
-          <Reveal className="-mt-6 space-y-6 md:-mt-10">
-            <p className="max-w-lg text-[17px] leading-relaxed text-ink/75">
+          <SectionHead compact index="04" tag="Unidad" title="10 años construyendo" />
+          <Reveal className="-mt-4 space-y-6 md:-mt-8">
+            <p className="max-w-lg text-[17px] leading-relaxed text-sage">
               Somos un equipo de desarrollo y soporte en Tijuana, Baja California. Trabajamos de cerca con cada cliente para entender su
               operación y entregar soluciones que realmente se usan.
             </p>
-            <div className="flex max-w-lg gap-5 border-t border-ink/15 pt-6">
-              <Logo compact className="shrink-0 [&>span:last-child]:hidden" />
-              <p className="text-[15px] leading-relaxed text-ink/70">
-                <strong className="font-bold text-ink">¿Por qué &quot;Hyperion&quot;?</strong> Hyperion es el árbol más alto del mundo. Nos
-                gusta la idea: bases sólidas y crecimiento constante. Así construimos el software de nuestros clientes.
+            <div className="hud flex max-w-lg gap-5 p-5">
+              <span className="brackets" />
+              <Logo holo compact className="shrink-0 [&>span:last-child]:hidden" />
+              <p className="text-[15px] leading-relaxed text-sage">
+                <strong className="font-semibold text-mint">¿Por qué &quot;Hyperion&quot;?</strong> Hyperion es el árbol más alto del mundo.
+                Nos gusta la idea: bases sólidas y crecimiento constante. Así construimos el software de nuestros clientes.
               </p>
             </div>
           </Reveal>
         </div>
-        <dl className="grid grid-cols-2 self-end border-t border-l border-ink/15">
-          {stats.map((s, i) => (
-            <Reveal key={s.label} delay={i * 70} className="border-r border-b border-ink/15 p-6 md:p-8">
-              <dd className="font-display text-5xl leading-none font-extrabold tracking-[-0.04em] tabular-nums md:text-7xl">
-                <span className="chrome chrome-on-paper">
-                  <CountUp to={s.n} suffix={s.s} />
-                </span>
-              </dd>
-              <dt className="spec mt-5 text-ink/60">{s.label}</dt>
-            </Reveal>
-          ))}
-        </dl>
+        <Parallax speed={-0.05}>
+          <Reveal className="hud sweep scan p-6 md:p-8">
+            <span className="brackets" />
+            <div className="readout mb-6 flex items-center justify-between text-sage">
+              <span>Lecturas del sistema</span>
+              <span className="flex items-center gap-1.5 text-phos">
+                <span className="pulse h-1.5 w-1.5 rounded-full bg-phos" /> Sync 100%
+              </span>
+            </div>
+            <dl className="grid grid-cols-2 gap-x-6 gap-y-8">
+              {stats.map((s) => (
+                <div key={s.label}>
+                  <dd className="glow font-display text-5xl leading-none font-bold tabular-nums md:text-6xl">
+                    <CountUp to={s.n} suffix={s.s} />
+                  </dd>
+                  <dt className="readout mt-3 text-[10px] text-sage">{s.label}</dt>
+                  <div className="mt-3 flex gap-[3px]" aria-hidden="true">
+                    {Array.from({ length: 10 }, (_, k) => (
+                      <span key={k} className={`h-1.5 flex-1 ${k < s.bar / 10 ? "bg-phos shadow-[0_0_6px_#4dff9a]" : "bg-phos/15"}`} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </dl>
+            <div className="mt-8 grid grid-cols-[88px_1fr] items-center gap-4 border-t border-phos/15 pt-6">
+              <HoloGlobe />
+              <p className="readout text-[10px] leading-relaxed text-sage">
+                Base de operaciones: Tijuana, B.C.
+                <br />
+                Atendemos negocios en todo México
+              </p>
+            </div>
+          </Reveal>
+        </Parallax>
       </div>
     </section>
   )
@@ -443,24 +481,32 @@ const steps = [
 
 function Process() {
   return (
-    <section id="proceso" className="grain bg-paper pb-24 text-ink md:pb-32">
+    <section id="proceso" className="relative py-24 md:py-28">
       <div className="container">
-        <div className="border-t border-ink/15 pt-16 md:pt-24">
-          <SectionHead index="05" tag="Cómo trabajamos" title="Un proceso claro" text="Sin sorpresas: sabes qué sigue, cuánto cuesta y cuándo llega." />
+        <SectionHead index="05" tag="Fases de misión" title="Un proceso claro" text="Sin sorpresas: sabes qué sigue, cuánto cuesta y cuándo llega." />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.map((s, i) => {
+            const Icon = s.icon
+            return (
+              <Parallax key={s.title} speed={i % 2 ? -0.04 : 0.04}>
+                <Reveal delay={i * 90} className="hud sweep h-full p-6">
+                  <span className="brackets" />
+                  <div className="flex items-center justify-between">
+                    <span className="readout text-phos">Fase 0{i + 1}</span>
+                    <Icon className="h-5 w-5 text-sage" />
+                  </div>
+                  <div className="mt-4 flex gap-[3px]" aria-hidden="true">
+                    {steps.map((_, k) => (
+                      <span key={k} className={`h-1 flex-1 ${k <= i ? "bg-phos" : "bg-phos/15"}`} />
+                    ))}
+                  </div>
+                  <h3 className="mt-6 font-display text-2xl font-bold tracking-[0.04em] text-mint uppercase">{s.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-sage">{s.text}</p>
+                </Reveal>
+              </Parallax>
+            )
+          })}
         </div>
-        <ol className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {steps.map((s, i) => (
-            <Reveal as="li" key={s.title} delay={i * 80}>
-              <div className="flex items-center gap-3">
-                <span className="h-2.5 w-2.5 rounded-full border-2 border-coral" />
-                <span className="h-px flex-1 bg-ink/20" />
-              </div>
-              <div className="spec mt-5 text-coral">Paso 0{i + 1}</div>
-              <h3 className="mt-2 font-display text-2xl font-extrabold uppercase">{s.title}</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-ink/70">{s.text}</p>
-            </Reveal>
-          ))}
-        </ol>
       </div>
     </section>
   )
@@ -494,42 +540,43 @@ function Contact() {
   }
 
   const field =
-    "w-full rounded-xl border border-white/12 bg-night-2 px-4 py-3.5 text-[16px] text-paper placeholder:text-paper/30 outline-none transition-[border-color] focus:border-coral"
-  const label = "spec mb-2 block text-paper/55"
+    "w-full border border-phos/25 bg-[#020a06]/90 px-4 py-3.5 text-[16px] text-mint placeholder:text-sage/50 outline-none transition-[border-color,box-shadow] focus:border-phos focus:shadow-[0_0_18px_-4px_rgba(77,255,154,0.6)]"
+  const label = "readout mb-2 block text-sage"
 
   return (
-    <section id="contacto" className="grain bg-night py-24 md:py-32">
-      <div className="container grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+    <section id="contacto" className="relative py-24 md:py-32">
+      <div className="container grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
         <div>
-          <SectionHead dark compact index="06" tag="Contacto" title="Cuéntanos de tu proyecto" />
-          <Reveal className="-mt-6 md:-mt-10">
-            <p className="text-[17px] text-paper/70">Te respondemos con una propuesta clara y sin compromiso.</p>
+          <SectionHead compact index="06" tag="Enlace seguro" title="Cuéntanos de tu proyecto" />
+          <Reveal className="-mt-4 md:-mt-8">
+            <p className="text-[17px] text-sage">Te respondemos con una propuesta clara y sin compromiso.</p>
             <a
               href={WHATSAPP}
               target="_blank"
               rel="noopener noreferrer"
-              className="group mt-10 flex items-center gap-4 border-y border-white/10 py-5 transition-colors hover:text-paper"
+              className="group hud mt-8 flex items-center gap-4 p-4 transition-[border-color] hover:border-phos"
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25d366] text-white">
+              <span className="brackets" />
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#25d366] text-white">
                 <MessageCircle className="h-5 w-5" />
               </span>
               <span className="flex-1">
-                <span className="block font-display text-lg font-extrabold uppercase">Escríbenos por WhatsApp</span>
-                <span className="spec text-paper/45">Respuesta rápida</span>
+                <span className="block font-display text-lg font-bold tracking-[0.04em] text-mint uppercase">Escríbenos por WhatsApp</span>
+                <span className="readout text-[10px] text-sage">Canal directo · respuesta rápida</span>
               </span>
-              <ArrowUpRight className="h-5 w-5 text-paper/60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="h-5 w-5 text-phos transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
-            <dl className="mt-2">
+            <dl className="mt-4">
               {[
                 ["Email", "info@hyperionmkt.com", "mailto:info@hyperionmkt.com"],
                 ["Teléfono", "+52 664 579 8903", "tel:+526645798903"],
-                ["Ubicación", "Tijuana, Baja California, México"],
+                ["Base", "Tijuana, Baja California, México"],
               ].map(([l, value, href]) => (
-                <div key={l} className="grid grid-cols-[110px_1fr] items-baseline border-b border-white/10 py-4">
-                  <dt className="spec text-paper/40">{l}</dt>
-                  <dd className="text-paper/90">
+                <div key={l} className="grid grid-cols-[100px_1fr] items-baseline border-b border-phos/15 py-4">
+                  <dt className="readout text-sage">{l}</dt>
+                  <dd className="text-mint">
                     {href ? (
-                      <a href={href} className="underline decoration-paper/25 underline-offset-4 hover:decoration-coral">
+                      <a href={href} className="underline decoration-phos/40 underline-offset-4 hover:decoration-phos">
                         {value}
                       </a>
                     ) : (
@@ -543,7 +590,14 @@ function Contact() {
         </div>
 
         <Reveal delay={120}>
-          <form onSubmit={onSubmit} className="rounded-[24px] border border-white/10 bg-night-2/60 p-6 md:p-9">
+          <form onSubmit={onSubmit} className="hud sweep scan p-6 md:p-9">
+            <span className="brackets" />
+            <div className="readout mb-6 flex items-center justify-between text-sage">
+              <span>Canal cifrado · nuevo proyecto</span>
+              <span className="flex items-center gap-1.5 text-phos">
+                <span className="pulse h-1.5 w-1.5 rounded-full bg-phos" /> Listo
+              </span>
+            </div>
             <div className="grid gap-5 md:grid-cols-2">
               <label className="block">
                 <span className={label}>Nombre</span>
@@ -564,8 +618,8 @@ function Contact() {
                 {needs.map((n) => (
                   <label
                     key={n}
-                    className={`cursor-pointer rounded-full border px-3.5 py-2 text-[13px] transition-colors has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-coral ${
-                      form.need === n ? "border-paper bg-paper text-ink" : "border-white/15 text-paper/75 hover:border-white/35"
+                    className={`cursor-pointer border px-3.5 py-2 text-[13px] transition-colors has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-mint ${
+                      form.need === n ? "border-phos bg-phos text-[#021008]" : "border-phos/25 text-mint/80 hover:border-phos/60"
                     }`}
                   >
                     <input type="radio" name="need" value={n} checked={form.need === n} onChange={onChange} className="sr-only" />
@@ -587,18 +641,18 @@ function Contact() {
               />
             </label>
             {status === "error" && (
-              <p role="alert" className="mt-4 rounded-xl border border-coral/40 bg-coral/10 px-4 py-3 text-sm text-paper">
+              <p role="alert" className="mt-4 border border-alert/50 bg-alert/10 px-4 py-3 text-sm text-mint">
                 No pudimos enviar tu mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.
               </p>
             )}
-            <button type="submit" disabled={status === "sending"} className="btn-chrome mt-8 w-full disabled:opacity-70">
+            <button type="submit" disabled={status === "sending"} className="btn-hud mt-8 w-full disabled:opacity-70">
               {status === "sending" ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin" /> Enviando…
+                  <Loader2 className="h-4 w-4 animate-spin" /> Transmitiendo…
                 </>
               ) : (
                 <>
-                  Enviar mensaje <ArrowRight className="h-4 w-4" />
+                  Transmitir mensaje <Send className="h-4 w-4" />
                 </>
               )}
             </button>
@@ -613,27 +667,27 @@ function Contact() {
 function Footer() {
   const product = (href, name, beta) => (
     <li key={name}>
-      <a href={href} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-paper">
+      <a href={href} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-mint">
         {name}
       </a>
-      {beta && <span className="spec ml-2 text-[9px] text-apricot">Beta</span>}
+      {beta && <span className="readout ml-2 text-[9px] text-amber">Beta</span>}
     </li>
   )
-  const linkCls = "transition-colors hover:text-paper"
+  const linkCls = "transition-colors hover:text-mint"
   return (
-    <footer className="bg-sunset grain overflow-hidden pt-20 [--h:84%]">
+    <footer className="relative overflow-hidden border-t border-phos/20 bg-night/85 pt-16">
       <div className="container">
-        <div className="grid gap-12 border-b border-white/10 pb-14 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="grid gap-12 pb-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Logo chrome />
-            <p className="mt-5 max-w-sm text-paper/60">
+            <Logo holo />
+            <p className="mt-5 max-w-sm text-sage">
               10 años desarrollando sistemas a la medida, puntos de venta, automatizaciones y dando servicio técnico a negocios en Tijuana y
               todo México.
             </p>
           </div>
           <div>
-            <h4 className="spec mb-4 text-paper/40">Productos</h4>
-            <ul className="space-y-2.5 text-sm text-paper/70">
+            <h4 className="readout mb-4 text-phos">Productos</h4>
+            <ul className="space-y-2.5 text-sm text-sage">
               {product("https://mitiendita.software", "Mitiendita")}
               {product(MIRESTAURANTE_URL, "Mirestaurante", true)}
               {product("https://internships.gg", "internships.gg")}
@@ -643,8 +697,8 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="spec mb-4 text-paper/40">Servicios</h4>
-            <ul className="space-y-2.5 text-sm text-paper/70">
+            <h4 className="readout mb-4 text-phos">Servicios</h4>
+            <ul className="space-y-2.5 text-sm text-sage">
               <li><Link href="/servicios/sistemas-a-medida" className={linkCls}>Sistemas a la medida</Link></li>
               <li><Link href="#productos" className={linkCls}>Puntos de venta</Link></li>
               <li><Link href="#automatizaciones" className={linkCls}>Automatizaciones</Link></li>
@@ -654,20 +708,15 @@ function Footer() {
           </div>
         </div>
 
-        {/* El nombre en cromo, recortado por el borde inferior como un letrero al atardecer */}
-        <div className="relative mt-10 select-none" aria-hidden="true">
-          <div className="text-center font-display text-[12.4vw] leading-[0.8] font-extrabold tracking-[-0.05em] uppercase xl:text-[12.5rem]">
-            <span className="chrome">Hyperion</span>
-          </div>
-          <span className="glint" style={{ left: "13%", top: "16%", "--s": "70px" }} />
-          <span className="glint" style={{ left: "82%", top: "62%", "--s": "40px", "--d": "2.6s" }} />
+        <div className="glow select-none text-center font-display text-[15vw] leading-[0.8] font-bold tracking-[0.06em] uppercase opacity-90 xl:text-[13rem]" aria-hidden="true">
+          Hyperion
         </div>
 
-        <div className="spec flex flex-col items-center justify-between gap-4 py-8 text-paper/45 md:flex-row">
+        <div className="readout flex flex-col items-center justify-between gap-4 border-t border-phos/15 py-7 text-sage md:flex-row">
           <p>© {new Date().getFullYear()} Hyperion Software · Tijuana, B.C.</p>
           <div className="flex items-center gap-6">
-            <Link href="/trafico" className="hover:text-paper">Tráfico de nuestros sitios</Link>
-            <a href="mailto:info@hyperionmkt.com" className="hover:text-paper">info@hyperionmkt.com</a>
+            <Link href="/trafico" className="hover:text-mint">Tráfico de nuestros sitios</Link>
+            <a href="mailto:info@hyperionmkt.com" className="hover:text-mint">info@hyperionmkt.com</a>
           </div>
         </div>
       </div>
@@ -678,11 +727,12 @@ function Footer() {
 export default function Home() {
   return (
     <div className="relative min-h-screen">
+      <CityScene />
       <Intro />
       <Navbar />
       <main>
         <Hero />
-        <Marquee />
+        <Ticker />
         <Services />
         <Products />
         <Automation />
@@ -696,7 +746,7 @@ export default function Home() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Escríbenos por WhatsApp"
-        className="fixed right-5 bottom-5 z-50 flex h-13 w-13 items-center justify-center rounded-full bg-[#25d366] text-white shadow-[0_0_0_3px_#0b0a0d,0_0_0_4px_rgba(255,255,255,0.35),0_12px_30px_-8px_rgba(0,0,0,0.7)] transition-transform active:scale-95"
+        className="fixed right-5 bottom-5 z-50 flex h-13 w-13 items-center justify-center bg-[#25d366] text-white shadow-[0_0_0_3px_#030806,0_0_0_4px_rgba(77,255,154,0.5),0_12px_30px_-8px_rgba(0,0,0,0.7)] rounded-full transition-transform active:scale-95"
       >
         <MessageCircle className="h-6 w-6" />
       </a>

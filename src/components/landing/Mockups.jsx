@@ -1,15 +1,22 @@
-// Capturas reales de cada producto, montadas en un monitor de bisel metálico.
+// Capturas reales de cada producto, en una pantalla holográfica con cabecera de transmisión.
 import Image from "next/image"
 
-// Bisel de aluminio con pantalla oscura, foco de encendido del color del producto y número de modelo grabado.
+// Marco: cabecera con el código y la señal "en vivo", la captura limpia (legible) y un velo verde muy leve con líneas de barrido.
 function Monitor({ model, color, children }) {
   return (
-    <figure className="rounded-[22px] bg-[linear-gradient(180deg,#f3f4f6_0%,#c7cbd3_48%,#8d939e_52%,#d3d6dc_100%)] p-[10px] shadow-[inset_0_1px_0_#fff,inset_0_-1px_0_rgba(0,0,0,0.35),0_0_0_1px_rgba(0,0,0,0.6),0_40px_80px_-30px_rgba(0,0,0,0.9)] md:p-3.5">
-      <div className="overflow-hidden rounded-[12px] bg-black ring-1 ring-black">{children}</div>
-      <figcaption className="flex items-center justify-between px-2 pt-2.5 pb-0.5 font-mono text-[10px] tracking-[0.2em] text-[#4b4f58] uppercase">
-        <span>Hyperion · {model}</span>
-        <span className="h-1.5 w-1.5 rounded-full shadow-[0_0_8px_currentColor]" style={{ background: color, color }} aria-hidden="true" />
+    <figure className="hud sweep relative p-2 md:p-2.5">
+      <span className="brackets" />
+      <figcaption className="readout flex items-center justify-between px-2 pt-1 pb-2.5 text-[10px] text-sage">
+        <span>Transmisión · {model}</span>
+        <span className="flex items-center gap-1.5 text-mint">
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: color, boxShadow: `0 0 8px ${color}` }} aria-hidden="true" />
+          En vivo
+        </span>
       </figcaption>
+      <div className="scan relative overflow-hidden border border-phos/20">
+        {children}
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(77,255,154,0.06),transparent_40%,rgba(3,8,6,0.25))]" />
+      </div>
     </figure>
   )
 }

@@ -6,16 +6,16 @@ import { ArrowUpRight, Menu, X } from "lucide-react"
 import { useScrollFrame } from "./parallax"
 
 // Símbolo del logo (árbol + H + flecha) con el nombre al lado.
-// `chrome`: sobre fondo oscuro el símbolo se pinta en cromo (el PNG sirve de molde) y el nombre en papel.
+// `holo`: sobre fondo oscuro el símbolo se pinta en fósforo verde (el PNG sirve de molde).
 // `target` marca la instancia de la barra: ahí aterriza el logo de la animación de entrada.
-export function Logo({ className = "", target = false, compact = false, chrome = false }) {
+export function Logo({ className = "", target = false, compact = false, holo = false }) {
   const size = compact ? "h-8" : "h-10"
   const targetProps = target ? { "data-logo-target": "" } : {}
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
-      {chrome ? (
+      {holo ? (
         <span
-          className={`chrome-mask block aspect-[273/480] ${size}`}
+          className={`holo-mask block aspect-[273/480] ${size}`}
           style={{ "--mask": "url(/brand/hyperion-mark.png)" }}
           {...targetProps}
         />
@@ -23,8 +23,8 @@ export function Logo({ className = "", target = false, compact = false, chrome =
         <Image src="/brand/hyperion-mark.png" alt="" width={273} height={480} priority={target} className={`${size} w-auto`} {...targetProps} />
       )}
       <span className="leading-none">
-        <span className={`block font-display text-[1.05rem] font-extrabold tracking-tight ${chrome ? "text-paper" : "text-ink"}`}>HYPERION</span>
-        <span className={`mt-1 block font-mono text-[8px] tracking-[0.42em] uppercase ${chrome ? "text-steel" : "text-brand"}`}>Software</span>
+        <span className={`block font-display text-[1.15rem] font-bold tracking-[0.08em] ${holo ? "glow-soft text-mint" : "text-ink"}`}>HYPERION</span>
+        <span className={`mt-1 block font-mono text-[8px] tracking-[0.42em] uppercase ${holo ? "text-sage" : "text-brand"}`}>Software</span>
       </span>
     </span>
   )
@@ -53,27 +53,27 @@ export default function Navbar() {
     <>
       <header
         ref={header}
-        className="group fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color] duration-300 data-[scrolled]:border-white/10 data-[scrolled]:bg-night/80 data-[scrolled]:backdrop-blur-xl"
+        className="group fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color] duration-300 data-[scrolled]:border-phos/20 data-[scrolled]:bg-night/85 data-[scrolled]:backdrop-blur-md"
       >
         <div className="container flex h-16 items-center justify-between md:h-[72px]">
           <Link href="#inicio" aria-label="Hyperion Software, inicio">
-            <Logo target chrome />
+            <Logo target holo />
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex">
             {links.map(([href, label]) => (
-              <Link key={href} href={href} className="spec text-paper/60 transition-colors hover:text-paper">
+              <Link key={href} href={href} className="readout text-sage transition-colors hover:text-mint">
                 {label}
               </Link>
             ))}
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link href="#contacto" className="btn-chrome hidden !px-5 !py-2.5 !text-[11px] sm:inline-flex">
+            <Link href="#contacto" className="btn-hud hidden !px-5 !py-2.5 !text-[13px] sm:inline-flex">
               Cotizar <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
             <button
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-paper lg:hidden"
+              className="flex h-11 w-11 items-center justify-center border border-phos/30 text-mint lg:hidden"
               onClick={() => setOpen(true)}
               aria-label="Abrir menú"
             >
@@ -82,7 +82,7 @@ export default function Navbar() {
           </div>
         </div>
         {/* Avance de lectura */}
-        <div ref={bar} className="absolute inset-x-0 bottom-[-1px] h-px origin-left bg-coral" style={{ transform: "scaleX(0)" }} />
+        <div ref={bar} className="absolute inset-x-0 bottom-[-1px] h-px origin-left bg-phos shadow-[0_0_8px_#4dff9a]" style={{ transform: "scaleX(0)" }} />
       </header>
 
       {/* Menú móvil (fuera del header: backdrop-filter rompería el position: fixed) */}
@@ -90,9 +90,9 @@ export default function Navbar() {
         className={`fixed inset-0 z-[60] bg-night transition-[opacity,visibility] duration-300 lg:hidden ${open ? "visible opacity-100" : "invisible opacity-0"}`}
       >
         <div className="flex h-16 items-center justify-between px-4">
-          <Logo chrome />
+          <Logo holo />
           <button
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-paper"
+            className="flex h-11 w-11 items-center justify-center border border-phos/30 text-mint"
             onClick={() => setOpen(false)}
             aria-label="Cerrar menú"
           >
@@ -105,14 +105,14 @@ export default function Navbar() {
               key={href}
               href={href}
               onClick={() => setOpen(false)}
-              className={`flex items-baseline gap-4 border-b border-white/10 py-5 font-display text-3xl font-extrabold text-paper uppercase transition-[opacity,transform] duration-300 ${open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
+              className={`flex items-baseline gap-4 border-b border-phos/15 py-5 font-display text-3xl font-bold tracking-[0.06em] text-mint uppercase transition-[opacity,transform] duration-300 ${open ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}
               style={{ transitionDelay: open ? `${60 + i * 40}ms` : "0ms" }}
             >
-              <span className="spec text-coral">0{i + 1}</span>
+              <span className="readout text-phos">0{i + 1}</span>
               {label}
             </Link>
           ))}
-          <Link href="#contacto" onClick={() => setOpen(false)} className="btn-chrome mt-8">
+          <Link href="#contacto" onClick={() => setOpen(false)} className="btn-hud mt-8">
             Cotizar proyecto
           </Link>
         </nav>

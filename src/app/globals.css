@@ -1,11 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-plex-sans), "Hiragino Sans", "Yu Gothic", ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-unbounded), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-chakra), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
-  --font-chrome: var(--font-unbounded), ui-sans-serif, sans-serif;
-  --font-tech: var(--font-plex), ui-monospace, monospace;
 
   /* Páginas secundarias (servicios, tráfico): tema claro de siempre */
   --color-ink-950: #ffffff;
@@ -16,15 +14,16 @@
   --color-brand: #1e6b35;
   --color-volt: #0f4d3a;
   --color-aqua: #15803d;
+  --color-ink: #121015;
 
-  /* Portada: ilustración aerografiada de cromo (Hajime Sorayama) sobre catálogo japonés de los 80 */
-  --color-night: #0b0a0d; /* fondo de las láminas oscuras */
-  --color-night-2: #16131b; /* paneles sobre la noche */
-  --color-paper: #ece8e1; /* papel del catálogo */
-  --color-ink: #121015; /* texto sobre papel */
-  --color-coral: #ff5a47; /* laca roja: el único acento */
-  --color-apricot: #ffb27a; /* reflejo cálido del horizonte */
-  --color-steel: #a7aebb;
+  /* Portada: interfaz táctica holográfica sobre una ciudad de noche */
+  --color-night: #030806; /* cielo y fondo */
+  --color-panel: #06110d; /* relleno de los paneles */
+  --color-phos: #4dff9a; /* fósforo verde: acentos, activos */
+  --color-mint: #c8f7dc; /* texto principal sobre el holograma */
+  --color-sage: #8cc4a6; /* texto secundario */
+  --color-alert: #ff4d4d; /* único rojo: botón del dispositivo, grabación */
+  --color-amber: #ffc56b; /* luces de la ciudad, estado beta */
 }
 
 html {
@@ -32,17 +31,17 @@ html {
   background: var(--color-night);
 }
 
+/* sin fondo propio: la ciudad 3D (z-index negativo) se ve a través del body */
 body {
-  background: var(--color-night);
-  color: var(--color-paper);
+  color: var(--color-mint);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--color-coral);
-  color: #fff;
+  background: var(--color-phos);
+  color: #021008;
 }
 
 .container {
@@ -59,160 +58,194 @@ body {
   }
 }
 
-/* ── Atardecer aerografiado: cielo violeta, horizonte duro y suelo oscuro ── */
-/* La altura del horizonte se ajusta por sección con [--h:60%] */
-.bg-sunset {
+/* ── Holograma ── */
+/* Panel: vidrio verde con retícula fina y borde de luz */
+.hud {
+  position: relative;
   background:
-    radial-gradient(60% 30% at 62% var(--h, 74%), rgba(255, 178, 122, 0.55), transparent 70%),
-    linear-gradient(
-      180deg,
-      #0b0a0d 0%,
-      #1a1028 calc(var(--h, 74%) - 52%),
-      #44193f calc(var(--h, 74%) - 30%),
-      #a3344f calc(var(--h, 74%) - 12%),
-      #ff7457 calc(var(--h, 74%) - 3%),
-      #ffc08d var(--h, 74%),
-      #24151f calc(var(--h, 74%) + 0.3%),
-      #120d14 calc(var(--h, 74%) + 8%),
-      #0b0a0d 100%
-    );
+    linear-gradient(rgba(77, 255, 154, 0.035) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(90deg, rgba(77, 255, 154, 0.035) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(160deg, rgba(12, 42, 29, 0.86), rgba(3, 12, 8, 0.9));
+  border: 1px solid rgba(124, 255, 180, 0.3);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.4),
+    inset 0 0 60px rgba(77, 255, 154, 0.06),
+    0 0 40px -12px rgba(77, 255, 154, 0.3);
+}
+/* Esquinas en L más brillantes que el borde: un elemento encima del panel */
+.brackets {
+  --b: var(--color-phos);
+  --l: 14px;
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--b), var(--b)) top left / var(--l) 2px,
+    linear-gradient(var(--b), var(--b)) top left / 2px var(--l),
+    linear-gradient(var(--b), var(--b)) top right / var(--l) 2px,
+    linear-gradient(var(--b), var(--b)) top right / 2px var(--l),
+    linear-gradient(var(--b), var(--b)) bottom left / var(--l) 2px,
+    linear-gradient(var(--b), var(--b)) bottom left / 2px var(--l),
+    linear-gradient(var(--b), var(--b)) bottom right / var(--l) 2px,
+    linear-gradient(var(--b), var(--b)) bottom right / 2px var(--l);
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 4px rgba(77, 255, 154, 0.7));
+}
+/* Líneas de barrido del proyector, encima del contenido */
+.scan::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(180deg, rgba(200, 255, 220, 0.04) 0 1px, transparent 1px 3px);
 }
 
-/* Grano de impresión: quita lo "digital" a los degradados */
-.grain {
-  position: relative;
-  isolation: isolate;
+/* Texto con brillo de fósforo */
+.glow {
+  color: #dcffe9;
+  text-shadow:
+    0 0 1px rgba(220, 255, 233, 0.9),
+    0 0 14px rgba(77, 255, 154, 0.55),
+    0 0 40px rgba(77, 255, 154, 0.25);
 }
-.grain::after {
+.glow-soft {
+  text-shadow: 0 0 10px rgba(77, 255, 154, 0.4);
+}
+
+/* Etiqueta de lectura del sistema */
+.readout {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ── Botones ── */
+/* Opción de menú: la activa se enciende como en un menú de pausa */
+.menu-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 0.9rem 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-mint);
+  border: 1px solid rgba(124, 255, 180, 0.2);
+  background: rgba(6, 22, 15, 0.55);
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.menu-item[data-active] {
+  color: #021008;
+  border-color: var(--color-phos);
+  background: linear-gradient(90deg, #45ec90, #2bc874 70%, #38dc86);
+  box-shadow:
+    0 0 0 1px rgba(77, 255, 154, 0.4),
+    0 0 30px rgba(77, 255, 154, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.menu-item:focus-visible {
+  outline: 2px solid var(--color-mint);
+  outline-offset: 3px;
+}
+
+.btn-hud,
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.5rem;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    filter 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.btn-hud {
+  color: #021008;
+  background: linear-gradient(90deg, #45ec90, #2bc874);
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+.btn-ghost {
+  color: var(--color-mint);
+  border: 1px solid rgba(124, 255, 180, 0.4);
+  background: rgba(6, 22, 15, 0.55);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-hud:hover {
+    filter: brightness(1.12);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-phos);
+    background: rgba(20, 70, 45, 0.6);
+  }
+}
+.btn-hud:active,
+.btn-ghost:active {
+  transform: scale(0.97);
+}
+.btn-hud:focus-visible,
+.btn-ghost:focus-visible {
+  outline: 2px solid var(--color-mint);
+  outline-offset: 3px;
+}
+
+/* Logo pintado en fósforo: el PNG del logo funciona como molde */
+.holo-mask {
+  background: linear-gradient(180deg, #e9fff2 0%, #7dffb4 45%, #2bc874 100%);
+  -webkit-mask: var(--mask) center / contain no-repeat;
+  mask: var(--mask) center / contain no-repeat;
+}
+
+/* Viñeta de visión nocturna sobre la ciudad */
+.vignette {
+  background:
+    radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(0, 0, 0, 0.7) 100%),
+    repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 3px);
+}
+
+/* Barrido de luz que recorre un panel al aparecer */
+.sweep {
+  overflow: hidden;
+}
+.sweep::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.16;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background: linear-gradient(180deg, transparent 40%, rgba(77, 255, 154, 0.14) 49%, rgba(220, 255, 233, 0.32) 50%, transparent 51%);
+  transform: translateY(-100%);
+  opacity: 0;
 }
-.grain > * {
-  position: relative;
-  z-index: 2;
+.reveal.is-visible .sweep::before,
+.reveal.is-visible.sweep::before {
+  animation: sweep 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.1s;
 }
-
-/* ── Cromo: cielo frío arriba, horizonte oscuro a media altura y suelo cálido abajo ── */
-.chrome {
-  color: transparent;
-  background-image: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #eef1f7 16%,
-    #b6c0d1 38%,
-    #59607a 47%,
-    #17121d 50%,
-    #3a1b2c 53%,
-    #c4485a 62%,
-    #ff9a74 74%,
-    #ffdcb4 88%,
-    #fff6ea 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.35)) drop-shadow(0 2px 0 #000);
-}
-/* Sobre papel el canto se oscurece para que el metal "pese" */
-.chrome-on-paper {
-  filter: drop-shadow(0 1px 0 #fff) drop-shadow(0 2px 0 #2c2530) drop-shadow(0 3px 0 #120e15);
-}
-/* Logo en cromo: el PNG del logo funciona como molde */
-.chrome-mask {
-  background: linear-gradient(180deg, #ffffff 0%, #c9d0dc 40%, #3d3a4a 50%, #c4485a 60%, #ffb27a 78%, #fff1e0 100%);
-  -webkit-mask: var(--mask) center / contain no-repeat;
-  mask: var(--mask) center / contain no-repeat;
-}
-
-/* ── Destello de 4 puntas: el brillo que deja el aerógrafo donde el cromo refleja una luz ── */
-.glint {
-  position: absolute;
-  width: var(--s, 34px);
-  height: var(--s, 34px);
-  translate: -50% -50%;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  background:
-    radial-gradient(closest-side, #fff 0 8%, rgba(255, 236, 214, 0.55) 16%, transparent 42%),
-    linear-gradient(90deg, transparent, #fff 50%, transparent) center / 100% 1.5px no-repeat,
-    linear-gradient(0deg, transparent, #fff 50%, transparent) center / 1.5px 100% no-repeat;
-  animation: glint 5.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-  animation-delay: var(--d, 0s);
-}
-@keyframes glint {
-  0%, 70%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
-  80% { transform: scale(0.55) rotate(18deg); opacity: 0.7; }
-}
-
-/* ── Botón de cromo cepillado, como las teclas de un equipo de audio ── */
-.btn-chrome {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  border-radius: 999px;
-  padding: 0.95rem 1.6rem;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #121015;
-  background: linear-gradient(180deg, #ffffff 0%, #e4e7ec 44%, #a9afba 50%, #d9dce2 72%, #f4f5f7 100%);
-  box-shadow:
-    inset 0 1px 0 #fff,
-    inset 0 -1px 0 rgba(0, 0, 0, 0.28),
-    0 0 0 1px rgba(0, 0, 0, 0.55),
-    0 10px 24px -10px rgba(0, 0, 0, 0.7);
-  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), filter 160ms ease;
-}
-@media (hover: hover) and (pointer: fine) {
-  .btn-chrome:hover {
-    filter: brightness(1.06);
-  }
-}
-.btn-chrome:active {
-  transform: translateY(1px) scale(0.98);
-  background: linear-gradient(180deg, #c9cdd5 0%, #eef0f3 55%, #ffffff 100%);
-}
-.btn-chrome:focus-visible,
-.btn-line:focus-visible {
-  outline: 2px solid var(--color-coral);
-  outline-offset: 3px;
-}
-.btn-line {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 0.95rem 0.25rem;
-  border-bottom: 1px solid currentColor;
-  transition: color 160ms ease;
-}
-
-/* Etiqueta de ficha técnica */
-.spec {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+@keyframes sweep {
+  0% { transform: translateY(-60%); opacity: 1; }
+  100% { transform: translateY(60%); opacity: 0; }
 }
 
 /* Revelado al hacer scroll */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  transition:
+    opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1),
+    transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .reveal.is-visible {
   opacity: 1;
@@ -220,7 +253,7 @@ body {
 }
 
 .marquee {
-  animation: marquee 48s linear infinite;
+  animation: marquee 50s linear infinite;
 }
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -234,39 +267,57 @@ body {
   50% { opacity: 0; }
 }
 
-/* Señal que corre por el cable (automatizaciones) */
-.flow-line {
-  stroke-dasharray: 2 14;
-  animation: flow 1.4s linear infinite;
+/* Pulso de "en línea" */
+.pulse {
+  animation: pulse 2s ease-out infinite;
 }
-@keyframes flow {
-  to { stroke-dashoffset: -32; }
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(77, 255, 154, 0.6); }
+  100% { box-shadow: 0 0 0 8px rgba(77, 255, 154, 0); }
 }
 
-/* ── Animación de entrada del logo ── */
-/* Mientras corre, el logo de la barra se oculta: lo "ocupa" el logo que vuela hacia ella. */
+/* Paquete de datos que viaja por la red (automatizaciones) */
+.flow-line {
+  stroke-dasharray: 3 18;
+  animation: flow 1.2s linear infinite;
+}
+@keyframes flow {
+  to { stroke-dashoffset: -42; }
+}
+
+/* Encendido del holograma: parpadea un instante y se queda */
+.flicker {
+  animation: flicker 1.4s steps(1) 0.2s both;
+}
+@keyframes flicker {
+  0% { opacity: 0; }
+  10% { opacity: 0.7; }
+  14% { opacity: 0.15; }
+  22% { opacity: 0.95; }
+  26% { opacity: 0.5; }
+  34%, 100% { opacity: 1; }
+}
+
+/* ── Animación de entrada (arranque del sistema) ── */
 html.intro-active [data-logo-target] {
   opacity: 0;
 }
 html.intro-active body {
   overflow: hidden;
 }
-/* Respaldo: si el JavaScript no corre, la cortina se quita sola. */
 .intro-failsafe {
   animation: intro-failsafe 0.4s ease 8s forwards;
 }
 @keyframes intro-failsafe {
   to { opacity: 0; visibility: hidden; pointer-events: none; }
 }
-.intro-letter {
-  display: inline-block;
-  transform: translateY(110%);
-  animation: intro-letter 0.55s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+.intro-line {
+  animation: intro-line 0.05s linear both;
 }
-@keyframes intro-letter {
-  to { transform: translateY(0); }
+@keyframes intro-line {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
-/* Construcción del logo pieza por pieza (todas las capas miden lo mismo que el logo completo) */
 .logo-part {
   animation-fill-mode: both;
   will-change: transform, clip-path;
@@ -306,18 +357,12 @@ html.intro-active body {
     transform: none;
   }
 }
-.logo-spark {
-  animation: logo-spark 0.8s ease-out 1.9s both;
-}
-@keyframes logo-spark {
-  0% { transform: scale(0) rotate(0deg); opacity: 1; }
-  55% { transform: scale(1.2) rotate(45deg); opacity: 1; }
-  100% { transform: scale(0.3) rotate(90deg); opacity: 0; }
-}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .marquee, .flow-line, .blink, .glint { animation: none; }
-  .logo-part, .logo-spark { animation: none; }
+  .reveal.is-visible .sweep::before,
+  .reveal.is-visible.sweep::before { animation: none; }
+  .marquee, .flow-line, .blink, .pulse, .flicker { animation: none; }
+  .logo-part { animation: none; }
 }

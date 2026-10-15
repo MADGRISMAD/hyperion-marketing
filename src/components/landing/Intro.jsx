@@ -11,7 +11,16 @@ const LAYERS = [
   ["arrow", "logo-arrow", null],
 ]
 
-// Cortina de entrada: el logo se construye (barras, árbol, flecha), cuenta hasta 100 y vuela a la barra.
+// Líneas de la consola de arranque: [milisegundos, texto, muestra OK]
+const BOOT = [
+  [100, "Hyperion OS v10.0", false],
+  [380, "Verificando enlace seguro", true],
+  [720, "Cargando módulos: sistemas, POS, automatización", true],
+  [1100, "Sincronizando unidad Tijuana", true],
+  [1500, "Proyector holográfico", true],
+]
+
+// Arranque del sistema: consola, el logo se construye (barras, árbol, flecha), cuenta hasta 100 y vuela a la barra.
 export default function Intro() {
   const [phase, setPhase] = useState("in") // in → fly → done
   const mark = useRef(null)
@@ -99,29 +108,38 @@ export default function Intro() {
 
       {/* Fondo que se desvanece mientras el logo vuela */}
       <div
-        className="bg-sunset absolute inset-0 transition-opacity duration-700"
+        className="absolute inset-0 bg-night transition-opacity duration-700"
         style={{ opacity: flying ? 0 : 1, transitionDelay: flying ? "250ms" : "0ms" }}
-      />
+      >
+        <div className="vignette absolute inset-0" />
+      </div>
 
       <div className={`absolute inset-0 transition-opacity duration-300 ${flying ? "opacity-0" : "opacity-100"}`}>
-        <div className="spec absolute top-5 left-5 text-paper/50 md:top-8 md:left-8">
-          hyperion_software.exe
+        {/* Consola de arranque: cada línea aparece a su tiempo */}
+        <div className="readout absolute top-6 left-5 space-y-1.5 text-[10px] text-sage md:top-8 md:left-8 md:text-[11px]">
+          {BOOT.map(([t, line, ok]) => (
+            <div key={line} className="intro-line" style={{ animationDelay: `${t}ms` }}>
+              <span className="text-phos/70">&gt;</span> {line}
+              {ok && <span className="ml-2 text-phos">[ OK ]</span>}
+            </div>
+          ))}
         </div>
-        <div className="spec absolute top-5 right-5 text-paper/50 md:top-8 md:right-8">
-          Tijuana · MX
+        <div className="readout absolute top-6 right-5 text-right text-[10px] text-sage md:top-8 md:right-8 md:text-[11px]">
+          Lat 32.5149 N
+          <br />
+          Lon 117.0382 W
         </div>
         <div className="absolute inset-x-5 bottom-6 md:inset-x-8 md:bottom-8">
-          <div className="mb-3 flex items-end justify-between font-mono uppercase">
-            <span className="text-[11px] tracking-widest text-paper/55">
-              Cargando<span className="blink">_</span>
+          <div className="mb-3 flex items-end justify-between">
+            <span className="readout text-sage">
+              Estableciendo enlace<span className="blink">_</span>
             </span>
-            <span className="chrome font-display text-5xl font-extrabold md:text-7xl">
-              <span ref={counter}>000</span>
-              %
+            <span className="glow font-display text-5xl font-bold md:text-7xl">
+              <span ref={counter}>000</span>%
             </span>
           </div>
-          <div className="h-px bg-paper/15">
-            <div ref={bar} className="h-full origin-left bg-coral" style={{ transform: "scaleX(0)" }} />
+          <div className="h-px bg-phos/15">
+            <div ref={bar} className="h-full origin-left bg-phos shadow-[0_0_10px_#4dff9a]" style={{ transform: "scaleX(0)" }} />
           </div>
         </div>
       </div>
@@ -129,32 +147,23 @@ export default function Intro() {
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <div ref={mark} className="will-change-transform">
           {/* El logo se arma por capas: barras → árbol → flecha (ver globals.css) */}
-          <div className="relative aspect-[273/480] h-[170px] md:h-[230px]">
+          <div className="relative aspect-[273/480] h-[170px] drop-shadow-[0_0_14px_rgba(77,255,154,0.55)] md:h-[230px]">
             {LAYERS.map(([src, cls, delay]) => (
-              // cada pieza del logo es un molde pintado en cromo
+              // cada pieza del logo es un molde pintado en fósforo
               <span
                 key={src}
-                className={`chrome-mask logo-part absolute inset-0 h-full w-full ${cls}`}
+                className={`holo-mask logo-part absolute inset-0 h-full w-full ${cls}`}
                 style={{ "--mask": `url(/brand/parts/${src}.png)`, ...(delay ? { animationDelay: delay } : {}) }}
               />
             ))}
-            <span className="absolute top-[27%] left-[99%]">
-              <span className="logo-spark glint block" style={{ "--s": "64px" }} />
-            </span>
           </div>
         </div>
         <div className={`mt-6 text-center transition-opacity duration-300 ${flying ? "opacity-0" : "opacity-100"}`}>
-          <div className="overflow-hidden py-2 font-display text-5xl font-extrabold md:text-7xl">
-            {"HYPERION".split("").map((c, i) => (
-              <span key={i} className="intro-letter chrome" style={{ animationDelay: `${1250 + i * 55}ms` }}>
-                {c}
-              </span>
-            ))}
+          <div className="glow intro-line font-display text-5xl font-bold tracking-[0.12em] md:text-7xl" style={{ animationDelay: "1250ms" }}>
+            HYPERION
           </div>
-          <div className="mt-2 overflow-hidden font-mono text-xs tracking-[0.6em] text-paper/60 uppercase md:text-sm">
-            <span className="intro-letter" style={{ animationDelay: "1800ms" }}>
-              Software
-            </span>
+          <div className="readout intro-line mt-3 tracking-[0.6em] text-sage" style={{ animationDelay: "1600ms" }}>
+            Software
           </div>
         </div>
       </div>

@@ -6,9 +6,17 @@ import { ThemeProvider } from "../components/ThemeProvider"
 import { Analytics } from "@vercel/analytics/react"
 import { UMAMI_URL } from "../lib/traffic.mjs"
 
-// Unbounded: titulares de cromo. Plex Sans: texto. Plex Mono: fichas técnicas.
+// Chakra Petch: titulares y menús de la interfaz táctica. Plex Sans: texto. Plex Mono: lecturas y etiquetas.
 // Van dentro del proyecto (juego latino) para que la compilación no dependa de descargarlas de Google.
-const unbounded = localFont({ src: "./fonts/unbounded.woff2", weight: "200 900", variable: "--font-unbounded", display: "swap" })
+const chakra = localFont({
+  src: [
+    { path: "./fonts/chakra-500.woff2", weight: "500" },
+    { path: "./fonts/chakra-600.woff2", weight: "600" },
+    { path: "./fonts/chakra-700.woff2", weight: "700" },
+  ],
+  variable: "--font-chakra",
+  display: "swap",
+})
 const plexSans = localFont({ src: "./fonts/plex-sans.woff2", weight: "100 700", variable: "--font-plex-sans", display: "swap" })
 const plex = localFont({
   src: [
@@ -37,7 +45,7 @@ export const metadata = {
 }
 
 export const viewport = {
-  themeColor: "#0b0a0d",
+  themeColor: "#030806",
 }
 
 const organizationLd = {
@@ -65,7 +73,7 @@ const organizationLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" suppressHydrationWarning className={`${unbounded.variable} ${plexSans.variable} ${plex.variable}`}>
+    <html lang="es" suppressHydrationWarning className={`${chakra.variable} ${plexSans.variable} ${plex.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" disableTransitionOnChange>
