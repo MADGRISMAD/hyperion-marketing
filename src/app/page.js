@@ -46,7 +46,7 @@ function Head({ eyebrow, title, text, center = false, light = false, small = fal
 function Numbers() {
   const stats = [
     { n: 10, s: "+", label: "años construyendo software" },
-    { n: 6, s: "", label: "productos propios en la calle" },
+    { n: 6, s: "", label: "productos propios, diseñados y construidos aquí" },
     { n: 100, s: "%", label: "desarrollo a la medida, sin plantillas" },
     { n: 1, s: "", label: "equipo que diseña, programa, instala y da soporte" },
   ]
@@ -235,7 +235,7 @@ function Products() {
             <h2 className="display mt-3 text-[clamp(2.4rem,5vw,4.4rem)]">
               Seis productos.
               <br />
-              <span className="text-mist">Todos en la calle.</span>
+              <span className="text-mist">Hechos por nosotros.</span>
             </h2>
           </div>
           <div className="hidden w-48 shrink-0 lg:block">
