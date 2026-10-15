@@ -176,11 +176,11 @@ function ProductCard({ p, i }) {
       {/* pantallas: se desplazan a su propio ritmo mientras la tarjeta cruza la pantalla */}
       <div className="relative min-h-[240px] overflow-hidden" style={{ background: `linear-gradient(160deg, rgb(${p.tint.join(",")}), #fff 120%)` }}>
         <div data-shift className="absolute top-[12%] left-[8%] w-[100%] will-change-transform lg:top-[14%] lg:left-[9%] lg:w-[104%]">
-          <MacBook src={p.web[0]} w={p.web[1]} h={p.web[2]} alt={p.web[3]} />
+          <MacBook eager src={p.web[0]} w={p.web[1]} h={p.web[2]} alt={p.web[3]} />
         </div>
         {p.phone && (
           <div data-shift-phone className="absolute right-[6%] bottom-[-14%] w-[24%] will-change-transform lg:w-[22%]">
-            <IPhone src={p.phone[0]} alt={p.phone[1]} />
+            <IPhone eager src={p.phone[0]} alt={p.phone[1]} />
           </div>
         )}
       </div>
