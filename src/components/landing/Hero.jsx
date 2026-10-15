@@ -3,6 +3,9 @@ import Link from "next/link"
 import { BarChart3, CalendarCheck, ChevronRight, ShoppingBag } from "lucide-react"
 import { Move, Scene } from "./parallax"
 import { IPhone, MacBook, Notif } from "./Devices"
+import caresiaWeb from "../../../public/productos/caresia-web.jpg"
+import caresiaMovil from "../../../public/productos/caresia-movil.jpg"
+import tienditaMovil from "../../../public/productos/mitiendita-movil.jpg"
 
 // Portada: titular de producto y un escenario con pantallas reales. Al bajar, la MacBook se acerca, los iPhones se abren
 // hacia los lados girando y las notificaciones se dispersan; con el cursor, cada capa se mueve según su profundidad.
@@ -41,18 +44,18 @@ export default function Hero() {
 
         <Move y={[0, -40]} s={[1, 1.07]} range={[0.35, 1]} className="absolute top-0 left-1/2 w-[76%] md:w-[68%]" style={{ translate: "-50% 0" }}>
           <div className="depth" style={{ "--d": 6 }}>
-            <MacBook src="/productos/caresia-web.jpg" alt="Caresia, software para clínicas y consultorios, en una laptop" priority />
+            <MacBook img={caresiaWeb} alt="Caresia, software para clínicas y consultorios, en una laptop" priority sizes="(min-width: 1024px) 840px, 76vw" />
           </div>
         </Move>
 
         <Move x={[0, -140]} y={[30, -110]} r={[-7, -14]} range={[0.35, 1]} className="absolute bottom-[-4%] left-[1%] w-[24%] md:bottom-[-8%] md:left-[4%] md:w-[17%]">
           <div className="depth" style={{ "--d": 22 }}>
-            <IPhone src="/productos/caresia-movil.jpg" alt="Caresia en un iPhone" priority />
+            <IPhone img={caresiaMovil} alt="Caresia en un iPhone" eager />
           </div>
         </Move>
         <Move x={[0, 150]} y={[50, -150]} r={[8, 15]} range={[0.35, 1]} className="absolute right-[1%] bottom-[-8%] w-[24%] md:right-[5%] md:bottom-[-12%] md:w-[17%]">
           <div className="depth" style={{ "--d": 28 }}>
-            <IPhone src="/productos/mitiendita-movil.jpg" alt="Mitiendita, punto de venta en la nube, en un iPhone" priority />
+            <IPhone img={tienditaMovil} alt="Mitiendita, punto de venta en la nube, en un iPhone" eager />
           </div>
         </Move>
 

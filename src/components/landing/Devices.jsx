@@ -1,14 +1,19 @@
 // Dispositivos hechos en CSS para mostrar las capturas reales de los productos.
 import Image from "next/image"
 
-// MacBook: pantalla con bisel negro y muesca, y la base de aluminio un poco más ancha
-export function MacBook({ src, alt, w = 1800, h = 1125, priority = false, eager = false, className = "" }) {
+// `img` es una imagen importada (trae ancho, alto y una miniatura borrosa que se muestra mientras carga la real).
+// `eager` adelanta la descarga (se usa cuando la sección está por aparecer); `priority` solo para lo que se ve al abrir.
+const loadingOf = (priority, eager) => (priority ? undefined : eager ? "eager" : "lazy")
+
+// MacBook: pantalla con bisel negro y muesca, y la base de aluminio un poco más ancha.
+// La pantalla toma la proporción exacta de la captura, para que no se recorte de los lados.
+export function MacBook({ img, alt, priority = false, eager = false, sizes = "(min-width: 1024px) 900px, 92vw", className = "" }) {
   return (
     <div className={`relative ${className}`}>
       <div className="relative rounded-[14px] bg-[#0d0d0f] p-[1.6%] shadow-[0_0_0_1px_#2a2a2e,0_50px_90px_-40px_rgba(17,17,20,0.55)] md:rounded-[20px]">
         <span className="absolute top-[1.6%] left-1/2 z-10 h-[2.2%] w-[11%] -translate-x-1/2 rounded-b-[6px] bg-[#0d0d0f]" aria-hidden="true" />
-        <div className="relative aspect-[16/10] overflow-hidden rounded-[4px] bg-[#1a1a1d]">
-          <Image src={src} alt={alt} width={w} height={h} priority={priority} loading={priority ? undefined : eager ? "eager" : "lazy"} sizes="(min-width: 1024px) 900px, 92vw" className="h-full w-full object-cover object-top" />
+        <div className="relative overflow-hidden rounded-[4px] bg-[#1a1a1d]" style={{ aspectRatio: `${img.width} / ${img.height}` }}>
+          <Image src={img} alt={alt} placeholder="blur" priority={priority} loading={loadingOf(priority, eager)} sizes={sizes} className="h-full w-full object-cover" />
         </div>
       </div>
       {/* base */}
@@ -20,14 +25,14 @@ export function MacBook({ src, alt, w = 1800, h = 1125, priority = false, eager 
 }
 
 // iPhone: marco de titanio, pantalla redondeada y la isla dinámica. Con `children` en lugar de `src` se dibuja la pantalla a mano.
-export function IPhone({ src, alt, w = 785, h = 1700, priority = false, eager = false, className = "", children }) {
+export function IPhone({ img, alt, priority = false, eager = false, className = "", children }) {
   return (
     <div
       className={`relative aspect-[9/19.5] rounded-[17%/8%] bg-[linear-gradient(135deg,#5b5b60,#2b2b2f_40%,#5d5d62)] p-[3%] shadow-[0_0_0_1px_rgba(0,0,0,0.5),0_50px_80px_-35px_rgba(17,17,20,0.6)] ${className}`}
     >
       <div className="relative h-full w-full overflow-hidden rounded-[14%/6.6%] bg-black">
         {children ?? (
-          <Image src={src} alt={alt} width={w} height={h} priority={priority} loading={priority ? undefined : eager ? "eager" : "lazy"} sizes="(min-width: 1024px) 320px, 45vw" className="h-full w-full object-cover object-top" />
+          <Image src={img} alt={alt} placeholder="blur" priority={priority} loading={loadingOf(priority, eager)} sizes="(min-width: 1024px) 300px, 40vw" className="h-full w-full object-cover object-top" />
         )}
         <span className="absolute top-[2.2%] left-1/2 h-[3.6%] w-[30%] -translate-x-1/2 rounded-full bg-black" aria-hidden="true" />
       </div>

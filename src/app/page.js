@@ -1,5 +1,5 @@
 "use client"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -26,6 +26,20 @@ import Navbar, { Logo } from "../components/landing/Navbar"
 import Hero from "../components/landing/Hero"
 import { IPhone, MacBook, Notif } from "../components/landing/Devices"
 import { CountUp, Move, Reveal, Scene, useMouseDepth } from "../components/landing/parallax"
+// Imágenes importadas: Next conoce su tamaño y genera una miniatura borrosa que se ve mientras carga la real
+import tienditaApp from "../../public/productos/mitiendita-app.webp"
+import tienditaMovil from "../../public/productos/mitiendita-movil.jpg"
+import caresiaWeb from "../../public/productos/caresia-web.jpg"
+import caresiaMovil from "../../public/productos/caresia-movil.jpg"
+import restauranteWeb from "../../public/productos/mirestaurante-landing.webp"
+import internshipsWeb from "../../public/productos/internships-landing.png"
+import miinfoWeb from "../../public/productos/miinfo-landing.webp"
+import behiveWeb from "../../public/productos/behive-landing.webp"
+import fotoTienda from "../../public/fotos/tienda.jpg"
+import fotoConsultorio from "../../public/fotos/consultorio.jpg"
+import fotoRestaurante from "../../public/fotos/restaurante.jpg"
+import fotoSecuoya from "../../public/fotos/secuoya.jpg"
+import fotoTijuana from "../../public/fotos/tijuana.jpg"
 
 const WA = "526645798903"
 const wa = (text) => `https://wa.me/${WA}?text=${encodeURIComponent(text)}`
@@ -77,8 +91,8 @@ const products = [
     tagline: "Tu tienda no cierra aunque la compu falle.",
     description: "Punto de venta en la nube para abarrotes y comercios. Abre caja desde el celular, la tablet o la PC sin instalar nada.",
     features: ["Lector de código de barras o búsqueda por nombre", "Cobrar en segundos con F12", "Ventas en espera, descuentos y cortes de caja"],
-    web: ["/productos/mitiendita-app.webp", 2000, 1161, "Pantalla de venta de Mitiendita"],
-    phone: ["/productos/mitiendita-movil.jpg", "Mitiendita en el celular"],
+    web: [tienditaApp, "Pantalla de venta de Mitiendita"],
+    phone: [tienditaMovil, "Mitiendita en el celular"],
   },
   {
     name: "Caresia",
@@ -89,8 +103,8 @@ const products = [
     tagline: "Menos papeleo, más consulta.",
     description: "Agenda, expedientes, recetas y cobros para clínicas dentales y consultorios. Funciona desde el navegador, sin instalar nada.",
     features: ["Agenda compartida por día y por profesional", "Expediente completo con búsqueda por CURP", "Permisos por rol: recepción agenda, el doctor consulta"],
-    web: ["/productos/caresia-web.jpg", 1800, 1125, "Página de Caresia con su agenda de citas"],
-    phone: ["/productos/caresia-movil.jpg", "Caresia en el celular"],
+    web: [caresiaWeb, "Página de Caresia con su agenda de citas"],
+    phone: [caresiaMovil, "Caresia en el celular"],
   },
   {
     name: "Mirestaurante",
@@ -100,7 +114,7 @@ const products = [
     tagline: "Cada comanda, en su lugar.",
     description: "Comandas del mesero a la cocina y de la cocina a la caja, con mapa de mesas en vivo. Sin papelitos ni gritos.",
     features: ["Pedidos desde el celular, directo a cocina", "Mapa de mesas: libre, pidiendo, listo, comiendo", "Pase de cocina con el tiempo de cada comanda"],
-    web: ["/productos/mirestaurante-landing.webp", 2000, 1158, "Pase de cocina y mapa de mesas de Mirestaurante"],
+    web: [restauranteWeb, "Pase de cocina y mapa de mesas de Mirestaurante"],
   },
   {
     name: "internships.gg",
@@ -110,7 +124,7 @@ const products = [
     tagline: "Sube de nivel tu carrera mientras estudias.",
     description: "Misiones reales en empresas reales para universitarios: freelance, remotas y por proyecto, con XP y portafolio.",
     features: ["Misiones freelance, remotas y por proyecto", "XP y rachas que motivan a seguir", "Sección para empresas que buscan talento"],
-    web: ["/productos/internships-landing.png", 1440, 900, "Página de inicio de internships.gg"],
+    web: [internshipsWeb, "Página de inicio de internships.gg"],
   },
   {
     name: "Mi Info",
@@ -120,7 +134,7 @@ const products = [
     tagline: "Tu tarjeta de presentación, en un enlace.",
     description: "Tus datos, tus redes y tu agenda en una página que se comparte por WhatsApp y se guarda en el teléfono con un toque.",
     features: ["WhatsApp, teléfono, correo y hasta 8 enlaces", "Botón para guardar tu contacto", "Agenda opcional con confirmación por correo"],
-    web: ["/productos/miinfo-landing.webp", 2000, 1160, "Página de Mi Info con una tarjeta de ejemplo"],
+    web: [miinfoWeb, "Página de Mi Info con una tarjeta de ejemplo"],
   },
   {
     name: "BeHive",
@@ -130,14 +144,14 @@ const products = [
     tagline: "Mesa de ayuda profesional, con precio en pesos.",
     description: "Tickets, SLA, centro de ayuda y reportes en una sola herramienta en español, pensada para empresas en México.",
     features: ["Tickets con prioridad, estados y notas internas", "SLA, centro de ayuda y reportes", "Gratis con 1 agente y hasta 10 personas"],
-    web: ["/productos/behive-landing.webp", 2000, 1163, "Lista de tickets de BeHive"],
+    web: [behiveWeb, "Lista de tickets de BeHive"],
   },
 ]
 const LAST_TINT = [241, 241, 238]
 
-function ProductCard({ p, i }) {
+function ProductCard({ p, i, eager }) {
   return (
-    <article data-card className="relative grid h-full shrink-0 snap-center grid-rows-[auto_1fr] overflow-hidden rounded-[32px] bg-white shadow-[0_30px_80px_-50px_rgba(17,17,20,0.45)] lg:grid-cols-[0.82fr_1.18fr] lg:grid-rows-1 w-[86vw] lg:w-[min(1120px,84vw)]">
+    <article data-card className="relative grid h-full shrink-0 snap-center grid-rows-[auto_1fr] overflow-hidden rounded-[32px] bg-white shadow-[0_30px_80px_-50px_rgba(17,17,20,0.45)] lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:grid-rows-1 w-[86vw] lg:w-[min(1120px,84vw)]">
       <div className="flex flex-col p-7 md:p-10 lg:p-12">
         <div className="flex items-center justify-between">
           <span className="eyebrow text-mist">
@@ -148,7 +162,7 @@ function ProductCard({ p, i }) {
             {p.live ? "En línea" : "Demo bajo pedido"}
           </span>
         </div>
-        <h3 className="display mt-6 text-[clamp(2.4rem,4.4vw,3.8rem)]" style={{ color: p.color }}>
+        <h3 className={`display mt-6 ${p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`} style={{ color: p.color }}>
           {p.name}
         </h3>
         <p className="mt-3 text-xl leading-snug font-semibold tracking-[-0.02em] md:text-2xl">{p.tagline}</p>
@@ -175,12 +189,14 @@ function ProductCard({ p, i }) {
       </div>
       {/* pantallas: se desplazan a su propio ritmo mientras la tarjeta cruza la pantalla */}
       <div className="relative min-h-[240px] overflow-hidden" style={{ background: `linear-gradient(160deg, rgb(${p.tint.join(",")}), #fff 120%)` }}>
-        <div data-shift className="absolute top-[12%] left-[8%] w-[100%] will-change-transform lg:top-[14%] lg:left-[9%] lg:w-[104%]">
-          <MacBook eager src={p.web[0]} w={p.web[1]} h={p.web[2]} alt={p.web[3]} />
+        <div className="absolute inset-0 flex items-center justify-center px-[8%] py-[10%]">
+          <div data-shift className={`w-full will-change-transform ${p.phone ? "lg:-translate-x-[6%]" : ""}`}>
+            <MacBook eager={eager} img={p.web[0]} alt={p.web[1]} sizes="(min-width: 1024px) 560px, 80vw" />
+          </div>
         </div>
         {p.phone && (
-          <div data-shift-phone className="absolute right-[6%] bottom-[-14%] w-[24%] will-change-transform lg:w-[22%]">
-            <IPhone eager src={p.phone[0]} alt={p.phone[1]} />
+          <div data-shift-phone className="absolute right-[5%] bottom-[-10%] w-[22%] will-change-transform lg:bottom-[-6%] lg:w-[20%]">
+            <IPhone eager={eager} img={p.phone[0]} alt={p.phone[1]} />
           </div>
         )}
       </div>
@@ -195,6 +211,15 @@ function Products() {
   const count = useRef(null)
   const bar = useRef(null)
   const tints = [...products.map((p) => p.tint), LAST_TINT]
+  // Las capturas entran de lado (fuera de la vista del navegador): se descargan cuando la sección está a una pantalla
+  const [near, setNear] = useState(false)
+  useEffect(() => {
+    const el = sticky.current?.parentElement
+    if (!el) return
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && (setNear(true), io.disconnect()), { rootMargin: "100% 0px" })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
 
   const onProgress = (p, reduced) => {
     const t = track.current
@@ -204,25 +229,29 @@ function Products() {
       t.style.transform = ""
       return
     }
-    const max = t.scrollWidth - window.innerWidth + 80
-    t.style.transform = `translate3d(${(-p * max).toFixed(1)}px,0,0)`
+    // cada tarjeta se detiene al centro de la pantalla y se queda un momento antes de pasar a la siguiente
+    const cards = [...t.querySelectorAll("[data-card]")]
+    const vw = window.innerWidth
+    const at = (c) => vw / 2 - (c.offsetLeft + c.offsetWidth / 2)
+    const f = p * (cards.length - 1)
+    const i = Math.min(cards.length - 2, Math.floor(f))
+    const k = Math.max(0, Math.min(1, (f - i - 0.18) / 0.64))
+    const e = k * k * (3 - 2 * k)
+    t.style.transform = `translate3d(${(at(cards[i]) + (at(cards[i + 1]) - at(cards[i])) * e).toFixed(1)}px,0,0)`
     // color de fondo entre el producto actual y el siguiente
-    const f = p * (tints.length - 1)
-    const a = tints[Math.floor(f)]
-    const b = tints[Math.min(tints.length - 1, Math.floor(f) + 1)]
-    const k = f - Math.floor(f)
-    if (sticky.current) sticky.current.style.background = `rgb(${a.map((v, j) => Math.round(v + (b[j] - v) * k)).join(",")})`
-    if (count.current) count.current.textContent = `0${Math.min(tints.length, Math.round(f) + 1)}`
+    const a = tints[i]
+    const b = tints[i + 1]
+    if (sticky.current) sticky.current.style.background = `rgb(${a.map((v, j) => Math.round(v + (b[j] - v) * e)).join(",")})`
+    if (count.current) count.current.textContent = `0${Math.round(i + e) + 1}`
     if (bar.current) bar.current.style.transform = `scaleX(${p.toFixed(3)})`
     // parallax dentro de cada tarjeta: la laptop va más lento que la tarjeta y el teléfono sube
-    const vw = window.innerWidth
-    t.querySelectorAll("[data-card]").forEach((card) => {
+    cards.forEach((card) => {
       const r = card.getBoundingClientRect()
       const d = (r.left + r.width / 2 - vw / 2) / vw // -1 … 1 respecto al centro
       const m = card.querySelector("[data-shift]")
       const ph = card.querySelector("[data-shift-phone]")
-      if (m) m.style.transform = `translate3d(${(d * 140).toFixed(1)}px, ${(Math.abs(d) * 30).toFixed(1)}px, 0)`
-      if (ph) ph.style.transform = `translate3d(${(d * -60).toFixed(1)}px, ${(d * 90).toFixed(1)}px, 0) rotate(${(d * 8).toFixed(2)}deg)`
+      if (m) m.style.transform = `translate3d(${(d * 36).toFixed(1)}px, 0, 0)`
+      if (ph) ph.style.transform = `translate3d(${(d * -30).toFixed(1)}px, ${(d * 60).toFixed(1)}px, 0) rotate(${(d * 5).toFixed(2)}deg)`
     })
   }
 
@@ -251,7 +280,7 @@ function Products() {
         <div className="mt-10 overflow-x-auto [scrollbar-width:none] lg:mt-0 lg:flex-1 lg:overflow-visible lg:pb-10">
           <div ref={track} className="flex h-[min(76vh,660px)] snap-x snap-mandatory gap-5 px-5 will-change-transform md:px-10 lg:h-full lg:gap-8 lg:px-[max(2.5rem,calc((100vw-1160px)/2))]">
             {products.map((p, i) => (
-              <ProductCard key={p.name} p={p} i={i} />
+              <ProductCard key={p.name} p={p} i={i} eager={near} />
             ))}
             {/* el séptimo */}
             <article data-card className="flex h-full w-[86vw] shrink-0 snap-center flex-col justify-center rounded-[32px] bg-ink p-10 text-white md:p-14 lg:w-[min(720px,70vw)]">
@@ -273,13 +302,13 @@ function Products() {
 
 /* ───────────────────────── En la calle (fotos) ───────────────────────── */
 // Cada foto se mueve dentro de su marco (más lenta que la página) y su notificación flota en otra capa
-function Photo({ src, alt, w, h, className = "", frame = [0, 0], inner = [-50, 50], children, caption }) {
+function Photo({ img, alt, className = "", frame = [0, 0], inner = [-50, 50], children, caption }) {
   return (
     <Move y={frame} className={className}>
       <figure className="md:flex md:h-full md:flex-col">
         <div className="relative overflow-hidden rounded-[28px] md:min-h-0 md:flex-1">
           <Move y={inner} s={[1.18, 1.18]} className="relative aspect-[4/5] md:aspect-auto md:h-full">
-            <Image src={src} alt={alt} width={w} height={h} sizes="(min-width: 1024px) 50vw, 92vw" className="h-full w-full object-cover" />
+            <Image src={img} alt={alt} placeholder="blur" sizes="(min-width: 1024px) 50vw, 92vw" className="h-full w-full object-cover" />
           </Move>
           {children}
         </div>
@@ -306,10 +335,8 @@ function InTheWild() {
         />
         <div className="mt-16 grid gap-6 md:grid-cols-12 md:gap-8">
           <Photo
-            src="/fotos/tienda.jpg"
+            img={fotoTienda}
             alt="Tienda de abarrotes de barrio"
-            w={2000}
-            h={1403}
             frame={[60, -40]}
             className="md:col-span-7 md:h-[640px]"
             caption="Tienda de abarrotes · Mitiendita"
@@ -320,10 +347,8 @@ function InTheWild() {
           </Photo>
           <div className="grid gap-6 md:col-span-5 md:gap-8">
             <Photo
-              src="/fotos/consultorio.jpg"
+              img={fotoConsultorio}
               alt="Consultorio dental con sillón naranja"
-              w={2000}
-              h={1333}
               frame={[120, -80]}
               className="md:h-[300px]"
               caption="Consultorio dental · Caresia"
@@ -333,10 +358,8 @@ function InTheWild() {
               </Move>
             </Photo>
             <Photo
-              src="/fotos/restaurante.jpg"
+              img={fotoRestaurante}
               alt="Plato de tacos con guacamole"
-              w={2000}
-              h={1500}
               frame={[180, -120]}
               className="md:h-[300px]"
               caption="Taquería · Mirestaurante"
@@ -628,7 +651,7 @@ function Studio() {
       {/* la secuoya: la foto se aleja mientras el texto sube */}
       <Scene className="relative h-[115vh] min-h-[720px] overflow-hidden bg-[#1a120d] text-white">
         <Move s={[1.3, 1.02]} y={[-60, 60]} className="absolute inset-0">
-          <Image src="/fotos/secuoya.jpg" alt="Troncos de secuoyas gigantes en un bosque de California" fill sizes="100vw" className="object-cover" />
+          <Image src={fotoSecuoya} alt="Troncos de secuoyas gigantes en un bosque de California" placeholder="blur" fill sizes="100vw" className="object-cover" />
         </Move>
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,8,6,0.55),rgba(10,8,6,0.25)_40%,rgba(10,8,6,0.8))]" />
         <div className="container relative flex h-full flex-col justify-end pb-20 md:pb-28">
@@ -660,7 +683,7 @@ function Studio() {
           <Move x={[-120, 20]} className="relative">
             <div className="relative aspect-[4/3] overflow-hidden rounded-[32px]">
               <Move x={[40, -40]} s={[1.15, 1.15]} className="absolute inset-0">
-                <Image src="/fotos/tijuana.jpg" alt="Vista de Tijuana desde una avenida en lo alto" fill sizes="(min-width: 1024px) 55vw, 92vw" className="object-cover" />
+                <Image src={fotoTijuana} alt="Vista de Tijuana desde una avenida en lo alto" placeholder="blur" fill sizes="(min-width: 1024px) 55vw, 92vw" className="object-cover" />
               </Move>
             </div>
             <Move x={[80, -20]} className="absolute -right-4 -bottom-6 md:-right-10">

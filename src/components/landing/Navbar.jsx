@@ -9,7 +9,7 @@ import { useScrollFrame } from "./parallax"
 export function Logo({ className = "", compact = false, light = false }) {
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
-      <Image src="/brand/hyperion-mark.png" alt="" width={273} height={480} priority className={`${compact ? "h-7" : "h-9"} w-auto`} />
+      <Image src="/brand/hyperion-mark.png" alt="" width={273} height={480} priority sizes="40px" className={`${compact ? "h-7" : "h-9"} w-auto`} />
       <span className="leading-none">
         <span className={`block text-[1.2rem] font-extrabold tracking-[-0.03em] ${light ? "text-white" : "text-ink"}`}>Hyperion</span>
         <span className={`mt-1 block font-mono text-[9px] tracking-[0.3em] uppercase ${light ? "text-white/60" : "text-mist"}`}>Software</span>
