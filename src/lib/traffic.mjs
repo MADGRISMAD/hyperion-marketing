@@ -11,6 +11,7 @@ export const SITES = [
   { name: "Caresia", href: "https://caresia.mx", websiteId: "055800fe-8fa4-42a7-a6af-daca83ab9c81", shareId: "e2bfb4fd7f072684", color: "#2a5d9f" },
   { name: "Mi Info", href: "https://miinfo.15-235-62-27.sslip.io", websiteId: "18b9edca-fe91-491e-8ec4-e483b3bc768e", shareId: "81f9e19070c89475", color: "#1f3a5f", beta: true },
   { name: "BeHive", href: "https://micolmena-eta.vercel.app", websiteId: "5604b26b-c871-4d2f-afbb-855757dea310", shareId: "96351afc8ce48306", color: "#b45309", beta: true },
+  { name: "Camión TJ", href: "https://camion.15-235-62-27.sslip.io", websiteId: "1d56c10e-178f-40dd-af9a-81d34d627d41", shareId: "9bbdff67b21ffcef", color: "#b98600", beta: true },
   { name: "Hyperion", href: "https://www.hyperionmkt.com", websiteId: "2df43349-9f98-473d-936a-7b70b6005039", shareId: "e77c8cb351dbea3e", color: "#1d4ed8" },
 ]
 

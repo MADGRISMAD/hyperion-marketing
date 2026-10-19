@@ -8,7 +8,7 @@ export const revalidate = 600
 
 export const metadata = {
   title: "Tráfico de nuestros sitios | Hyperion Marketing",
-  description: "Visitas de la última semana de Mitiendita, Mirestaurante, Caresia, BeHive y Hyperion. Datos públicos, sin cookies.",
+  description: "Visitas de la última semana de Mitiendita, Mirestaurante, Caresia, BeHive, Mi Info, Camión TJ y Hyperion. Datos públicos, sin cookies.",
   alternates: { canonical: "/trafico" },
 }
 

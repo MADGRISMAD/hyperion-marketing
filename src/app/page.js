@@ -35,6 +35,8 @@ import restauranteWeb from "../../public/productos/mirestaurante-landing.webp"
 import internshipsWeb from "../../public/productos/internships-landing.png"
 import miinfoWeb from "../../public/productos/miinfo-landing.webp"
 import behiveWeb from "../../public/productos/behive-landing.webp"
+import camionWeb from "../../public/productos/camion-web.jpg"
+import camionMovil from "../../public/productos/camion-movil.jpg"
 import fotoTienda from "../../public/fotos/tienda.jpg"
 import fotoConsultorio from "../../public/fotos/consultorio.jpg"
 import fotoRestaurante from "../../public/fotos/restaurante.jpg"
@@ -145,6 +147,18 @@ const products = [
     description: "Tickets, SLA, centro de ayuda y reportes en una sola herramienta en español, pensada para empresas en México.",
     features: ["Tickets con prioridad, estados y notas internas", "SLA, centro de ayuda y reportes", "Gratis con 1 agente y hasta 10 personas"],
     web: [behiveWeb, "Lista de tickets de BeHive"],
+  },
+  {
+    name: "Camión TJ",
+    cat: "Movilidad",
+    color: "var(--color-bus)",
+    tint: [255, 245, 214],
+    live: "https://camion.15-235-62-27.sslip.io",
+    tagline: "Cómo llegar en camión, y cuánto te va a costar.",
+    description: "Rutas reales de Tijuana: camiones, taxis de ruta y calafias. Te dice qué tomar, cuánto cuesta cada pasaje y te guía a pie hasta la parada.",
+    features: ["Más de 100 rutas con su trazado real", "Opciones por más barata, más rápida o menos caminar", "Camino a pie a la parada y aviso para bajar"],
+    web: [camionWeb, "Pantallas de búsqueda, opciones y detalle de Camión TJ"],
+    phone: [camionMovil, "Camino a pie a la parada en Camión TJ"],
   },
 ]
 const LAST_TINT = [241, 241, 238]
