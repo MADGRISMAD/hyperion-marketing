@@ -1000,7 +1000,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Escríbenos por WhatsApp"
-          className="fixed right-5 bottom-5 z-50 flex h-13 w-13 items-center justify-center rounded-[16px] bg-ink text-canvas transition-transform hover:scale-105"
+          className="fixed right-5 bottom-5 z-50 flex h-13 w-13 items-center justify-center rounded-[16px] bg-pink text-ink transition-transform hover:scale-105"
         >
           <MessageCircle className="h-6 w-6" />
         </a>
