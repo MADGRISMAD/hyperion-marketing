@@ -23,7 +23,7 @@ import {
   UtensilsCrossed,
 } from "lucide-react"
 import Navbar, { Logo } from "../components/landing/Navbar"
-import Hero from "../components/landing/Hero"
+import Hero from "../components/landing/HeroVideo"
 import { IPhone, MacBook, Notif } from "../components/landing/Devices"
 import { CountUp, Move, Reveal, Scene, useMouseDepth } from "../components/landing/parallax"
 // Imágenes importadas: Next conoce su tamaño y genera una miniatura borrosa que se ve mientras carga la real
