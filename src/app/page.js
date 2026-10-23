@@ -162,10 +162,15 @@ const products = [
   },
 ]
 const LAST_TINT = [241, 241, 238]
+// Los tintes pastel de cada producto, llevados al tema oscuro: el matiz se conserva y el fondo se oscurece
+const oscuro = (t) => {
+  const m = Math.min(...t)
+  return t.map((v, i) => [14, 17, 15][i] + (v - m))
+}
 
 function ProductCard({ p, i, eager }) {
   return (
-    <article data-card className="relative grid h-full shrink-0 snap-center grid-rows-[auto_1fr] overflow-hidden rounded-[32px] bg-white shadow-[0_30px_80px_-50px_rgba(17,17,20,0.45)] lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:grid-rows-1 w-[86vw] lg:w-[min(1120px,84vw)]">
+    <article data-card className="relative grid h-full shrink-0 snap-center grid-rows-[auto_1fr] overflow-hidden rounded-[32px] bg-paper shadow-[0_30px_80px_-50px_rgba(0,0,0,0.65)] lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:grid-rows-1 w-[86vw] lg:w-[min(1120px,84vw)]">
       <div className="flex flex-col p-7 md:p-10 lg:p-12">
         <div className="flex items-center justify-between">
           <span className="eyebrow text-mist">
@@ -202,7 +207,7 @@ function ProductCard({ p, i, eager }) {
         </div>
       </div>
       {/* pantallas: se desplazan a su propio ritmo mientras la tarjeta cruza la pantalla */}
-      <div className="relative min-h-[240px] overflow-hidden" style={{ background: `linear-gradient(160deg, rgb(${p.tint.join(",")}), #fff 120%)` }}>
+      <div className="relative min-h-[240px] overflow-hidden" style={{ background: `linear-gradient(160deg, rgb(${oscuro(p.tint).join(",")}), #1a1f1b 120%)` }}>
         <div className="absolute inset-0 flex items-center justify-center px-[8%] py-[10%]">
           <div data-shift className={`w-full will-change-transform ${p.phone ? "lg:-translate-x-[6%]" : ""}`}>
             <MacBook eager={eager} img={p.web[0]} alt={p.web[1]} sizes="(min-width: 1024px) 560px, 80vw" />
@@ -224,7 +229,7 @@ function Products() {
   const track = useRef(null)
   const count = useRef(null)
   const bar = useRef(null)
-  const tints = [...products.map((p) => p.tint), LAST_TINT]
+  const tints = [...products.map((p) => oscuro(p.tint)), oscuro(LAST_TINT)]
   // Las capturas entran de lado (fuera de la vista del navegador): se descargan cuando la sección está a una pantalla
   const [near, setNear] = useState(false)
   useEffect(() => {
@@ -297,13 +302,13 @@ function Products() {
               <ProductCard key={p.name} p={p} i={i} eager={near} />
             ))}
             {/* el séptimo */}
-            <article data-card className="flex h-full w-[86vw] shrink-0 snap-center flex-col justify-center rounded-[32px] bg-ink p-10 text-white md:p-14 lg:w-[min(720px,70vw)]">
+            <article data-card className="flex h-full w-[86vw] shrink-0 snap-center flex-col justify-center rounded-[32px] bg-inverse p-10 text-white md:p-14 lg:w-[min(720px,70vw)]">
               <span className="eyebrow text-white/50">07 · ¿El tuyo?</span>
               <h3 className="display mt-6 text-[clamp(2.6rem,5vw,4.6rem)]">
                 El séptimo puede ser <span className="grad [--grad-a:#7fe0a8] [--grad-b:#9db5ff] [--grad-c:#c4b5ff]">tu idea.</span>
               </h3>
               <p className="mt-5 max-w-md text-lg text-white/70">El mismo equipo que construyó estos seis, trabajando en el tuyo.</p>
-              <Link href="#contacto" className="btn mt-9 self-start bg-white text-ink">
+              <Link href="#contacto" className="btn mt-9 self-start bg-white text-[#111114]">
                 Cotizar proyecto <ArrowRight className="h-4 w-4" />
               </Link>
             </article>
@@ -396,7 +401,7 @@ function Tile({ className = "", children }) {
 
 function Services() {
   return (
-    <Scene id="servicios" className="bg-white py-24 md:py-36">
+    <Scene id="servicios" className="bg-paper py-24 md:py-36">
       <div className="container">
         <Head
           eyebrow="Servicios"
@@ -412,7 +417,7 @@ function Services() {
 
         <div className="mt-16 grid gap-5 lg:grid-cols-6">
           {/* Sistemas a la medida */}
-          <Tile className="bg-[#eef2fc] lg:col-span-4 lg:row-span-2">
+          <Tile className="bg-[#141b2d] lg:col-span-4 lg:row-span-2">
             <p className="eyebrow text-cobalt">01</p>
             <h3 className="display mt-3 text-4xl md:text-5xl">Sistemas a la medida</h3>
             <p className="mt-3 max-w-md text-graphite">Software diseñado alrededor de tus procesos, no al revés: ERP, CRM, portales, inventarios y paneles de control.</p>
@@ -425,12 +430,12 @@ function Services() {
                 <div>
                   <div className="flex items-baseline justify-between">
                     <span className="text-[13px] font-semibold text-mist">Ventas de la semana</span>
-                    <span className="rounded-full bg-[#e3f6ec] px-2 py-0.5 text-[12px] font-semibold text-[#16804f]">+18%</span>
+                    <span className="rounded-full bg-[#16342a] px-2 py-0.5 text-[12px] font-semibold text-[#4ade80]">+18%</span>
                   </div>
                   <div className="display mt-2 text-4xl tabular-nums">$84,210</div>
                   <div className="mt-5 flex h-28 items-end gap-2">
                     {[38, 52, 46, 64, 58, 82, 96].map((v, i) => (
-                      <span key={i} className="flex-1 rounded-t-md" style={{ height: `${v}%`, background: i === 6 ? "var(--color-cobalt)" : "#d7e0f7" }} />
+                      <span key={i} className="flex-1 rounded-t-md" style={{ height: `${v}%`, background: i === 6 ? "var(--color-cobalt)" : "#2b3658" }} />
                     ))}
                   </div>
                   <div className="mt-2 flex justify-between font-mono text-[11px] text-mist">
@@ -462,7 +467,7 @@ function Services() {
           </Tile>
 
           {/* Puntos de venta */}
-          <Tile className="bg-[#fdf1e7] lg:col-span-2">
+          <Tile className="bg-[#2a1d12] lg:col-span-2">
             <p className="eyebrow text-tangerine">02</p>
             <h3 className="display mt-3 text-3xl">Puntos de venta</h3>
             <p className="mt-3 text-graphite">Instalación y personalización para tiendas, restaurantes y comercios, con sistema propio en la nube.</p>
@@ -492,7 +497,7 @@ function Services() {
           </Tile>
 
           {/* Automatizaciones */}
-          <Tile className="bg-[#e8f5ef] lg:col-span-2">
+          <Tile className="bg-[#12251c] lg:col-span-2">
             <p className="eyebrow text-mint">03</p>
             <h3 className="display mt-3 text-3xl">Automatizaciones</h3>
             <p className="mt-3 text-graphite">Que tus sistemas hablen entre ellos y hagan solos el trabajo repetitivo: reportes, integraciones y bots.</p>
@@ -502,7 +507,7 @@ function Services() {
           </Tile>
 
           {/* Servicio técnico */}
-          <Tile className="bg-ink text-white lg:col-span-3">
+          <Tile className="bg-inverse text-white lg:col-span-3">
             <p className="eyebrow text-white/50">04</p>
             <h3 className="display mt-3 text-3xl md:text-4xl">Servicio técnico</h3>
             <p className="mt-3 max-w-md text-white/70">Mantenimiento de equipos, redes, instalación y soporte a los sistemas que ya tienes funcionando.</p>
@@ -641,7 +646,7 @@ function Process() {
           <ol className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {steps.map(({ icon: Icon, title, text, color }, i) => (
               <Move as="li" key={title} y={[40 + i * 25, -10]} className="relative text-center">
-                <span className="relative mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_0_0_6px_var(--color-canvas),0_12px_30px_-12px_rgba(17,17,20,0.35)]" style={{ color }}>
+                <span className="relative mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-paper shadow-[0_0_0_6px_var(--color-canvas),0_12px_30px_-12px_rgba(17,17,20,0.35)]" style={{ color }}>
                   <Icon className="h-6 w-6" />
                 </span>
                 <p className="eyebrow mt-6" style={{ color }}>
@@ -756,7 +761,7 @@ function Contact() {
   const label = "mb-2 block text-[14px] font-semibold"
 
   return (
-    <section id="contacto" className="bg-white py-24 md:py-36">
+    <section id="contacto" className="bg-paper py-24 md:py-36">
       <div className="container grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
         <div>
           <Head
@@ -797,17 +802,17 @@ function Contact() {
             <div className="mt-7 grid gap-5 md:grid-cols-2">
               <label className="block">
                 <span className={label}>Nombre</span>
-                <input name="name" required value={form.name} onChange={onChange} autoComplete="name" placeholder="Tu nombre" className={`${field} bg-white`} />
+                <input name="name" required value={form.name} onChange={onChange} autoComplete="name" placeholder="Tu nombre" className={`${field} bg-paper`} />
               </label>
               <label className="block">
                 <span className={label}>Email</span>
-                <input name="email" type="email" required value={form.email} onChange={onChange} autoComplete="email" placeholder="tu@negocio.com" className={`${field} bg-white`} />
+                <input name="email" type="email" required value={form.email} onChange={onChange} autoComplete="email" placeholder="tu@negocio.com" className={`${field} bg-paper`} />
               </label>
               <label className="block md:col-span-2">
                 <span className={label}>
                   Teléfono <span className="font-normal text-mist">(opcional)</span>
                 </span>
-                <input name="phone" type="tel" value={form.phone} onChange={onChange} autoComplete="tel" placeholder="664 000 0000" className={`${field} bg-white`} />
+                <input name="phone" type="tel" value={form.phone} onChange={onChange} autoComplete="tel" placeholder="664 000 0000" className={`${field} bg-paper`} />
               </label>
             </div>
             <fieldset className="mt-6">
@@ -817,7 +822,7 @@ function Contact() {
                   <label
                     key={n}
                     className={`cursor-pointer rounded-full px-4 py-2 text-[14px] font-medium transition-colors has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-cobalt ${
-                      form.need === n ? "bg-ink text-white" : "bg-white text-graphite shadow-[inset_0_0_0_1px_var(--color-line)] hover:text-ink"
+                      form.need === n ? "bg-ink text-[#111114]" : "bg-paper text-graphite shadow-[inset_0_0_0_1px_var(--color-line)] hover:text-ink"
                     }`}
                   >
                     <input type="radio" name="need" value={n} checked={form.need === n} onChange={onChange} className="sr-only" />
@@ -828,10 +833,10 @@ function Contact() {
             </fieldset>
             <label className="mt-6 block">
               <span className={label}>Mensaje</span>
-              <textarea name="message" required rows={5} value={form.message} onChange={onChange} placeholder="Cuéntanos de tu negocio y qué te gustaría resolver" className={`${field} resize-none bg-white`} />
+              <textarea name="message" required rows={5} value={form.message} onChange={onChange} placeholder="Cuéntanos de tu negocio y qué te gustaría resolver" className={`${field} resize-none bg-paper`} />
             </label>
             {status === "error" && (
-              <p role="alert" className="mt-4 rounded-2xl bg-[#fdecea] px-4 py-3 text-sm text-[#a3271a]">
+              <p role="alert" className="mt-4 rounded-2xl bg-[#3a1814] px-4 py-3 text-sm text-[#ff9c8f]">
                 No pudimos enviar tu mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.
               </p>
             )}
@@ -934,7 +939,7 @@ function Footer() {
 export default function Home() {
   useMouseDepth()
   return (
-    <div className="relative">
+    <div className="tema-oscuro relative">
       <Navbar />
       <main>
         <Hero />

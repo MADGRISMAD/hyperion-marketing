@@ -1,9 +1,8 @@
 "use client"
-import { useRef, useState } from "react"
+import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
-import { useScrollFrame } from "./parallax"
 
 // Símbolo del logo (árbol + H + flecha) con el nombre al lado.
 export function Logo({ className = "", compact = false, light = false }) {
@@ -28,47 +27,28 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
-  const header = useRef(null)
 
-  // Sobre el video de la portada la barra es transparente y clara; al salir de ella vuelve a su estilo normal.
-  useScrollFrame((y) => {
-    const h = header.current
-    if (!h) return
-    const inicio = document.getElementById("inicio")
-    const sobreHero = !!inicio && inicio.getBoundingClientRect().bottom > 64
-    h.toggleAttribute("data-hero", sobreHero)
-    h.toggleAttribute("data-scrolled", y > 24 && !sobreHero)
-  })
 
   return (
     <>
-      <header
-        ref={header}
-        className="group/nav fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-canvas/90 backdrop-blur-xl transition-[background-color,border-color] duration-300 data-[scrolled]:border-line/80 data-[scrolled]:bg-canvas/75 data-[scrolled]:backdrop-blur-xl data-[scrolled]:backdrop-saturate-150 data-[hero]:border-transparent data-[hero]:bg-transparent data-[hero]:backdrop-blur-none"
-      >
-        <div className="container flex h-16 items-center justify-between">
-          <Link href="#inicio" aria-label="Hyperion Software, inicio">
-            <Logo compact />
+      <header className="fixed top-3 left-3 z-50 max-w-[calc(100vw-1.5rem)] rounded-2xl border border-white/10 bg-[#0c0f0d]/55 shadow-[0_12px_30px_-14px_rgba(0,0,0,0.7)] backdrop-blur-xl backdrop-saturate-150">
+        <div className="flex items-center gap-1 p-1.5 pl-3">
+          <Link href="#inicio" aria-label="Hyperion Software, inicio" className="mr-1.5">
+            <Logo compact light />
           </Link>
-          <nav className="hidden items-center gap-8 text-[14px] font-medium text-graphite group-data-[hero]/nav:text-white/85 lg:flex">
+          <nav className="hidden items-center text-[13px] font-medium text-white/75 lg:flex">
             {links.map(([href, label]) => (
-              <Link key={href} href={href} className="transition-colors hover:text-ink group-data-[hero]/nav:hover:text-white">
+              <Link key={href} href={href} className="rounded-lg px-2.5 py-1.5 transition-colors hover:bg-white/10 hover:text-white">
                 {label}
               </Link>
             ))}
           </nav>
-          <div className="flex items-center gap-2">
-            <Link href="#contacto" className="btn btn-ink hidden !h-9 !px-4 !text-[14px] group-data-[hero]/nav:!bg-white group-data-[hero]/nav:!text-ink sm:inline-flex">
-              Cotizar proyecto
-            </Link>
-            <button
-              className="flex h-10 w-10 items-center justify-center rounded-full text-ink group-data-[hero]/nav:text-white lg:hidden"
-              onClick={() => setOpen(true)}
-              aria-label="Abrir menú"
-            >
-              <Menu className="h-5 w-5" />
-            </button>
-          </div>
+          <Link href="#contacto" className="btn btn-light ml-1 hidden !h-8 !px-3.5 !text-[13px] sm:inline-flex">
+            Cotizar
+          </Link>
+          <button className="flex h-8 w-8 items-center justify-center rounded-lg text-white lg:hidden" onClick={() => setOpen(true)} aria-label="Abrir menú">
+            <Menu className="h-5 w-5" />
+          </button>
         </div>
       </header>
 

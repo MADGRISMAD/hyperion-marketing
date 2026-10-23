@@ -30,8 +30,53 @@
   --color-iris: #6a55e0; /* Mi Info */
   --color-bus: #b98600; /* Camión TJ */
   --color-honey: #d99a13; /* BeHive */
+  --color-inverse: #111114; /* fondo de las tarjetas «invertidas» */
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Tema oscuro de la portada: se aplica con la clase .tema-oscuro (las páginas de servicios siguen claras) */
+.tema-oscuro {
+  --color-canvas: #0c0f0d;
+  --color-paper: #141815;
+  --color-ink: #ece9e2;
+  --color-graphite: #b9b8b0;
+  --color-mist: #8c8c85;
+  --color-line: #272c28;
+  --color-inverse: #1b221d;
+  --color-cobalt: #7d9ef6;
+  --color-sequoia: #3fa56f;
+  color-scheme: dark;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+.tema-oscuro .btn-ink {
+  background: #f1efe9;
+  color: #111114;
+}
+.tema-oscuro .btn-light {
+  background: #f1efe9;
+  color: #111114;
+  box-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .tema-oscuro .btn-ink:hover,
+  .tema-oscuro .btn-light:hover {
+    background: #fff;
+  }
+}
+.tema-oscuro .card {
+  background: #1a201b;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 20px 50px -30px rgba(0, 0, 0, 0.6);
+}
+/* el símbolo verde del logo, un poco más claro para que se lea sobre fondo oscuro */
+.tema-oscuro img[src*="hyperion-mark"] {
+  filter: brightness(1.9) saturate(1.15);
+}
+html:has(.tema-oscuro) {
+  background: #0c0f0d;
 }
 
 html {
