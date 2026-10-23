@@ -9,6 +9,9 @@ import { UMAMI_URL } from "../lib/traffic.mjs"
 // Schibsted Grotesk (variable): titulares y texto. Plex Mono: etiquetas pequeñas.
 // Van dentro del proyecto (juego latino) para que la compilación no dependa de descargarlas de Google.
 const schibsted = localFont({ src: "./fonts/schibsted.woff2", weight: "400 900", variable: "--font-schibsted", display: "swap" })
+// Space Grotesk (variable) y Space Mono: la tipografía de la marca, según el press kit. Se usan en toda la landing salvo en el hero.
+const spaceGrotesk = localFont({ src: "./fonts/SpaceGrotesk-Variable.ttf", weight: "300 700", variable: "--font-space", display: "swap" })
+const spaceMono = localFont({ src: "./fonts/SpaceMono-Regular.ttf", weight: "400", variable: "--font-spacemono", display: "swap" })
 const plex = localFont({
   src: [
     { path: "./fonts/plex-mono-400.woff2", weight: "400" },
@@ -32,7 +35,9 @@ export const metadata = {
     siteName: "Hyperion Software",
     locale: "es_MX",
     type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Hyperion Software" }],
   },
+  twitter: { card: "summary_large_image", images: ["/og.png"] },
 }
 
 export const viewport = {
@@ -64,7 +69,7 @@ const organizationLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" suppressHydrationWarning className={`${schibsted.variable} ${plex.variable}`}>
+    <html lang="es" suppressHydrationWarning className={`${schibsted.variable} ${plex.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" disableTransitionOnChange>

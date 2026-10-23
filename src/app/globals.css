@@ -32,6 +32,19 @@
   --color-honey: #d99a13; /* BeHive */
   --color-inverse: #111114; /* fondo de las tarjetas «invertidas» */
 
+  /* Press kit (DESIGN.md): núcleo de marca y bloques de color de los productos */
+  --color-pink: #ff3d7f;
+  --color-pink-text: #d1105a;
+  --color-paper-2: #ebe9e2;
+  --color-grey-300: #b8b6ae;
+  --color-grey-500: #6b6a66;
+  --color-grey-700: #4a4a4a;
+  --color-blue: #2b4bff;
+  --color-violet: #7a3dff;
+  --color-orange: #ff8a00;
+  --color-lime: #b6e83a;
+  --color-teal: #00a884;
+
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -74,9 +87,6 @@
 /* el símbolo verde del logo, un poco más claro para que se lea sobre fondo oscuro */
 .tema-oscuro img[src*="hyperion-mark"] {
   filter: brightness(1.9) saturate(1.15);
-}
-html:has(.tema-oscuro) {
-  background: #0c0f0d;
 }
 
 html {
@@ -278,4 +288,166 @@ body {
   .hero-media, .hero-copy { transform: none !important; will-change: auto; }
   .hero-copy { opacity: 1 !important; }
   .hero-media video, .hero-scroll-hint, .hero-progress { display: none; }
+}
+
+
+/* ═════════════ Landing rediseñada: neo-brutalismo cálido (DESIGN.md) ═════════════
+   Todo lo que está debajo del hero vive dentro de .hy. El hero conserva su propio estilo. */
+.hy {
+  --font-sans: var(--font-space), system-ui, sans-serif;
+  --font-display: var(--font-space), system-ui, sans-serif;
+  --font-mono: var(--font-spacemono), ui-monospace, SFMono-Regular, monospace;
+  --color-canvas: #f5f4f0;
+  --color-paper: #ffffff;
+  --color-ink: #141414;
+  --color-graphite: #4a4a4a;
+  --color-mist: #6b6a66;
+  --color-line: #d8d5cc;
+  --color-blue: #141414;
+  --color-violet: #141414;
+  --color-orange: #141414;
+  --color-lime: #141414;
+  --color-teal: #141414;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+.hy ::selection {
+  background: var(--color-pink);
+  color: #141414;
+}
+.hy .display {
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+}
+.hy .eyebrow {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  line-height: 1.2;
+}
+.hy .mono {
+  font-family: var(--font-mono);
+}
+/* Firma tipográfica: el punto final de los titulares grandes es rosa, como en el logo */
+.dot {
+  color: var(--color-pink);
+}
+
+/* Botones: pastilla, rosa o línea fina */
+.bt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border: 1px solid #141414;
+  border-radius: 999px;
+  color: #141414;
+  font: 600 16px/1 var(--font-space), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+.bt:focus-visible {
+  outline: 3px solid #ff3d7f;
+  outline-offset: 2px;
+}
+.bt-pink {
+  background: #ff3d7f;
+  border-color: #ff3d7f;
+}
+.bt-pink:hover {
+  background: #141414;
+  border-color: #141414;
+  color: #f5f4f0;
+}
+.bt-line {
+  background: transparent;
+}
+.bt-line:hover {
+  background: #141414;
+  color: #f5f4f0;
+}
+.bt-white {
+  background: #fff;
+  border-color: rgba(20, 20, 20, 0.2);
+}
+.bt-white:hover {
+  background: #141414;
+  color: #f5f4f0;
+}
+.bt-sm {
+  padding: 10px 18px;
+  font-size: 14px;
+}
+.bt-inv {
+  border-color: #f5f4f0;
+}
+.bt-pink.bt-inv {
+  border-color: #ff3d7f;
+}
+.bt-pink.bt-inv:hover {
+  background: #f5f4f0;
+  border-color: #f5f4f0;
+  color: #141414;
+}
+
+/* Superficies */
+.hy .card {
+  background: #fff;
+  color: var(--color-ink);
+  border: 1px solid rgba(20, 20, 20, 0.12);
+  border-radius: 20px;
+}
+.hy .notif {
+  background: #fff;
+  border: 1px solid rgba(20, 20, 20, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px -10px rgba(20, 20, 20, 0.25);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.hy .tag {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid rgba(20, 20, 20, 0.15);
+  border-radius: 999px;
+  background: var(--color-paper-2);
+  color: #141414;
+  font: 400 12px/1 var(--font-mono);
+  text-transform: uppercase;
+}
+.hy .field {
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(20, 20, 20, 0.25);
+  border-radius: 12px;
+  padding: 0 16px;
+  height: 48px;
+  color: #141414;
+  font-size: 16px;
+}
+.hy textarea.field {
+  height: auto;
+  padding: 12px 16px;
+}
+.hy .field::placeholder {
+  color: #6b6a66;
+}
+.hy .field:focus-visible {
+  outline: 3px solid #ff3d7f;
+  outline-offset: 1px;
+  border-color: #141414;
+}
+.hy .link-pink {
+  color: #d1105a;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
