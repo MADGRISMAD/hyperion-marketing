@@ -1,81 +1,191 @@
 "use client"
+import { useEffect, useRef } from "react"
 import Link from "next/link"
-import { BarChart3, CalendarCheck, ChevronRight, ShoppingBag } from "lucide-react"
-import { Move, Scene } from "./parallax"
-import { IPhone, MacBook, Notif } from "./Devices"
-import caresiaWeb from "../../../public/productos/caresia-web.jpg"
-import caresiaMovil from "../../../public/productos/caresia-movil.jpg"
-import tienditaMovil from "../../../public/productos/mitiendita-movil.jpg"
+import { ArrowRight, ArrowDownRight } from "lucide-react"
 
-// Portada: titular de producto y un escenario con pantallas reales. Al bajar, la MacBook se acerca, los iPhones se abren
-// hacia los lados girando y las notificaciones se dispersan; con el cursor, cada capa se mueve según su profundidad.
 export default function Hero() {
+  const track = useRef(null)
+  const stage = useRef(null)
+  const media = useRef(null)
+  const video = useRef(null)
+  const content = useRef(null)
+  const progress = useRef(null)
+
+  useEffect(() => {
+    const root = track.current
+    const player = video.current
+    const copy = content.current
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
+
+    function mount() {
+      root.dataset.motion = "false"
+      root.dataset.painted = "false"
+      root.style.setProperty("--hero-shade", "1")
+      media.current.style.transform = ""
+      copy.style.transform = ""
+      copy.style.opacity = ""
+      copy.inert = false
+      progress.current.style.transform = "scaleX(0)"
+      if (motion.matches) return () => {}
+
+      const controller = new AbortController()
+      let objectURL, raf, frameCallback
+      let target = 0
+      let current = 0
+      let primed = false
+      let disposed = false
+
+      // Adaptado de Scroll World: blob seekable, interpolación y un solo seek pendiente.
+      function frame() {
+        raf = null
+        if (disposed || root.dataset.motion !== "true") return
+        const rect = root.getBoundingClientRect()
+        const distance = root.offsetHeight - stage.current.offsetHeight
+        target = Math.max(0, Math.min(1, -rect.top / Math.max(1, distance)))
+        const fade = Math.max(0, 1 - target / 0.28)
+        root.style.setProperty("--hero-shade", String(0.3 + fade * 0.7))
+        copy.style.opacity = String(fade)
+        copy.style.transform = `translate3d(0, ${-Math.min(target, 0.3) * 180}px, 0)`
+        copy.inert = fade < 0.05
+        media.current.style.transform = `translate3d(0, ${target * -3}%, 0) scale(1.07)`
+        progress.current.style.transform = `scaleX(${target})`
+        if (!Number.isFinite(player.duration) || player.seeking || disposed) return
+        current += (target - current) * 0.18
+        if (Math.abs(target - current) < 0.001) current = target
+        const time = current * Math.max(0, player.duration - 1 / 24)
+        if (Math.abs(player.currentTime - time) > 0.015) player.currentTime = time
+        if (current !== target) schedule()
+      }
+
+      function schedule() {
+        if (!disposed && raf == null) raf = requestAnimationFrame(frame)
+      }
+
+      function painted() {
+        if (!disposed) root.dataset.painted = "true"
+      }
+
+      function seeked() {
+        if (!player.requestVideoFrameCallback) painted()
+        schedule()
+      }
+
+      function prime() {
+        if (primed || player.readyState < 2) return
+        primed = true
+        player.play()?.then(() => {
+          player.pause()
+          schedule()
+        }).catch(() => { primed = false })
+      }
+
+      function ready() {
+        root.dataset.motion = "true"
+        schedule()
+        if (window.matchMedia("(pointer: coarse)").matches) prime()
+      }
+
+      function failed() {
+        root.dataset.motion = "false"
+        root.dataset.painted = "false"
+        root.style.setProperty("--hero-shade", "1")
+        copy.style.opacity = ""
+        copy.style.transform = ""
+        copy.inert = false
+      }
+
+      player.addEventListener("loadeddata", ready)
+      player.addEventListener("seeked", seeked)
+      player.addEventListener("error", failed)
+      window.addEventListener("scroll", schedule, { passive: true })
+      window.addEventListener("resize", schedule)
+      window.addEventListener("pointerdown", prime, { passive: true })
+      if (player.requestVideoFrameCallback) frameCallback = player.requestVideoFrameCallback(painted)
+
+      fetch("/video/recorrido-1080.mp4", { signal: controller.signal })
+        .then((response) => {
+          if (!response.ok) throw new Error("No se pudo cargar el recorrido")
+          return response.blob()
+        })
+        .then((blob) => {
+          if (disposed) return
+          objectURL = URL.createObjectURL(blob)
+          player.src = objectURL
+        })
+        .catch((error) => { if (error.name !== "AbortError") failed() })
+
+      return () => {
+        disposed = true
+        controller.abort()
+        cancelAnimationFrame(raf)
+        if (frameCallback != null) player.cancelVideoFrameCallback(frameCallback)
+        window.removeEventListener("scroll", schedule)
+        window.removeEventListener("resize", schedule)
+        window.removeEventListener("pointerdown", prime)
+        player.removeEventListener("loadeddata", ready)
+        player.removeEventListener("seeked", seeked)
+        player.removeEventListener("error", failed)
+        player.pause()
+        player.removeAttribute("src")
+        player.load()
+        if (objectURL) URL.revokeObjectURL(objectURL)
+      }
+    }
+
+    let cleanup = mount()
+    const change = () => { cleanup(); cleanup = mount() }
+    motion.addEventListener("change", change)
+    return () => { cleanup(); motion.removeEventListener("change", change) }
+  }, [])
+
   return (
-    <Scene id="inicio" className="relative overflow-hidden pt-28 pb-10 md:pt-36">
-      <div className="container text-center">
-        <p className="reveal is-visible inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[13px] font-medium text-graphite shadow-[inset_0_0_0_1px_var(--color-line)]">
-          <span className="h-1.5 w-1.5 rounded-full bg-sequoia" />
-          Estudio de software · Tijuana · desde 2016
-        </p>
-        <h1 className="display mx-auto mt-7 max-w-5xl text-[clamp(2.9rem,8.4vw,7.4rem)]">
-          Software que hace <span className="grad">crecer</span> tu negocio.
-        </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-graphite md:text-[1.35rem]">
-          Sistemas a la medida, puntos de venta, automatizaciones y servicio técnico. Diez años construyendo para negocios de todo México.
-        </p>
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-          <Link href="#contacto" className="btn btn-ink">
-            Cotizar proyecto
-          </Link>
-          <Link href="#productos" className="link-arrow text-[15px] text-cobalt">
-            Ver productos <ChevronRight className="h-4 w-4" />
-          </Link>
+    <section id="inicio" aria-label="Hyperion Software">
+      <div ref={track} className="hero-journey">
+        <div ref={stage} className="hero-stage">
+          <div ref={media} className="hero-media" aria-hidden="true">
+            {/* El poster sigue visible hasta que el decodificador pinta un cuadro. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/video/recorrido-poster.jpg" alt="" width="1920" height="1080" fetchPriority="high" />
+            <video ref={video} muted playsInline preload="auto" disablePictureInPicture tabIndex={-1} />
+          </div>
+          <div className="hero-scrim" aria-hidden="true" />
+
+          <div className="container hero-copy-wrap">
+            <div ref={content} className="hero-copy">
+              <div className="mb-5 flex flex-wrap items-center gap-2 font-mono text-[10px] tracking-wider uppercase sm:text-xs">
+                <span className="rounded-full border border-white/40 bg-white/10 px-3 py-1 backdrop-blur-md">Hyperion Software</span>
+                <span className="px-2 py-1">Tijuana → MX · Desde 2016</span>
+              </div>
+              <h1 className="font-display text-[clamp(2.4rem,5.8vw,5.6rem)] leading-[1.04] font-bold tracking-tight">
+                Software que<br />hace <span className="hero-highlight">crecer</span><br />tu negocio.
+              </h1>
+              <p className="mt-6 max-w-lg text-sm leading-relaxed text-white/85 sm:text-base lg:text-lg">
+                Sistemas a la medida, puntos de venta, automatizaciones y servicio técnico.
+                Diez años ayudando a negocios a vender más y trabajar menos.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link href="#contacto" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/80 bg-white px-5 py-3.5 font-mono text-xs font-bold text-ink uppercase sm:px-7">
+                  Cotiza tu proyecto <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link href="#productos" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/50 bg-black/20 px-5 py-3.5 font-mono text-xs font-bold uppercase backdrop-blur-md hover:bg-white/15">
+                  Ver productos <ArrowDownRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="container hero-journey-footer">
+            <div className="hero-scroll-hint font-mono text-[10px] tracking-[0.15em] uppercase sm:text-xs">
+              <ArrowDownRight className="h-4 w-4" /> Desliza para explorar
+            </div>
+            <a href="#servicios" className="rounded-full border border-white/40 bg-black/30 px-4 py-2 font-mono text-[10px] uppercase backdrop-blur-md hover:bg-black/50 sm:text-xs">
+              Ir a servicios ↗
+            </a>
+          </div>
+          <div className="hero-progress" aria-hidden="true"><div ref={progress} /></div>
         </div>
       </div>
 
-      {/* Escenario */}
-      <div className="relative mx-auto mt-14 h-[78vw] max-w-[1240px] md:mt-20 md:h-[min(56vw,720px)]">
-        {/* halos de color detrás de las pantallas */}
-        <Move y={[0, 120]} range={[0.35, 1]} className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="depth absolute top-[8%] left-[18%] h-[55%] w-[38%] rounded-full bg-[#7fd6a8] opacity-45 blur-[90px]" style={{ "--d": 8 }} />
-          <div className="depth absolute top-[18%] right-[16%] h-[55%] w-[36%] rounded-full bg-[#9db5ff] opacity-50 blur-[90px]" style={{ "--d": 12 }} />
-          <div className="depth absolute bottom-[4%] left-[42%] h-[40%] w-[26%] rounded-full bg-[#ffc59a] opacity-50 blur-[80px]" style={{ "--d": 6 }} />
-        </Move>
-
-        <Move y={[0, -40]} s={[1, 1.07]} range={[0.35, 1]} className="absolute top-0 left-1/2 w-[76%] md:w-[68%]" style={{ translate: "-50% 0" }}>
-          <div className="depth" style={{ "--d": 6 }}>
-            <MacBook img={caresiaWeb} alt="Caresia, software para clínicas y consultorios, en una laptop" priority sizes="(min-width: 1024px) 840px, 76vw" />
-          </div>
-        </Move>
-
-        <Move x={[0, -140]} y={[30, -110]} r={[-7, -14]} range={[0.35, 1]} className="absolute bottom-[-4%] left-[1%] w-[24%] md:bottom-[-8%] md:left-[4%] md:w-[17%]">
-          <div className="depth" style={{ "--d": 22 }}>
-            <IPhone img={caresiaMovil} alt="Caresia en un iPhone" eager />
-          </div>
-        </Move>
-        <Move x={[0, 150]} y={[50, -150]} r={[8, 15]} range={[0.35, 1]} className="absolute right-[1%] bottom-[-8%] w-[24%] md:right-[5%] md:bottom-[-12%] md:w-[17%]">
-          <div className="depth" style={{ "--d": 28 }}>
-            <IPhone img={tienditaMovil} alt="Mitiendita, punto de venta en la nube, en un iPhone" eager />
-          </div>
-        </Move>
-
-        {/* notificaciones: la capa más cercana, cada una sale en otra dirección */}
-        <Move x={[0, -80]} y={[0, -220]} o={[1, 0]} range={[0.4, 0.95]} className="absolute top-[6%] left-[2%] hidden lg:block">
-          <div className="depth" style={{ "--d": 40 }}>
-            <Notif app="Mitiendita" color="var(--color-tangerine)" icon={ShoppingBag} title="Venta registrada · $118.50" text="Caja 1 · 4 artículos, guardada en la nube" />
-          </div>
-        </Move>
-        <Move x={[0, 90]} y={[0, -260]} o={[1, 0]} range={[0.4, 0.95]} className="absolute top-[30%] right-[0%] hidden md:block">
-          <div className="depth" style={{ "--d": 46 }}>
-            <Notif app="Caresia" color="var(--color-cobalt)" icon={CalendarCheck} time="9:41" title="Cita confirmada · 10:30" text="Jorge Medina con la Dra. Ana Ruiz" />
-          </div>
-        </Move>
-        <Move y={[0, -160]} o={[1, 0]} range={[0.45, 0.95]} className="absolute bottom-[10%] left-[14%] hidden lg:block">
-          <div className="depth" style={{ "--d": 34 }}>
-            <Notif app="Hyperion" color="var(--color-sequoia)" icon={BarChart3} time="21:00" title="Reporte del día enviado" text="Ventas $12,480 · inventario al día" />
-          </div>
-        </Move>
-      </div>
-    </Scene>
+    </section>
   )
 }

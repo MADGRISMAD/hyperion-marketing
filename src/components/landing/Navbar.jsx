@@ -36,7 +36,7 @@ export default function Navbar() {
     <>
       <header
         ref={header}
-        className="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color] duration-300 data-[scrolled]:border-line/80 data-[scrolled]:bg-canvas/75 data-[scrolled]:backdrop-blur-xl data-[scrolled]:backdrop-saturate-150"
+        className="fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-canvas/90 backdrop-blur-xl transition-[background-color,border-color] duration-300 data-[scrolled]:border-line/80 data-[scrolled]:bg-canvas/75 data-[scrolled]:backdrop-blur-xl data-[scrolled]:backdrop-saturate-150"
       >
         <div className="container flex h-16 items-center justify-between">
           <Link href="#inicio" aria-label="Hyperion Software, inicio">
