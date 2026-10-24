@@ -159,6 +159,7 @@ const products = [
     cat: "Tarjeta digital",
     bg: "#ffffff",
     fg: "ink",
+    live: "https://miinfo.15-235-62-27.sslip.io",
     tagline: "Tu tarjeta de presentación, en un enlace.",
     description: "Tus datos, tus redes y tu agenda en una página que se comparte por WhatsApp y se guarda en el teléfono con un toque.",
     features: ["WhatsApp, teléfono, correo y hasta 8 enlaces", "Botón para guardar tu contacto", "Agenda opcional con confirmación por correo"],
