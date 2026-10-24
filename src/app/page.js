@@ -211,7 +211,7 @@ function ProductCard({ p, i, eager }) {
         <h3 className={`display mt-6 ${p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`}>{p.name}</h3>
         <p className="mt-3 text-xl leading-snug font-bold tracking-[-0.02em] md:text-2xl">{p.tagline}</p>
         <p className={`mt-3 leading-relaxed ${onDark ? "text-white" : "text-ink/80"}`}>{p.description}</p>
-        <ul className={`mt-6 hidden space-y-2 text-[15px] md:block ${onDark ? "text-white" : "text-ink/85"}`}>
+        <ul className={`mt-6 hidden space-y-2 text-[15px] md:block [@media(max-height:820px)]:hidden ${onDark ? "text-white" : "text-ink/85"}`}>
           {p.features.map((f) => (
             <li key={f} className="flex gap-2.5">
               <span className="mt-[7px] h-2.5 w-2.5 shrink-0 rounded-full border border-ink/30 bg-pink" />
@@ -233,8 +233,8 @@ function ProductCard({ p, i, eager }) {
       </div>
       {/* pantallas recortadas abajo: se desplazan a su propio ritmo mientras la tarjeta cruza la pantalla */}
       <div className="relative min-h-[240px] overflow-hidden border-t border-ink/10 bg-white/25 lg:border-t-0 lg:border-l-2">
-        <div className="absolute inset-0 flex items-end justify-center px-[8%] pt-[12%]">
-          <div data-shift className={`w-full translate-y-[7%] will-change-transform ${p.phone ? "lg:-translate-x-[6%]" : ""}`}>
+        <div className="absolute inset-0 flex items-end justify-center px-[8%] pt-[8%] pb-[7%]">
+          <div data-shift className={`w-full lg:w-[min(100%,calc((100svh-20.5rem)*1.2))] will-change-transform ${p.phone ? "lg:-translate-x-[6%]" : ""}`}>
             <MacBook eager={eager} img={p.web[0]} alt={p.web[1]} sizes="(min-width: 1024px) 560px, 80vw" />
           </div>
         </div>
@@ -319,7 +319,7 @@ function Products() {
           </div>
         </div>
         <div className="mt-10 overflow-x-auto [scrollbar-width:none] lg:mt-0 lg:flex-1 lg:overflow-visible lg:pb-12">
-          <div ref={track} className="flex h-[min(76vh,660px)] snap-x snap-mandatory gap-5 px-5 pb-3 will-change-transform md:px-10 lg:h-full lg:gap-8 lg:px-[max(2.5rem,calc((100vw-1160px)/2))] lg:pb-0">
+          <div ref={track} className="flex h-[min(76vh,660px)] snap-x snap-mandatory gap-5 px-5 pb-3 will-change-transform md:px-10 lg:h-[max(420px,calc(100svh-20.5rem))] lg:gap-8 lg:px-[max(2.5rem,calc((100vw-1160px)/2))] lg:pb-0">
             {products.map((p, i) => (
               <ProductCard key={p.name} p={p} i={i} eager={near} />
             ))}
