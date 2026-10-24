@@ -172,7 +172,7 @@ const products = [
     cat: "Agenda y caja",
     bg: "#ffffff",
     fg: "ink",
-    live: "https://miestudio.15-235-62-27.sslip.io",
+    live: "https://barbella.mx",
     liveLabel: "Barbella",
     tagline: "Todo tu local, en una sola agenda.",
     description: "Agenda por persona que no deja empalmar, anticipos y caja para barberías, salones de uñas, pestañas y spas. Hecho en México.",
