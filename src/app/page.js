@@ -39,6 +39,8 @@ import restauranteWeb from "../../public/productos/mirestaurante-landing.webp"
 import internshipsWeb from "../../public/productos/internships-landing.png"
 import gridsWeb from "../../public/productos/grids-web.jpg"
 import gridsMovil from "../../public/productos/grids-movil.jpg"
+import barbellaWeb from "../../public/productos/barbella-web.jpg"
+import barbellaMovil from "../../public/productos/barbella-movil.jpg"
 import behiveWeb from "../../public/productos/behive-landing.webp"
 import camionWeb from "../../public/productos/camion-web.jpg"
 import camionMovil from "../../public/productos/camion-movil.jpg"
@@ -87,7 +89,7 @@ function Head({ eyebrow, title, text, center = false, light = false, small = fal
 function Numbers() {
   const stats = [
     { n: 10, s: "+", label: "años construyendo software" },
-    { n: 7, s: "", label: "productos propios, diseñados y construidos aquí" },
+    { n: 8, s: "", label: "productos propios, diseñados y construidos aquí" },
     { n: 100, s: "%", label: "desarrollo a la medida, sin plantillas" },
     { n: 1, s: "", label: "equipo que diseña, programa, instala y da soporte" },
   ]
@@ -136,6 +138,44 @@ const products = [
     phone: [caresiaMovil, "Caresia en el celular"],
   },
   {
+    name: "Camión TJ",
+    cat: "Movilidad",
+    bg: "#ffffff",
+    fg: "ink",
+    live: "https://camion.15-235-62-27.sslip.io",
+    tagline: "Cómo llegar en camión, y cuánto te va a costar.",
+    description: "Rutas reales de Tijuana: camiones, taxis de ruta y calafias. Te dice qué tomar, cuánto cuesta cada pasaje y te guía a pie hasta la parada.",
+    features: ["Más de 100 rutas con su trazado real", "Opciones por más barata, más rápida o menos caminar", "Camino a pie a la parada y aviso para bajar"],
+    web: [camionWeb, "Pantallas de búsqueda, opciones y detalle de Camión TJ"],
+    phone: [camionMovil, "Camino a pie a la parada en Camión TJ"],
+  },
+  {
+    name: "Grids",
+    cat: "Tu enlace en cuadros",
+    bg: "#ffffff",
+    fg: "ink",
+    live: "https://miinfo.15-235-62-27.sslip.io",
+    liveLabel: "Grids",
+    tagline: "Tu negocio, armado en cuadritos.",
+    description: "Fotos, WhatsApp, redes, menú y agenda en un solo enlace. Cada cosa en su cuadro, para compartir por WhatsApp.",
+    features: ["WhatsApp, teléfono, correo y hasta 8 enlaces", "Botón para guardar tu contacto", "Agenda opcional con confirmación por correo"],
+    web: [gridsWeb, "Página de inicio de Grids con un grid de ejemplo"],
+    phone: [gridsMovil, "Grids en el celular"],
+  },
+  {
+    name: "Barbella",
+    cat: "Agenda y caja",
+    bg: "#ffffff",
+    fg: "ink",
+    live: "https://miestudio.15-235-62-27.sslip.io",
+    liveLabel: "Barbella",
+    tagline: "Todo tu local, en una sola agenda.",
+    description: "Agenda por persona que no deja empalmar, anticipos y caja para barberías, salones de uñas, pestañas y spas. Hecho en México.",
+    features: ["Agenda por persona, sin citas empalmadas", "Anticipos para apartar el horario", "Caja y comisión de cada quien"],
+    web: [barbellaWeb, "Página de inicio de Barbella con el recorrido de una barbería"],
+    phone: [barbellaMovil, "Barbella en el celular"],
+  },
+  {
     name: "Mirestaurante",
     cat: "Restaurantes",
     bg: "#ffffff",
@@ -156,19 +196,6 @@ const products = [
     web: [internshipsWeb, "Página de inicio de internships.gg"],
   },
   {
-    name: "Grids",
-    cat: "Tu enlace en cuadros",
-    bg: "#ffffff",
-    fg: "ink",
-    live: "https://miinfo.15-235-62-27.sslip.io",
-    liveLabel: "Grids",
-    tagline: "Tu negocio, armado en cuadritos.",
-    description: "Fotos, WhatsApp, redes, menú y agenda en un solo enlace. Cada cosa en su cuadro, para compartir por WhatsApp.",
-    features: ["WhatsApp, teléfono, correo y hasta 8 enlaces", "Botón para guardar tu contacto", "Agenda opcional con confirmación por correo"],
-    web: [gridsWeb, "Página de inicio de Grids con un grid de ejemplo"],
-    phone: [gridsMovil, "Grids en el celular"],
-  },
-  {
     name: "BeHive",
     cat: "Mesa de ayuda",
     bg: "#ffffff",
@@ -177,18 +204,6 @@ const products = [
     description: "Tickets, SLA, centro de ayuda y reportes en una sola herramienta en español, pensada para empresas en México.",
     features: ["Tickets con prioridad, estados y notas internas", "SLA, centro de ayuda y reportes", "Gratis con 1 agente y hasta 10 personas"],
     web: [behiveWeb, "Lista de tickets de BeHive"],
-  },
-  {
-    name: "Camión TJ",
-    cat: "Movilidad",
-    bg: "#ffffff",
-    fg: "ink",
-    live: "https://camion.15-235-62-27.sslip.io",
-    tagline: "Cómo llegar en camión, y cuánto te va a costar.",
-    description: "Rutas reales de Tijuana: camiones, taxis de ruta y calafias. Te dice qué tomar, cuánto cuesta cada pasaje y te guía a pie hasta la parada.",
-    features: ["Más de 100 rutas con su trazado real", "Opciones por más barata, más rápida o menos caminar", "Camino a pie a la parada y aviso para bajar"],
-    web: [camionWeb, "Pantallas de búsqueda, opciones y detalle de Camión TJ"],
-    phone: [camionMovil, "Camino a pie a la parada en Camión TJ"],
   },
 ]
 
@@ -299,13 +314,13 @@ function Products() {
   }
 
   return (
-    <Scene id="productos" mode="pin" onProgress={onProgress} className="relative lg:h-[640vh]">
+    <Scene id="productos" mode="pin" onProgress={onProgress} className="relative lg:h-[720vh]">
       <div ref={sticky} className="overflow-hidden bg-paper-2 py-20 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:py-0 lg:pt-24">
         <div className="container flex items-end justify-between gap-6 lg:pb-8">
           <div>
             <p className="eyebrow text-grey-500">Productos propios</p>
             <h2 className="display mt-3 text-[clamp(2.4rem,5vw,4.4rem)]">
-              Siete productos.
+              Ocho productos.
               <br />
               <span className="text-grey-500">Hechos por nosotros</span>
               <Dot />
@@ -334,10 +349,10 @@ function Products() {
               <Rings className="pointer-events-none absolute -right-32 -bottom-40 h-[520px] w-[520px]" stroke="#f5f4f0" opacity={0.12} />
               <span className="eyebrow relative text-grey-300">0{total} · ¿El tuyo?</span>
               <h3 className="display relative mt-6 text-[clamp(2.6rem,5vw,4.6rem)]">
-                El octavo puede ser <span className="inline-block -rotate-1 rounded-lg bg-pink px-2 text-ink">tu idea</span>
+                El noveno puede ser <span className="inline-block -rotate-1 rounded-lg bg-pink px-2 text-ink">tu idea</span>
                 <Dot />
               </h3>
-              <p className="relative mt-5 max-w-md text-lg text-grey-300">El mismo equipo que construyó estos siete, trabajando en el tuyo.</p>
+              <p className="relative mt-5 max-w-md text-lg text-grey-300">El mismo equipo que construyó estos ocho, trabajando en el tuyo.</p>
               <Link href="#contacto" className="bt bt-pink bt-inv relative mt-9 self-start">
                 Cotizar proyecto <ArrowRight className="h-4 w-4" />
               </Link>

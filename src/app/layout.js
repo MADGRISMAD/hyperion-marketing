@@ -25,7 +25,7 @@ export const metadata = {
   metadataBase: new URL("https://hyperionmkt.com"),
   title: "Hyperion Software | Sistemas a medida, puntos de venta y automatización",
   description:
-    "10 años creando sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios. Creadores de Mitiendita, Mirestaurante, Internships.gg, Caresia, Grids, BeHive y Camión TJ.",
+    "10 años creando sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios. Creadores de Mitiendita, Caresia, Camión TJ, Grids, Barbella, Mirestaurante, Internships.gg y BeHive.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Hyperion Software | Sistemas a medida, puntos de venta y automatización",
