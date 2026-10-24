@@ -115,6 +115,7 @@ function Numbers() {
 const products = [
   {
     name: "Mitiendita",
+    logo: "/productos/logos/mitiendita.svg",
     cat: "Punto de venta",
     bg: "#ffffff",
     fg: "ink",
@@ -127,6 +128,7 @@ const products = [
   },
   {
     name: "Caresia",
+    logo: "/productos/logos/caresia.svg",
     cat: "Salud",
     bg: "#ffffff",
     fg: "ink",
@@ -139,6 +141,7 @@ const products = [
   },
   {
     name: "Camión TJ",
+    logo: "/productos/logos/camiontj.svg",
     cat: "Movilidad",
     bg: "#ffffff",
     fg: "ink",
@@ -151,6 +154,7 @@ const products = [
   },
   {
     name: "Grids",
+    logo: "/productos/logos/grids.svg",
     cat: "Tu enlace en cuadros",
     bg: "#ffffff",
     fg: "ink",
@@ -164,6 +168,7 @@ const products = [
   },
   {
     name: "Barbella",
+    logo: "/productos/logos/barbella.svg",
     cat: "Agenda y caja",
     bg: "#ffffff",
     fg: "ink",
@@ -177,6 +182,7 @@ const products = [
   },
   {
     name: "Mirestaurante",
+    logo: "/productos/logos/mirestaurante.svg",
     cat: "Restaurantes",
     bg: "#ffffff",
     fg: "ink",
@@ -197,6 +203,7 @@ const products = [
   },
   {
     name: "BeHive",
+    logo: "/productos/logos/behive.png",
     cat: "Mesa de ayuda",
     bg: "#ffffff",
     fg: "ink",
@@ -226,7 +233,10 @@ function ProductCard({ p, i, eager }) {
             {p.live ? "En línea" : "Demo bajo pedido"}
           </span>
         </div>
-        <h3 className={`display mt-6 ${p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`}>{p.name}</h3>
+        <div className="mt-6 flex items-center gap-4">
+          {p.logo && <img src={p.logo} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-2xl object-contain" />}
+          <h3 className={`display ${p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`}>{p.name}</h3>
+        </div>
         <p className="mt-3 text-xl leading-snug font-bold tracking-[-0.02em] md:text-2xl">{p.tagline}</p>
         <p className={`mt-3 leading-relaxed ${onDark ? "text-white" : "text-ink/80"}`}>{p.description}</p>
         <ul className={`mt-6 hidden space-y-2 text-[15px] md:block [@media(max-height:820px)]:hidden ${onDark ? "text-white" : "text-ink/85"}`}>
