@@ -31,7 +31,7 @@ import Hero from "../components/landing/HeroVideo"
 import { IPhone, MacBook, Notif } from "../components/landing/Devices"
 import { CountUp, Move, Reveal, Scene, useMouseDepth } from "../components/landing/parallax"
 // Imágenes importadas: Next conoce su tamaño y genera una miniatura borrosa que se ve mientras carga la real
-import tienditaApp from "../../public/productos/mitiendita-app.webp"
+import tienditaApp from "../../public/productos/mitiendita-landing.jpg"
 import tienditaMovil from "../../public/productos/mitiendita-movil.jpg"
 import caresiaWeb from "../../public/productos/caresia-web.jpg"
 import caresiaMovil from "../../public/productos/caresia-movil.jpg"
@@ -123,8 +123,8 @@ const products = [
     tagline: "Tu tienda no cierra aunque la compu falle.",
     description: "Punto de venta en la nube para abarrotes y comercios. Abre caja desde el celular, la tablet o la PC sin instalar nada.",
     features: ["Lector de código de barras o búsqueda por nombre", "Cobrar en segundos con F12", "Ventas en espera, descuentos y cortes de caja"],
-    web: [tienditaApp, "Pantalla de venta de Mitiendita"],
-    phone: [tienditaMovil, "Mitiendita en el celular"],
+    web: [tienditaApp, "Página de inicio de Mitiendita"],
+    phone: [tienditaMovil, "Pantalla de venta de Mitiendita en el celular"],
   },
   {
     name: "Caresia",
@@ -137,7 +137,7 @@ const products = [
     description: "Agenda, expedientes, recetas y cobros para clínicas dentales y consultorios. Funciona desde el navegador, sin instalar nada.",
     features: ["Agenda compartida por día y por profesional", "Expediente completo con búsqueda por CURP", "Permisos por rol: recepción agenda, el doctor consulta"],
     web: [caresiaWeb, "Página de Caresia con su agenda de citas"],
-    phone: [caresiaMovil, "Caresia en el celular"],
+    phone: [caresiaMovil, "Panel de inicio de Caresia en el celular"],
   },
   {
     name: "Camión TJ",
