@@ -37,7 +37,8 @@ import caresiaWeb from "../../public/productos/caresia-web.jpg"
 import caresiaMovil from "../../public/productos/caresia-movil.jpg"
 import restauranteWeb from "../../public/productos/mirestaurante-landing.webp"
 import internshipsWeb from "../../public/productos/internships-landing.png"
-import miinfoWeb from "../../public/productos/miinfo-landing.webp"
+import gridsWeb from "../../public/productos/grids-web.jpg"
+import gridsMovil from "../../public/productos/grids-movil.jpg"
 import behiveWeb from "../../public/productos/behive-landing.webp"
 import camionWeb from "../../public/productos/camion-web.jpg"
 import camionMovil from "../../public/productos/camion-movil.jpg"
@@ -155,15 +156,17 @@ const products = [
     web: [internshipsWeb, "Página de inicio de internships.gg"],
   },
   {
-    name: "Mi Info",
-    cat: "Tarjeta digital",
+    name: "Grids",
+    cat: "Tu enlace en cuadros",
     bg: "#ffffff",
     fg: "ink",
     live: "https://miinfo.15-235-62-27.sslip.io",
-    tagline: "Tu tarjeta de presentación, en un enlace.",
-    description: "Tus datos, tus redes y tu agenda en una página que se comparte por WhatsApp y se guarda en el teléfono con un toque.",
+    liveLabel: "Grids",
+    tagline: "Tu negocio, armado en cuadritos.",
+    description: "Fotos, WhatsApp, redes, menú y agenda en un solo enlace. Cada cosa en su cuadro, para compartir por WhatsApp.",
     features: ["WhatsApp, teléfono, correo y hasta 8 enlaces", "Botón para guardar tu contacto", "Agenda opcional con confirmación por correo"],
-    web: [miinfoWeb, "Página de Mi Info con una tarjeta de ejemplo"],
+    web: [gridsWeb, "Página de inicio de Grids con un grid de ejemplo"],
+    phone: [gridsMovil, "Grids en el celular"],
   },
   {
     name: "BeHive",
@@ -222,7 +225,7 @@ function ProductCard({ p, i, eager }) {
         <div className="mt-auto pt-7">
           {p.live ? (
             <a href={p.live} target="_blank" rel="noopener noreferrer" className="bt bt-white bt-sm">
-              Visitar {p.live.replace("https://", "")} <ArrowUpRight className="h-4 w-4" />
+              Visitar {p.liveLabel || p.live.replace("https://", "")} <ArrowUpRight className="h-4 w-4" />
             </a>
           ) : (
             <a href={wa(`Hola Hyperion, me gustaría ver una demo de ${p.name}`)} target="_blank" rel="noopener noreferrer" className="bt bt-white bt-sm">
