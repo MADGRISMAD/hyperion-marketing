@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function Privacidad() {
   return (
-    <Legal title="Política de privacidad" updated="25 de octubre de 2026">
+    <Legal title="Política de privacidad" updated="26 de octubre de 2026">
       <p>Faro by Hyperion («Faro») es un servicio de Hyperion Software («nosotros») que lee tu sitio web, propone temas y escribe y publica artículos para tu blog con ayuda de inteligencia artificial. Esta política explica qué datos tratamos, para qué y cómo puedes controlarlos.</p>
 
       <h2>1. Quién es responsable</h2>
@@ -35,32 +35,44 @@ export default function Privacidad() {
       <p>El uso y la transferencia a cualquier otra aplicación de la información recibida de las APIs de Google respetará la <a href="https://developers.google.com/terms/api-services-user-data-policy">Política de Datos de Usuario de los Servicios de API de Google</a>, incluidos los requisitos de uso limitado.</p>
       <p><i>Faro’s use and transfer to any other app of information received from Google APIs will adhere to the Google API Services User Data Policy, including the Limited Use requirements.</i></p>
 
-      <h2>4. Con quién compartimos datos</h2>
+      <h2>4. Páginas de Facebook</h2>
+      <p>Si conectas Facebook en <i>Redes sociales</i>, te pedimos solo los permisos para ver las páginas que administras y publicar en la que elijas (<code>pages_show_list</code>, <code>pages_read_engagement</code> y <code>pages_manage_posts</code>).</p>
+      <ul>
+        <li>Usamos ese acceso <b>únicamente</b> para compartir en tu página cada artículo que se publique en tu blog: el título, el resumen y el enlace al artículo. Nunca publicamos en tu perfil personal, no leemos tus mensajes y no tocamos tus anuncios.</li>
+        <li>Guardamos solo el nombre y el identificador de la página que elegiste y su token de acceso <b>cifrado</b>. No conservamos tu token de usuario ni tu lista de amigos o datos personales de Facebook.</li>
+        <li>Registramos qué artículos se compartieron y el identificador de cada publicación, para mostrártelo en tu panel.</li>
+        <li>No vendemos ni compartimos esa información con terceros y no la usamos para publicidad ni para entrenar modelos.</li>
+      </ul>
+      <h3 id="eliminar-datos">Cómo eliminar tus datos de Facebook</h3>
+      <p>Desde <i>Redes sociales → Desconectar</i> borramos al momento el token y la página guardados; lo que ya se publicó en tu página se queda ahí y lo puedes borrar desde Facebook. También puedes quitarle el acceso a Faro en Facebook, en <i>Configuración → Seguridad e inicio de sesión → Integraciones comerciales</i>, o escribirnos a <a href="mailto:info@hyperionmkt.com">info@hyperionmkt.com</a> y borramos todo lo relacionado con tu cuenta de Facebook en un máximo de 30 días.</p>
+
+      <h2>5. Con quién compartimos datos</h2>
       <p>Solo con los proveedores necesarios para prestar el servicio y únicamente para eso:</p>
       <ul>
         <li><b>Google (API de Gemini):</b> recibe el texto público de tu sitio y las instrucciones de tu marca para analizarlo y para redactar artículos e imágenes. Su tratamiento se rige por las condiciones de Google.</li>
         <li><b>DataForSEO (opcional):</b> recibe únicamente palabras clave (por ejemplo «software a la medida») para devolver volumen de búsqueda y dificultad. No recibe tus datos personales ni los de tu cuenta.</li>
         <li><b>Google Search Console:</b> solo si tú lo conectas, como se describe arriba.</li>
+        <li><b>Meta (Facebook):</b> solo si conectas tu página; recibe el texto y el enlace de cada artículo que se comparte.</li>
         <li><b>Infraestructura:</b> el servidor donde corre Faro.</li>
       </ul>
       <p>No vendemos tus datos ni los usamos para entrenar modelos propios.</p>
 
-      <h2>5. Contenido publicado</h2>
+      <h2>6. Contenido publicado</h2>
       <p>Los artículos que tú publicas son públicos por naturaleza: cualquiera puede leerlos en tu blog y a través de la API de lectura de tu sitio. Lo que está en borrador no se muestra públicamente.</p>
 
-      <h2>6. Cuánto tiempo los conservamos</h2>
-      <p>Mientras tengas tu cuenta y el sitio esté dado de alta. Si quitas un sitio desde <i>Ajustes → Quitar este sitio</i>, se borran sus artículos, imágenes, planes, conexión con Google y métricas. Si cierras tu cuenta o quieres que borremos algo más, escríbenos y lo hacemos.</p>
+      <h2>7. Cuánto tiempo los conservamos</h2>
+      <p>Mientras tengas tu cuenta y el sitio esté dado de alta. Si quitas un sitio desde <i>Ajustes → Quitar este sitio</i>, se borran sus artículos, imágenes, planes, conexiones con Google y Facebook y métricas. Si cierras tu cuenta o quieres que borremos algo más, escríbenos y lo hacemos.</p>
 
-      <h2>7. Seguridad</h2>
+      <h2>8. Seguridad</h2>
       <p>Usamos conexiones cifradas (HTTPS), contraseñas con Argon2id, sesiones con cookie HttpOnly, protección contra solicitudes falsificadas y tokens de terceros cifrados en reposo. Ningún sistema es infalible; si detectáramos un incidente que te afecte, te avisaremos.</p>
 
-      <h2>8. Tus derechos</h2>
+      <h2>9. Tus derechos</h2>
       <p>Puedes pedir acceso, rectificación, cancelación u oposición (derechos ARCO, conforme a la legislación mexicana de protección de datos personales) escribiendo a <a href="mailto:info@hyperionmkt.com">info@hyperionmkt.com</a>. Responderemos en un plazo razonable.</p>
 
-      <h2>9. Menores de edad</h2>
+      <h2>10. Menores de edad</h2>
       <p>Faro es un servicio para negocios y no está dirigido a menores de 18 años.</p>
 
-      <h2>10. Cambios</h2>
+      <h2>11. Cambios</h2>
       <p>Si cambiamos esta política, publicaremos la nueva versión en esta página con su fecha. Si el cambio es importante, te avisaremos por correo.</p>
     </Legal>
   )
