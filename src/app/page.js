@@ -41,6 +41,8 @@ import gridsWeb from "../../public/productos/grids-web.jpg"
 import gridsMovil from "../../public/productos/grids-movil.jpg"
 import barbellaWeb from "../../public/productos/barbella-web.jpg"
 import barbellaMovil from "../../public/productos/barbella-movil.jpg"
+import faroWeb from "../../public/productos/faro-web.jpg"
+import faroMovil from "../../public/productos/faro-movil.jpg"
 import behiveWeb from "../../public/productos/behive-landing.webp"
 import camionWeb from "../../public/productos/camion-web.jpg"
 import camionMovil from "../../public/productos/camion-movil.jpg"
@@ -89,7 +91,7 @@ function Head({ eyebrow, title, text, center = false, light = false, small = fal
 function Numbers() {
   const stats = [
     { n: 10, s: "+", label: "años construyendo software" },
-    { n: 8, s: "", label: "productos propios, diseñados y construidos aquí" },
+    { n: 9, s: "", label: "productos propios, diseñados y construidos aquí" },
     { n: 100, s: "%", label: "desarrollo a la medida, sin plantillas" },
     { n: 1, s: "", label: "equipo que diseña, programa, instala y da soporte" },
   ]
@@ -181,6 +183,20 @@ const products = [
     phone: [barbellaMovil, "Barbella en el celular"],
   },
   {
+    name: "FaroContenido",
+    logo: "/productos/logos/faro.svg",
+    cat: "Blog con IA",
+    bg: "#ffffff",
+    fg: "ink",
+    live: "https://faro.hyperionmkt.com",
+    liveLabel: "FaroContenido",
+    tagline: "Tu blog, escrito solo.",
+    description: "Pegas la dirección de tu sitio y la IA investiga tu negocio, elige los temas y escribe y publica artículos con imagen, a un ritmo que Google ve con buenos ojos.",
+    features: ["Brand DNA sugerido por la IA, que tú ajustas", "Piloto automático con ritmo prudente; en salud, legal y finanzas queda en borrador", "Analytics reales con Google Search Console"],
+    web: [faroWeb, "Página de inicio de FaroContenido"],
+    phone: [faroMovil, "Panel de FaroContenido en el celular con la próxima publicación"],
+  },
+  {
     name: "Mirestaurante",
     logo: "/productos/logos/mirestaurante.svg",
     cat: "Restaurantes",
@@ -226,7 +242,7 @@ function ProductCard({ p, i, eager }) {
       <div className="relative flex flex-col p-7 md:p-10 lg:p-12">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="tag">
-            0{i + 1} · {p.cat}
+            {String(i + 1).padStart(2, "0")} · {p.cat}
           </span>
           <span className="tag !flex items-center gap-1.5 !bg-white">
             <span className="h-2 w-2 shrink-0 rounded-full border border-ink" style={{ background: p.live ? "#141414" : "#ff3d7f" }} />
@@ -235,7 +251,7 @@ function ProductCard({ p, i, eager }) {
         </div>
         <div className="mt-6 flex items-center gap-4">
           {p.logo && <img src={p.logo} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-2xl object-contain" />}
-          <h3 className={`display ${p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`}>{p.name}</h3>
+          <h3 className={`display ${p.name.length > 12 ? "text-[clamp(1.9rem,3.1vw,2.8rem)]" : p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`}>{p.name}</h3>
         </div>
         <p className="mt-3 text-xl leading-snug font-bold tracking-[-0.02em] md:text-2xl">{p.tagline}</p>
         <p className={`mt-3 leading-relaxed ${onDark ? "text-white" : "text-ink/80"}`}>{p.description}</p>
@@ -310,7 +326,7 @@ function Products() {
     const k = Math.max(0, Math.min(1, (f - i - 0.18) / 0.64))
     const e = k * k * (3 - 2 * k)
     t.style.transform = `translate3d(${(at(cards[i]) + (at(cards[i + 1]) - at(cards[i])) * e).toFixed(1)}px,0,0)`
-    if (count.current) count.current.textContent = `0${Math.round(i + e) + 1}`
+    if (count.current) count.current.textContent = String(Math.round(i + e) + 1).padStart(2, "0")
     if (bar.current) bar.current.style.transform = `scaleX(${p.toFixed(3)})`
     // parallax dentro de cada tarjeta: la laptop va más lenta que la tarjeta y el teléfono sube
     cards.forEach((card) => {
@@ -324,13 +340,13 @@ function Products() {
   }
 
   return (
-    <Scene id="productos" mode="pin" onProgress={onProgress} className="relative lg:h-[720vh]">
+    <Scene id="productos" mode="pin" onProgress={onProgress} className="relative lg:h-[800vh]">
       <div ref={sticky} className="overflow-hidden bg-paper-2 py-20 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:py-0 lg:pt-24">
         <div className="container flex items-end justify-between gap-6 lg:pb-8">
           <div>
             <p className="eyebrow text-grey-500">Productos propios</p>
             <h2 className="display mt-3 text-[clamp(2.4rem,5vw,4.4rem)]">
-              Ocho productos.
+              Nueve productos.
               <br />
               <span className="text-grey-500">Hechos por nosotros</span>
               <Dot />
@@ -339,7 +355,7 @@ function Products() {
           <div className="hidden w-48 shrink-0 lg:block">
             <div className="mono flex items-baseline justify-between text-sm">
               <span ref={count}>01</span>
-              <span>0{total}</span>
+              <span>{String(total).padStart(2, "0")}</span>
             </div>
             <div className="mt-2 h-1.5 rounded-full border border-ink/15 bg-white">
               <div ref={bar} className="h-full origin-left rounded-full bg-pink" style={{ transform: "scaleX(0)" }} />
@@ -357,12 +373,12 @@ function Products() {
               className="relative flex h-full w-[86vw] shrink-0 snap-center flex-col justify-center overflow-hidden rounded-[24px] border border-ink/15 bg-ink p-10 text-canvas md:p-14 lg:w-[min(720px,70vw)]"
             >
               <Rings className="pointer-events-none absolute -right-32 -bottom-40 h-[520px] w-[520px]" stroke="#f5f4f0" opacity={0.12} />
-              <span className="eyebrow relative text-grey-300">0{total} · ¿El tuyo?</span>
+              <span className="eyebrow relative text-grey-300">{String(total).padStart(2, "0")} · ¿El tuyo?</span>
               <h3 className="display relative mt-6 text-[clamp(2.6rem,5vw,4.6rem)]">
-                El noveno puede ser <span className="inline-block -rotate-1 rounded-lg bg-pink px-2 text-ink">tu idea</span>
+                El décimo puede ser <span className="inline-block -rotate-1 rounded-lg bg-pink px-2 text-ink">tu idea</span>
                 <Dot />
               </h3>
-              <p className="relative mt-5 max-w-md text-lg text-grey-300">El mismo equipo que construyó estos ocho, trabajando en el tuyo.</p>
+              <p className="relative mt-5 max-w-md text-lg text-grey-300">El mismo equipo que construyó estos nueve, trabajando en el tuyo.</p>
               <Link href="#contacto" className="bt bt-pink bt-inv relative mt-9 self-start">
                 Cotizar proyecto <ArrowRight className="h-4 w-4" />
               </Link>
