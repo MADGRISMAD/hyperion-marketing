@@ -27,6 +27,8 @@ export const metadata = {
   description:
     "10 años creando sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios. Creadores de Mitiendita, Caresia, Camión TJ, Grids, Barbella, Mirestaurante, Internships.gg y BeHive.",
   alternates: { canonical: "/" },
+  // Verificación de propiedad en Google Search Console (necesaria para publicar FaroContenido con Google)
+  verification: { google: "0cHVa4OdvzTtasKE6twq695QpSrM7D0UjVdBfsprBrs" },
   openGraph: {
     title: "Hyperion Software | Sistemas a medida, puntos de venta y automatización",
     description:
