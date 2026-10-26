@@ -3,8 +3,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Logo } from "../../components/landing/Navbar"
 
 export const metadata = {
-  title: "FaroContenido | Tu blog escrito solo, por Hyperion Software",
-  description: "FaroContenido lee tu sitio, entiende tu negocio y escribe y publica artículos con imagen para tu blog, con datos reales de Google Search Console.",
+  title: "Faro Ai | Tu blog escrito solo, por Hyperion Software",
+  description: "Faro Ai lee tu sitio, entiende tu negocio y escribe y publica artículos con imagen para tu blog, con datos reales de Google Search Console.",
   alternates: { canonical: "/faro" },
 }
 
@@ -26,10 +26,10 @@ export default function Faro() {
       </header>
       <main className="container py-14 md:py-20">
         <p className="eyebrow text-grey-500">Un producto de Hyperion Software</p>
-        <h1 className="display mt-4 max-w-4xl text-[clamp(2.6rem,7vw,5.2rem)]">FaroContenido: tu blog, escrito solo.</h1>
+        <h1 className="display mt-4 max-w-4xl text-[clamp(2.6rem,7vw,5.2rem)]">Faro Ai: tu blog, escrito solo.</h1>
         <p className="mt-6 max-w-2xl text-xl text-grey-700">Pegas la dirección de tu sitio y la inteligencia artificial investiga tu negocio, elige los temas y escribe y publica artículos con imagen. Tú conservas el control y el diseño.</p>
         <div className="mt-8 flex flex-wrap items-center gap-4">
-          <a href="https://faro.hyperionmkt.com/dashboard" className="bt bt-pink">Entrar a FaroContenido <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
+          <a href="https://faro.hyperionmkt.com/dashboard" className="bt bt-pink">Entrar a Faro Ai <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
         </div>
         <ol className="mt-16 grid gap-px overflow-hidden rounded-lg border border-ink/15 bg-ink/15 md:grid-cols-2">
           {pasos.map(([t, d], i) => (
@@ -42,12 +42,12 @@ export default function Faro() {
         </ol>
         <section className="mt-16 max-w-2xl">
           <h2 className="text-2xl font-bold tracking-[-0.02em]">Tus datos, con cuidado</h2>
-          <p className="mt-3 text-grey-700">Si conectas Google Search Console, FaroContenido solo lee las métricas de tu sitio (permiso de solo lectura) para mostrártelas y priorizar temas. No las vende ni las comparte, y puedes desconectarlo cuando quieras. Lee nuestra <Link href="/faro/privacidad" className="underline">política de privacidad</Link> y las <Link href="/faro/terminos" className="underline">condiciones del servicio</Link>.</p>
+          <p className="mt-3 text-grey-700">Si conectas Google Search Console, Faro Ai solo lee las métricas de tu sitio (permiso de solo lectura) para mostrártelas y priorizar temas. No las vende ni las comparte, y puedes desconectarlo cuando quieras. Lee nuestra <Link href="/faro/privacidad" className="underline">política de privacidad</Link> y las <Link href="/faro/terminos" className="underline">condiciones del servicio</Link>.</p>
         </section>
       </main>
       <footer className="border-t border-ink/15">
         <div className="container flex flex-wrap items-center justify-between gap-4 py-8 text-sm text-grey-700">
-          <p>© 2026 Hyperion Software · FaroContenido es un producto de Hyperion Software, Tijuana, México.</p>
+          <p>© 2026 Hyperion Software · Faro Ai es un producto de Hyperion Software, Tijuana, México.</p>
           <nav aria-label="Legal" className="flex gap-6 font-medium">
             <Link href="/faro/privacidad" className="underline">Política de privacidad</Link>
             <Link href="/faro/terminos" className="underline">Condiciones del servicio</Link>

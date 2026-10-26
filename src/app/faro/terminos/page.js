@@ -1,15 +1,15 @@
 import Legal from "../../../components/legal/Legal"
 
 export const metadata = {
-  title: "Condiciones del servicio | FaroContenido",
-  description: "Las reglas de uso de FaroContenido, de Hyperion Software.",
+  title: "Condiciones del servicio | Faro Ai",
+  description: "Las reglas de uso de Faro Ai, de Hyperion Software.",
   alternates: { canonical: "/faro/terminos" },
 }
 
 export default function Terminos() {
   return (
     <Legal title="Condiciones del servicio" updated="25 de octubre de 2026">
-      <p>Al crear una cuenta o usar FaroContenido («Faro»), un servicio de Hyperion Software, aceptas estas condiciones. Si no estás de acuerdo, no uses el servicio.</p>
+      <p>Al crear una cuenta o usar Faro Ai («Faro»), un servicio de Hyperion Software, aceptas estas condiciones. Si no estás de acuerdo, no uses el servicio.</p>
 
       <h2>1. Qué es Faro</h2>
       <p>Faro lee tu sitio web, propone temas de contenido y, con inteligencia artificial, redacta artículos e imágenes de portada que puedes revisar y publicar en tu blog, ya sea en una dirección alojada por Faro, en tu propio dominio o con tu propio diseño a través de nuestra API de lectura. Opcionalmente muestra datos reales de Google Search Console y de palabras clave.</p>

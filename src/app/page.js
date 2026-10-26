@@ -183,18 +183,19 @@ const products = [
     phone: [barbellaMovil, "Barbella en el celular"],
   },
   {
-    name: "FaroContenido",
+    name: "Faro Ai",
     logo: "/productos/logos/faro.svg",
     cat: "Blog con IA",
     bg: "#ffffff",
     fg: "ink",
     live: "https://faro.hyperionmkt.com",
-    liveLabel: "FaroContenido",
+    liveLabel: "Faro Ai",
     tagline: "Tu blog, escrito solo.",
     description: "Pegas la dirección de tu sitio y la IA investiga tu negocio, elige los temas y escribe y publica artículos con imagen, a un ritmo que Google ve con buenos ojos.",
     features: ["Brand DNA sugerido por la IA, que tú ajustas", "Piloto automático con ritmo prudente; en salud, legal y finanzas queda en borrador", "Analytics reales con Google Search Console"],
-    web: [faroWeb, "Página de inicio de FaroContenido"],
-    phone: [faroMovil, "Panel de FaroContenido en el celular con la próxima publicación"],
+    mascot: "/productos/faro-mascota.png",
+    web: [faroWeb, "Página de inicio de Faro Ai"],
+    phone: [faroMovil, "Panel de Faro Ai en el celular con la próxima publicación"],
   },
   {
     name: "Mirestaurante",
@@ -278,7 +279,8 @@ function ProductCard({ p, i, eager }) {
       {/* pantallas recortadas abajo: se desplazan a su propio ritmo mientras la tarjeta cruza la pantalla */}
       <div className="relative min-h-[240px] overflow-hidden border-t border-ink/10 bg-white/25 lg:border-t-0 lg:border-l-2">
         <div className="absolute inset-0 flex items-end justify-center px-[8%] pt-[8%] pb-[7%]">
-          <div data-shift className={`w-full lg:w-[min(100%,calc((100svh-20.5rem)*1.2))] will-change-transform ${p.phone ? "lg:-translate-x-[6%]" : ""}`}>
+          <div data-shift className={`relative w-full lg:w-[min(100%,calc((100svh-20.5rem)*1.2))] will-change-transform ${p.phone ? "lg:-translate-x-[6%]" : ""}`}>
+            {p.mascot && <img src={p.mascot} alt="" width={900} height={507} loading="lazy" className="pointer-events-none absolute right-[7%] hidden lg:block bottom-[calc(100%-5px)] z-10 w-[38%] drop-shadow-[0_14px_14px_rgba(232,51,109,0.22)]" />}
             <MacBook eager={eager} img={p.web[0]} alt={p.web[1]} sizes="(min-width: 1024px) 560px, 80vw" />
           </div>
         </div>
