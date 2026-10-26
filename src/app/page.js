@@ -608,10 +608,10 @@ function Services() {
 
 /* ───────────────────────── Automatizar (iPhone que recibe avisos) ───────────────────────── */
 const flow = [
-  { step: "Venta", text: "Se cobra en caja, tablet o celular. Es el único paso que hace una persona.", app: "Mitiendita", color: "var(--color-orange)", icon: ShoppingBag, title: "Venta registrada · $118.50", body: "Caja 1 · 4 artículos" },
-  { step: "Inventario", text: "Cada producto vendido se descuenta solo, en todas las sucursales.", app: "Inventario", color: "var(--color-blue)", icon: Package, title: "Inventario actualizado", body: "Refresco 600 ml · quedan 23" },
-  { step: "Factura", text: "Si el cliente la pide, la factura se genera y le llega por correo.", app: "Facturación", color: "var(--color-violet)", icon: FileText, title: "Factura enviada", body: "CFDI al correo del cliente" },
-  { step: "Reporte", text: "Al cierre, el resumen del día llega a tu correo sin que nadie lo arme.", app: "Reportes", color: "var(--color-teal)", icon: BarChart3, title: "Reporte del día", body: "$12,480 en 86 ventas" },
+  { step: "Evento", text: "Un cliente compra, reserva o paga. Es el único paso que hace una persona.", app: "Barbella", color: "var(--color-orange)", icon: CalendarCheck, title: "Cita reservada · sáb 5:30 pm", body: "Corte y barba · Sucursal Centro" },
+  { step: "Registro", text: "Cada sistema se entera: inventario, agenda o expediente se actualizan solos.", app: "Mitiendita", color: "var(--color-blue)", icon: Package, title: "Inventario actualizado", body: "Refresco 600 ml · quedan 23" },
+  { step: "Comprobante", text: "El cliente recibe su confirmación, recibo o factura sin que nadie la envíe.", app: "Facturación", color: "var(--color-violet)", icon: FileText, title: "Factura enviada", body: "CFDI al correo del cliente" },
+  { step: "Reporte", text: "Al cierre, el resumen del día llega a tu correo sin que nadie lo arme.", app: "Reportes", color: "var(--color-teal)", icon: BarChart3, title: "Reporte del día", body: "$12,480 · 86 operaciones" },
   { step: "Aviso", text: "Si algo se acaba o falla, te enteras antes de que sea un problema.", app: "Alertas", color: "var(--color-pink)", icon: Bell, title: "Stock bajo: pan blanco", body: "Pide al proveedor hoy" },
 ]
 
@@ -629,12 +629,12 @@ function Automation() {
         <div>
           <p className="eyebrow text-grey-300">Automatizar</p>
           <h2 className="display mt-4 text-[clamp(2.5rem,5.4vw,4.8rem)]">
-            Una venta.
+            Un evento.
             <br />
             <span className="inline-block -rotate-1 rounded-lg bg-pink px-2 text-ink">Cinco tareas</span> que ya no haces
             <Dot />
           </h2>
-          <p className="mt-6 max-w-lg text-lg text-grey-300">Conectamos tus sistemas para que un cobro dispare todo lo demás. Sin capturar dos veces, sin hojas de cálculo a medianoche.</p>
+          <p className="mt-6 max-w-lg text-lg text-grey-300">Una venta, una cita o un pedido: conectamos tus sistemas para que un solo evento dispare todo lo demás. Sin capturar dos veces, sin hojas de cálculo a medianoche.</p>
           <ol className="mt-10 space-y-2">
             {flow.map((f, i) => (
               <li
