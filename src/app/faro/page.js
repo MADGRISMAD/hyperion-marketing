@@ -45,6 +45,16 @@ export default function Faro() {
           <p className="mt-3 text-grey-700">Si conectas Google Search Console, FaroContenido solo lee las métricas de tu sitio (permiso de solo lectura) para mostrártelas y priorizar temas. No las vende ni las comparte, y puedes desconectarlo cuando quieras. Lee nuestra <Link href="/faro/privacidad" className="underline">política de privacidad</Link> y las <Link href="/faro/terminos" className="underline">condiciones del servicio</Link>.</p>
         </section>
       </main>
+      <footer className="border-t border-ink/15">
+        <div className="container flex flex-wrap items-center justify-between gap-4 py-8 text-sm text-grey-700">
+          <p>© 2026 Hyperion Software · FaroContenido es un producto de Hyperion Software, Tijuana, México.</p>
+          <nav aria-label="Legal" className="flex gap-6 font-medium">
+            <Link href="/faro/privacidad" className="underline">Política de privacidad</Link>
+            <Link href="/faro/terminos" className="underline">Condiciones del servicio</Link>
+            <a href="mailto:info@hyperionmkt.com" className="underline">Contacto</a>
+          </nav>
+        </div>
+      </footer>
     </div>
   )
 }
