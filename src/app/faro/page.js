@@ -29,7 +29,7 @@ export default function Faro() {
         <h1 className="display mt-4 max-w-4xl text-[clamp(2.6rem,7vw,5.2rem)]">FaroContenido: tu blog, escrito solo.</h1>
         <p className="mt-6 max-w-2xl text-xl text-grey-700">Pegas la dirección de tu sitio y la inteligencia artificial investiga tu negocio, elige los temas y escribe y publica artículos con imagen. Tú conservas el control y el diseño.</p>
         <div className="mt-8 flex flex-wrap items-center gap-4">
-          <a href="https://faro.15-235-62-27.sslip.io/dashboard" className="bt bt-pink">Entrar a FaroContenido <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
+          <a href="https://faro.hyperionmkt.com/dashboard" className="bt bt-pink">Entrar a FaroContenido <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
         </div>
         <ol className="mt-16 grid gap-px overflow-hidden rounded-lg border border-ink/15 bg-ink/15 md:grid-cols-2">
           {pasos.map(([t, d], i) => (
