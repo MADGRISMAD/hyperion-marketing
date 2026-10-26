@@ -1,15 +1,15 @@
 import Legal from "../../../components/legal/Legal"
 
 export const metadata = {
-  title: "Política de privacidad | Faro Ai",
-  description: "Qué datos usa Faro Ai, para qué, con quién se comparten y cómo borrarlos.",
+  title: "Política de privacidad | Faro by Hyperion",
+  description: "Qué datos usa Faro, para qué, con quién se comparten y cómo borrarlos.",
   alternates: { canonical: "/faro/privacidad" },
 }
 
 export default function Privacidad() {
   return (
     <Legal title="Política de privacidad" updated="25 de octubre de 2026">
-      <p>Faro Ai («Faro») es un servicio de Hyperion Software («nosotros») que lee tu sitio web, propone temas y escribe y publica artículos para tu blog con ayuda de inteligencia artificial. Esta política explica qué datos tratamos, para qué y cómo puedes controlarlos.</p>
+      <p>Faro by Hyperion («Faro») es un servicio de Hyperion Software («nosotros») que lee tu sitio web, propone temas y escribe y publica artículos para tu blog con ayuda de inteligencia artificial. Esta política explica qué datos tratamos, para qué y cómo puedes controlarlos.</p>
 
       <h2>1. Quién es responsable</h2>
       <p>Hyperion Software, Tijuana, Baja California, México. Contacto para cualquier tema de privacidad: <a href="mailto:info@hyperionmkt.com">info@hyperionmkt.com</a>.</p>
@@ -33,7 +33,7 @@ export default function Privacidad() {
         <li>Puedes desconectarlo cuando quieras desde Analytics (botón «Desconectar Google», que además revoca el permiso en Google) o desde <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</li>
       </ul>
       <p>El uso y la transferencia a cualquier otra aplicación de la información recibida de las APIs de Google respetará la <a href="https://developers.google.com/terms/api-services-user-data-policy">Política de Datos de Usuario de los Servicios de API de Google</a>, incluidos los requisitos de uso limitado.</p>
-      <p><i>Faro Ai’s use and transfer to any other app of information received from Google APIs will adhere to the Google API Services User Data Policy, including the Limited Use requirements.</i></p>
+      <p><i>Faro’s use and transfer to any other app of information received from Google APIs will adhere to the Google API Services User Data Policy, including the Limited Use requirements.</i></p>
 
       <h2>4. Con quién compartimos datos</h2>
       <p>Solo con los proveedores necesarios para prestar el servicio y únicamente para eso:</p>

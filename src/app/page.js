@@ -183,19 +183,20 @@ const products = [
     phone: [barbellaMovil, "Barbella en el celular"],
   },
   {
-    name: "Faro Ai",
+    name: "Faro",
+    by: true,
     logo: "/productos/logos/faro.svg",
     cat: "Blog con IA",
     bg: "#ffffff",
     fg: "ink",
     live: "https://faro.hyperionmkt.com",
-    liveLabel: "Faro Ai",
+    liveLabel: "Faro",
     tagline: "Tu blog, escrito solo.",
     description: "Pegas la dirección de tu sitio y la IA investiga tu negocio, elige los temas y escribe y publica artículos con imagen, a un ritmo que Google ve con buenos ojos.",
     features: ["Brand DNA sugerido por la IA, que tú ajustas", "Piloto automático con ritmo prudente; en salud, legal y finanzas queda en borrador", "Analytics reales con Google Search Console"],
     mascot: "/productos/faro-mascota.png",
-    web: [faroWeb, "Página de inicio de Faro Ai"],
-    phone: [faroMovil, "Panel de Faro Ai en el celular con la próxima publicación"],
+    web: [faroWeb, "Página de inicio de Faro"],
+    phone: [faroMovil, "Panel de Faro en el celular con la próxima publicación"],
   },
   {
     name: "Mirestaurante",
@@ -252,7 +253,7 @@ function ProductCard({ p, i, eager }) {
         </div>
         <div className="mt-6 flex items-center gap-4">
           {p.logo && <img src={p.logo} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-2xl object-contain" />}
-          <h3 className={`display ${p.name.length > 12 ? "text-[clamp(1.9rem,3.1vw,2.8rem)]" : p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`}>{p.name}</h3>
+          <h3 className={`display ${p.name.length > 12 ? "text-[clamp(1.9rem,3.1vw,2.8rem)]" : p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`}>{p.name}{p.by && <small className="ml-2 align-baseline font-sans text-[0.3em] font-bold tracking-normal text-ink/60">by Hyperion</small>}</h3>
         </div>
         <p className="mt-3 text-xl leading-snug font-bold tracking-[-0.02em] md:text-2xl">{p.tagline}</p>
         <p className={`mt-3 leading-relaxed ${onDark ? "text-white" : "text-ink/80"}`}>{p.description}</p>
