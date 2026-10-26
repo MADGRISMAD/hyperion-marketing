@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { notFound } from "next/navigation"
+import { notFound, permanentRedirect } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { Logo } from "../../../components/landing/Navbar"
 import { getPost } from "../../../lib/faro"
@@ -17,8 +17,11 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Post({ params }) {
-  const post = await getPost((await params).slug)
+  const { slug } = await params
+  const post = await getPost(slug)
   if (!post) notFound()
+  // Faro responde también a direcciones anteriores del artículo (p. ej. cuando se quitaron los acentos): se lleva a la actual
+  if (post.slug !== slug) permanentRedirect(`/blog/${post.slug}`)
   return (
     <div className="min-h-screen bg-canvas text-ink">
       {post.jsonld.map((d, i) => (
