@@ -26,7 +26,7 @@ export default async function Post({ params }) {
   const url = `${SITE}/blog/${post.slug}`
   const jsonld = [
     ...post.jsonld
-      .filter((d) => d["@type"] !== "Organization")
+      .filter((d) => d["@type"] !== "Organization" && d["@type"] !== "BreadcrumbList") // las migas las arma esta página
       .map((d) => (d["@type"] === "BlogPosting" ? { ...d, "@id": `${url}#article`, inLanguage: "es-MX", publisher: { "@id": ORG_ID }, author: { "@id": ORG_ID } } : d)),
     {
       "@context": "https://schema.org",
