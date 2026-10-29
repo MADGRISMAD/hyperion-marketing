@@ -2,7 +2,7 @@ import Link from "next/link"
 import { ArrowLeft, CheckCircle2 } from "lucide-react"
 
 export const metadata = {
-  title: "¡Gracias! | Hyperion Marketing",
+  title: "¡Gracias! | Hyperion Software",
   alternates: { canonical: "/gracias" },
   openGraph: { url: "/gracias", images: ["/og.png"] },
   robots: { index: false },

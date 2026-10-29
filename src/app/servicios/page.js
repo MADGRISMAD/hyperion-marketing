@@ -3,7 +3,7 @@ import { ArrowRight, ChevronRight, Code, Globe, Megaphone, Settings } from "luci
 import { Logo } from "@/components/landing/Navbar"
 
 export const metadata = {
-  title: "Servicios | Hyperion Marketing",
+  title: "Servicios | Hyperion Software",
   description: "Desarrollo web, sistemas a medida, marketing digital y consultoría IT.",
   alternates: { canonical: "/servicios" },
   openGraph: { url: "/servicios", images: ["/og.png"] },
@@ -13,7 +13,7 @@ const servicios = [
   { icon: Globe, title: "Desarrollo Web", description: "Sitios web modernos y responsivos que convierten visitantes en clientes.", href: "/servicios/desarrollo-web" },
   { icon: Code, title: "Sistemas a Medida", description: "Soluciones de software personalizadas para optimizar tus procesos de negocio.", href: "/servicios/sistemas-a-medida" },
   { icon: Megaphone, title: "Marketing Digital", description: "Estrategias efectivas para aumentar tu visibilidad online y atraer clientes.", href: "/servicios/marketing-digital" },
-  { icon: Settings, title: "Consultoría IT", description: "Asesoramiento experto para optimizar tu infraestructura tecnológica.", href: "/servicios/consultoria-it" },
+  { icon: Settings, title: "Consultoría IT", description: "Te ayudamos a decidir qué tecnología conviene a tu negocio antes de invertir.", href: "/servicios/consultoria-it" },
 ]
 
 export default function Servicios() {
@@ -21,7 +21,7 @@ export default function Servicios() {
     <div className="min-h-screen bg-ink-900 text-fog">
       <header className="border-b border-slate-200 bg-white">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/" aria-label="Hyperion Marketing, inicio">
+          <Link href="/" aria-label="Hyperion Software, inicio">
             <Logo />
           </Link>
           <Link href="/" className="text-sm font-medium text-fog/60 hover:text-fog">Volver al inicio</Link>
@@ -34,7 +34,7 @@ export default function Servicios() {
             Nuestros <span className="text-brand">Servicios</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-fog/65">
-            Ofrecemos soluciones tecnológicas integrales para impulsar el crecimiento de tu negocio en la era digital.
+            Sistemas, sitios y soporte para negocios de Tijuana y de todo México, hechos por un solo equipo.
           </p>
         </div>
 

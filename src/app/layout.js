@@ -60,6 +60,7 @@ const organizationLd = {
       foundingDate: "2016",
       description: "Estudio de software en Tijuana: sistemas a la medida, puntos de venta, automatizaciones y servicio técnico.",
       address: { "@type": "PostalAddress", addressLocality: "Tijuana", addressRegion: "Baja California", addressCountry: "MX" },
+      areaServed: { "@type": "Country", name: "México" },
       contactPoint: {
         "@type": "ContactPoint",
         telephone: "+526645798903",

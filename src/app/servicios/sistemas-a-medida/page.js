@@ -2,7 +2,7 @@ import { Code, Cpu, Database } from "lucide-react"
 import ServicePage from "@/components/landing/ServicePage"
 
 export const metadata = {
-  title: "Sistemas a medida | Hyperion Marketing",
+  title: "Sistemas a medida | Hyperion Software",
   description: "Software personalizado que optimiza los procesos de tu negocio.",
   alternates: { canonical: "/servicios/sistemas-a-medida" },
   openGraph: { url: "/servicios/sistemas-a-medida", images: ["/og.png"] },
@@ -11,6 +11,8 @@ export const metadata = {
 export default function SistemasAMedida() {
   return (
     <ServicePage
+      path="/servicios/sistemas-a-medida"
+      related={{ href: "/blog/que-es-un-sistema-a-la-medida-y-cuando-le-conviene-a-tu-negocio-acbc03c5", label: "¿Qué es un sistema a la medida y cuándo le conviene a tu negocio?" }}
       icon={Code}
       title="Sistemas a Medida"
       intro="Desarrollamos soluciones de software personalizadas que optimizan tus procesos de negocio."
@@ -25,11 +27,11 @@ export default function SistemasAMedida() {
         "Escalabilidad y seguridad",
       ]}
       extras={[
-        { icon: Cpu, title: "Tecnología Avanzada", text: "Utilizamos las últimas tecnologías y frameworks para garantizar el mejor rendimiento y escalabilidad." },
+        { icon: Cpu, title: "Hecho por el mismo equipo", text: "El mismo equipo que construyó Mitiendita, Caresia y Barbella diseña, programa y da soporte a tu sistema." },
         { icon: Database, title: "Gestión de Datos", text: "Sistemas robustos para la gestión y análisis de datos que impulsan la toma de decisiones." },
       ]}
       ctaTitle="¿Necesitas un sistema a tu medida?"
-      ctaText="Contáctanos para desarrollar la solución perfecta para tu negocio."
+      ctaText="Cuéntanos tu proceso y te proponemos un plan con tiempos y costos definidos."
       ctaLabel="Solicitar Cotización"
     />
   )

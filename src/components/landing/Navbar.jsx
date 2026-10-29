@@ -15,6 +15,7 @@ const links = [
   ["#automatizar", "Automatizar"],
   ["#proceso", "Proceso"],
   ["#estudio", "Estudio"],
+  ["/blog", "Blog"],
 ]
 
 export default function Navbar() {
@@ -28,7 +29,7 @@ export default function Navbar() {
           <Link href="#inicio" aria-label="Hyperion Software, inicio" className="-my-1 mr-1 flex items-center">
             <Logo className="h-11" />
           </Link>
-          <nav className="hidden items-center text-[14px] font-medium text-[#141414] lg:flex">
+          <nav aria-label="Principal" className="hidden items-center text-[14px] font-medium text-[#141414] lg:flex">
             {links.map(([href, label]) => (
               <Link key={href} href={href} className="rounded-full px-3 py-1.5 transition-colors hover:bg-[#141414] hover:text-[#f5f4f0]">
                 {label}
@@ -59,7 +60,7 @@ export default function Navbar() {
             <X className="h-6 w-6" />
           </button>
         </div>
-        <nav className="mt-6 flex flex-col px-5">
+        <nav aria-label="Menú móvil" className="mt-6 flex flex-col px-5">
           {links.map(([href, label], i) => (
             <Link
               key={href}

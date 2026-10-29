@@ -1,0 +1,33 @@
+# Hyperion Software
+
+> Estudio de software en Tijuana, Baja California, desde 2016. Sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios de todo México. Nueve productos propios.
+
+Un solo equipo diseña, programa, instala y da soporte, en persona o a distancia.
+
+Contacto: info@hyperionmkt.com · +52 664 579 8903 · WhatsApp https://wa.me/526645798903
+
+## Servicios
+- [Sistemas a la medida](https://www.hyperionmkt.com/servicios/sistemas-a-medida): ERP, CRM, portales, inventarios y paneles de control diseñados alrededor de tus procesos.
+- [Desarrollo web](https://www.hyperionmkt.com/servicios/desarrollo-web)
+- [Marketing digital](https://www.hyperionmkt.com/servicios/marketing-digital)
+- [Consultoría IT](https://www.hyperionmkt.com/servicios/consultoria-it)
+- Puntos de venta: instalación y personalización para tiendas, restaurantes y comercios, con sistema propio en la nube.
+- Automatizaciones: integraciones y reportes para que tus sistemas hablen entre ellos.
+- Servicio técnico: mantenimiento de equipos, redes, instalación y soporte a sistemas existentes.
+
+## Productos
+- [Mitiendita](https://mitiendita.software): punto de venta en la nube para abarrotes y comercios, desde celular, tablet o PC sin instalar nada.
+- [Caresia](https://caresia.mx): agenda, expedientes, recetas y cobros para clínicas dentales y consultorios.
+- [Barbella](https://barbella.mx): agenda por persona, anticipos y caja para barberías, salones de uñas, pestañas y spas.
+- [Faro](https://www.hyperionmkt.com/faro): blog escrito con IA que investiga tu negocio y publica artículos con imagen, de una a tres veces por semana.
+- Camión TJ: rutas de transporte de Tijuana (camiones, taxis de ruta y calafias), con costo del pasaje y camino a pie hasta la parada.
+- Grids: fotos, WhatsApp, redes, menú y agenda de un negocio en un solo enlace.
+- Mirestaurante (demo bajo pedido): comandas del mesero a la cocina y a la caja, con mapa de mesas en vivo.
+- internships.gg (demo bajo pedido): misiones reales en empresas para universitarios.
+- BeHive (demo bajo pedido): mesa de ayuda en español con tickets, SLA, centro de ayuda y reportes.
+
+## Blog
+- [Blog de Hyperion Software](https://www.hyperionmkt.com/blog)
+
+## Optional
+- [Aviso de privacidad](https://www.hyperionmkt.com/privacidad)

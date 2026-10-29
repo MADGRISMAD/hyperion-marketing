@@ -31,6 +31,7 @@ export default function Faro() {
         <p className="mt-6 max-w-2xl text-xl text-grey-700">Pegas la dirección de tu sitio y la inteligencia artificial investiga tu negocio, elige los temas y escribe y publica artículos con imagen. Tú conservas el control y el diseño.</p>
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <a href="https://faro.hyperionmkt.com/dashboard" className="bt bt-pink">Entrar a Faro <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
+          <Link href="/blog" className="bt bt-line">Ver un blog escrito con Faro</Link>
         </div>
         <ol className="mt-16 grid gap-px overflow-hidden rounded-lg border border-ink/15 bg-ink/15 md:grid-cols-2">
           {pasos.map(([t, d], i) => (

@@ -3,6 +3,7 @@ import { notFound, permanentRedirect } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
 import { Logo } from "../../../components/landing/Navbar"
 import { getPost } from "../../../lib/faro"
+import { SITE, ORG_ID } from "../../../lib/site"
 
 export async function generateMetadata({ params }) {
   const post = await getPost((await params).slug)
@@ -22,9 +23,24 @@ export default async function Post({ params }) {
   if (!post) notFound()
   // Faro responde también a direcciones anteriores del artículo (p. ej. cuando se quitaron los acentos): se lleva a la actual
   if (post.slug !== slug) permanentRedirect(`/blog/${post.slug}`)
+  const url = `${SITE}/blog/${post.slug}`
+  const jsonld = [
+    ...post.jsonld
+      .filter((d) => d["@type"] !== "Organization")
+      .map((d) => (d["@type"] === "BlogPosting" ? { ...d, "@id": `${url}#article`, inLanguage: "es-MX", publisher: { "@id": ORG_ID }, author: { "@id": ORG_ID } } : d)),
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Inicio", item: SITE },
+        { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE}/blog` },
+        { "@type": "ListItem", position: 3, name: post.title, item: url },
+      ],
+    },
+  ]
   return (
     <div className="min-h-screen bg-canvas text-ink">
-      {post.jsonld.map((d, i) => (
+      {jsonld.map((d, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(d).replace(/</g, "\\u003c") }} />
       ))}
       <header className="border-b border-ink/15">

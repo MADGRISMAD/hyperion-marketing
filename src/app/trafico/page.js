@@ -7,7 +7,7 @@ import { SITES, change, getTraffic } from "../../lib/traffic.mjs"
 export const revalidate = 600
 
 export const metadata = {
-  title: "Tráfico de nuestros sitios | Hyperion Marketing",
+  title: "Tráfico de nuestros sitios | Hyperion Software",
   description: "Visitas de la última semana de Mitiendita, Mirestaurante, Caresia, BeHive, Grids, Camión TJ y Hyperion. Datos públicos, sin cookies.",
   alternates: { canonical: "/trafico" },
   openGraph: { url: "/trafico", images: ["/og.png"] },
@@ -111,7 +111,7 @@ export default async function Trafico() {
     <div className="min-h-screen bg-ink-900 text-fog">
       <header className="border-b border-slate-200 bg-white">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/" aria-label="Hyperion Marketing, inicio">
+          <Link href="/" aria-label="Hyperion Software, inicio">
             <Logo />
           </Link>
           <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-fog/60 hover:text-fog">

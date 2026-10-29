@@ -1,14 +1,30 @@
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react"
 import { Logo } from "./Navbar"
+import { SITE, ORG_ID } from "../../lib/site"
 
 // Plantilla compartida de las páginas /servicios/*: mismo esquema claro que la página principal.
-export default function ServicePage({ icon: Icon, title, intro, heading, text, items, extras, ctaTitle, ctaText, ctaLabel }) {
+export default function ServicePage({ icon: Icon, title, intro, heading, text, items, extras, ctaTitle, ctaText, ctaLabel, path, related }) {
+  const ld = path && {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "Service", name: title, description: intro, url: `${SITE}${path}`, provider: { "@id": ORG_ID }, areaServed: { "@type": "Country", name: "México" } },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Inicio", item: SITE },
+          { "@type": "ListItem", position: 2, name: "Servicios", item: `${SITE}/servicios` },
+          { "@type": "ListItem", position: 3, name: title, item: `${SITE}${path}` },
+        ],
+      },
+    ],
+  }
   return (
     <div className="min-h-screen bg-ink-900 text-fog">
+      {ld && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />}
       <header className="border-b border-slate-200 bg-white">
         <div className="container flex h-16 items-center justify-between">
-          <Link href="/" aria-label="Hyperion Marketing, inicio">
+          <Link href="/" aria-label="Hyperion Software, inicio">
             <Logo />
           </Link>
           <Link href="/servicios" className="inline-flex items-center gap-1.5 text-sm font-medium text-fog/60 hover:text-fog">
@@ -41,6 +57,11 @@ export default function ServicePage({ icon: Icon, title, intro, heading, text, i
                   </li>
                 ))}
               </ul>
+              {related && (
+                <p className="mt-6 text-fog/80">
+                  Lee también: <Link href={related.href} className="font-semibold text-brand underline">{related.label}</Link>
+                </p>
+              )}
             </div>
 
             <div className="space-y-8">

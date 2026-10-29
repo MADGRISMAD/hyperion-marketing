@@ -91,9 +91,9 @@ function Head({ eyebrow, title, text, center = false, light = false, small = fal
 /* ───────────────────────── Cifras (bloque lima) ───────────────────────── */
 function Numbers() {
   const stats = [
-    { n: 10, s: "+", label: "años construyendo software" },
+    { n: 10, s: "", label: "años construyendo software" },
     { n: 9, s: "", label: "productos propios, diseñados y construidos aquí" },
-    { n: 100, s: "%", label: "desarrollo a la medida, sin plantillas" },
+    { n: 6, s: "", label: "productos en línea que puedes probar hoy" },
     { n: 1, s: "", label: "equipo que diseña, programa, instala y da soporte" },
   ]
   return (
@@ -241,9 +241,10 @@ const productsLd = {
     .map((p) => ({
       "@type": "SoftwareApplication",
       name: p.name,
-      url: p.live,
+      // las direcciones temporales (*.sslip.io) no se publican como URL del producto
+      ...(p.live.includes("sslip.io") ? {} : { url: p.live }),
       description: p.description,
-      applicationCategory: "BusinessApplication",
+      applicationCategory: { Caresia: "HealthApplication", "Camión TJ": "TravelApplication" }[p.name] || "BusinessApplication",
       operatingSystem: "Web",
       creator: { "@id": ORG_ID },
     })),
@@ -270,7 +271,7 @@ function ProductCard({ p, i, eager }) {
         </div>
         <div className="mt-6 flex items-center gap-4">
           {p.logo && <img src={p.logo} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-2xl object-contain" />}
-          <h3 className={`display ${p.name.length > 12 ? "text-[clamp(1.9rem,3.1vw,2.8rem)]" : p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`}>{p.name}{p.by && <small className="ml-2 align-baseline font-sans text-[0.3em] font-bold tracking-normal text-ink/60">by Hyperion</small>}</h3>
+          <h3 className={`display ${p.name.length > 12 ? "text-[clamp(1.9rem,3.1vw,2.8rem)]" : p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`}>{p.name}{p.by && <>{" "}<small className="ml-2 align-baseline font-sans text-[0.3em] font-bold tracking-normal text-ink/60">by Hyperion</small></>}</h3>
         </div>
         <p className="mt-3 text-xl leading-snug font-bold tracking-[-0.02em] md:text-2xl">{p.tagline}</p>
         <p className={`mt-3 leading-relaxed ${onDark ? "text-white" : "text-ink/80"}`}>{p.description}</p>
@@ -288,7 +289,7 @@ function ProductCard({ p, i, eager }) {
               Visitar {p.liveLabel || p.live.replace("https://", "")} <ArrowUpRight className="h-4 w-4" />
             </a>
           ) : (
-            <a href={wa(`Hola Hyperion, me gustaría ver una demo de ${p.name}`)} target="_blank" rel="noopener noreferrer" className="bt bt-white bt-sm">
+            <a href={wa(`Hola Hyperion, me gustaría ver una demo de ${p.name}`)} target="_blank" rel="noopener noreferrer" aria-label={`Pedir una demo de ${p.name} por WhatsApp`} className="bt bt-white bt-sm">
               Pedir una demo <ChevronRight className="h-4 w-4" />
             </a>
           )}
@@ -453,7 +454,7 @@ function InTheWild() {
       <Rings className="pointer-events-none absolute -bottom-52 -left-44 h-[720px] w-[720px]" stroke="#ebe9e2" opacity={1} />
       <div className="container relative">
         <Head
-          eyebrow="En negocios reales"
+          eyebrow="Para negocios como estos"
           title={
             <>
               Donde vive
@@ -578,7 +579,7 @@ function Services() {
               <span className="mono text-sm text-grey-500">02 /</span>
             </div>
             <h3 className="display mt-5 text-3xl">Puntos de venta</h3>
-            <p className="mt-3 text-grey-700">Instalación y personalización para tiendas, restaurantes y comercios, con sistema propio en la nube.</p>
+            <p className="mt-3 text-grey-700">Instalación y personalización para tiendas, restaurantes y comercios, con sistema propio en la nube: <a href="https://mitiendita.software" target="_blank" rel="noopener noreferrer" className="link-pink">Mitiendita</a>.</p>
             <Move y={[50, -20]} r={[-4, 2]} className="mt-7">
               <div className="card mx-auto max-w-[260px] !rounded-[12px] p-5 font-mono text-[12px]">
                 <div className="flex justify-between text-grey-500">
@@ -727,6 +728,7 @@ function Automation() {
               ))}
             </div>
           </IPhone>
+          <p className="mono mt-6 text-center text-[12px] tracking-[0.12em] text-grey-300 uppercase">Notificaciones de ejemplo</p>
         </div>
       </div>
     </Scene>
@@ -801,7 +803,7 @@ function Studio() {
               <Dot />
             </h2>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-canvas/85 md:text-xl">
-              Hyperion es una secuoya roja de casi 116 metros en California. No creció de golpe: creció sobre una base sólida, un anillo a la vez. Así construimos software.
+              El nombre viene de Hyperion, una secuoya roja de unos 116 metros en California. No creció de golpe: creció sobre una base sólida, un anillo a la vez. Así construimos software.
             </p>
           </Move>
           <Move y={[200, -20]} className="mt-12 grid max-w-3xl grid-cols-3 gap-6 border-t border-canvas/30 pt-6">
@@ -845,7 +847,7 @@ function Studio() {
               <Dot />
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-grey-700">
-              Somos un equipo de desarrollo y soporte en Tijuana, Baja California. Trabajamos de cerca con cada cliente, en persona o a distancia, para entender su operación y entregar soluciones que de verdad se usan.
+              Hyperion Software es un equipo de desarrollo y soporte en Tijuana, Baja California, desde 2016. Trabajamos de cerca con cada cliente, en persona o a distancia, para entender su operación y entregar soluciones que de verdad se usan.
             </p>
           </Move>
         </div>
@@ -1030,6 +1032,9 @@ function Footer() {
               <li><Link href="#automatizar" className={a}>Automatizaciones</Link></li>
               <li><Link href="#servicios" className={a}>Servicio técnico</Link></li>
               <li><Link href="/servicios/desarrollo-web" className={a}>Desarrollo web</Link></li>
+              <li><Link href="/servicios/marketing-digital" className={a}>Marketing digital</Link></li>
+              <li><Link href="/servicios/consultoria-it" className={a}>Consultoría IT</Link></li>
+              <li><Link href="/servicios" className={a}>Todos los servicios</Link></li>
             </ul>
           </div>
           <div>
@@ -1068,9 +1073,12 @@ export default function Home() {
   useMouseDepth()
   return (
     <div className="relative">
+      <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[80] focus:rounded-lg focus:bg-ink focus:px-4 focus:py-2 focus:text-canvas">
+        Saltar al contenido
+      </a>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productsLd) }} />
       <Navbar />
-      <main>
+      <main id="contenido">
         {/* el hero conserva su propio estilo: se queda fuera de .hy */}
         <div className="tema-oscuro">
           <Hero />
