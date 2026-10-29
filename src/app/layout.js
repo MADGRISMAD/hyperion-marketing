@@ -10,9 +10,10 @@ import { SITE, ORG_ID } from "../lib/site"
 // Schibsted Grotesk (variable): titulares y texto. Plex Mono: etiquetas pequeñas.
 // Van dentro del proyecto (juego latino) para que la compilación no dependa de descargarlas de Google.
 const schibsted = localFont({ src: "./fonts/schibsted.woff2", weight: "400 900", variable: "--font-schibsted", display: "swap" })
-// Space Grotesk (variable) y Space Mono: la tipografía de la marca, según el press kit. Se usan en toda la landing salvo en el hero.
-const spaceGrotesk = localFont({ src: "./fonts/SpaceGrotesk-Variable.ttf", weight: "300 700", variable: "--font-space", display: "swap" })
-const spaceMono = localFont({ src: "./fonts/SpaceMono-Regular.ttf", weight: "400", variable: "--font-spacemono", display: "swap" })
+// Space Grotesk (variable) y Space Mono: la tipografía de la marca, según el press kit. Se usan en toda la landing salvo en el hero,
+// por eso no se precargan: no compiten con lo que se ve al abrir.
+const spaceGrotesk = localFont({ src: "./fonts/SpaceGrotesk-Variable.woff2", weight: "300 700", variable: "--font-space", display: "swap", preload: false })
+const spaceMono = localFont({ src: "./fonts/SpaceMono-Regular.woff2", weight: "400", variable: "--font-spacemono", display: "swap", preload: false })
 const plex = localFont({
   src: [
     { path: "./fonts/plex-mono-400.woff2", weight: "400" },

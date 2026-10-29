@@ -68,8 +68,15 @@ export default function HeroVideo() {
     let vivo = true
     let url = ""
     let raf = 0
+    let idle = 0
+    // Con ahorro de datos o conexión lenta no se baja el video (5.8–11 MB): se queda el poster y los textos siguen el scroll
+    const red = navigator.connection
+    const lenta = red && (red.saveData || /2g|3g/.test(red.effectiveType || ""))
 
-    fetch(celular ? "/video/hero-720.mp4" : "/video/hero-1080.mp4")
+    // el video no compite con la carga inicial: se pide cuando la página ya terminó y el navegador está libre
+    const cargar = () => {
+      if (!vivo || lenta) return
+      fetch(celular ? "/video/hero-720.mp4" : "/video/hero-1080.mp4")
       .then((r) => r.blob())
       .then((b) => {
         if (!vivo) return
@@ -88,6 +95,12 @@ export default function HeroVideo() {
         )
       })
       .catch(() => {})
+    }
+    const programar = () => {
+      idle = window.requestIdleCallback ? requestIdleCallback(cargar, { timeout: 2500 }) : setTimeout(cargar, 300)
+    }
+    if (document.readyState === "complete") programar()
+    else window.addEventListener("load", programar, { once: true })
 
     const paso = () => {
       raf = requestAnimationFrame(paso)
@@ -103,6 +116,9 @@ export default function HeroVideo() {
 
     return () => {
       vivo = false
+      window.removeEventListener("load", programar)
+      if (window.cancelIdleCallback) cancelIdleCallback(idle)
+      clearTimeout(idle)
       cancelAnimationFrame(raf)
       if (url) URL.revokeObjectURL(url)
     }

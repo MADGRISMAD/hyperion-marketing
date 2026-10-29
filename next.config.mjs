@@ -11,6 +11,8 @@ const nextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
         ],
       },
+      // el video del héroe pesa varios MB: quien vuelve no lo descarga otra vez durante una semana
+      { source: "/video/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }] },
     ]
   },
 }

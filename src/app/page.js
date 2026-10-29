@@ -340,6 +340,7 @@ function Products() {
   const total = products.length + 1
   // Las capturas entran de lado (fuera de la vista del navegador): se descargan cuando la sección está a una pantalla
   const [near, setNear] = useState(false)
+  const [upTo, setUpTo] = useState(0) // tarjeta más lejana a la que ya llegó el recorrido
   useEffect(() => {
     const el = sticky.current?.parentElement
     if (!el) return
@@ -350,6 +351,7 @@ function Products() {
 
   const onProgress = (p, reduced) => {
     const t = track.current
+    if (t) { const idx = Math.round(p * (products.length - 1)); setUpTo((u) => (idx > u ? idx : u)) }
     if (!t) return
     const wide = window.innerWidth >= 1024 && !reduced
     if (!wide) {
@@ -405,7 +407,7 @@ function Products() {
         <div role="region" aria-label="Galería de productos" tabIndex={0} className={`mt-10 snap-x snap-mandatory overflow-x-auto ${reduced ? "[scrollbar-width:none] lg:[scrollbar-width:auto]" : "[scrollbar-width:none] lg:mt-0 lg:flex-1 lg:overflow-visible lg:pb-12"}`}>
           <div ref={track} className="flex h-[min(76vh,660px)] gap-5 px-5 pb-3 will-change-transform md:px-10 lg:h-[max(420px,calc(100svh-20.5rem))] lg:gap-8 lg:px-[max(2.5rem,calc((100vw-1160px)/2))] lg:pb-0">
             {products.map((p, i) => (
-              <ProductCard key={p.name} p={p} i={i} eager={near} />
+              <ProductCard key={p.name} p={p} i={i} eager={near && i <= upTo + 2} />
             ))}
             {/* el último */}
             <article
