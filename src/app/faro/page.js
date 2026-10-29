@@ -12,7 +12,7 @@ export const metadata = {
 const pasos = [
   ["Pegas la dirección de tu sitio", "Con o sin https, con o sin www. Sin formularios."],
   ["La IA entiende tu negocio", "Deduce qué haces, a quién le vendes, tu tono y los temas que te conviene cubrir. Tú lo revisas en un asistente de pocos pasos."],
-  ["Escribe y publica a un ritmo prudente", "Un artículo con su imagen de portada, a un ritmo moderado que Google ve con buenos ojos. En sectores sensibles queda en borrador para tu revisión."],
+  ["Escribe y publica a un ritmo prudente", "Un artículo con su imagen de portada, a la frecuencia que tú elijas: uno, dos o tres por semana. En sectores sensibles queda en borrador para tu revisión."],
   ["Lo ves en tu sitio, con tu diseño", "Por una API de lectura, por tu propio dominio o en un blog alojado. Y con Google Search Console conectado, ves tus datos reales."],
 ]
 

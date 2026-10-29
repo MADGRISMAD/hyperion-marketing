@@ -5,6 +5,7 @@ import "../app/globals.css"
 import { ThemeProvider } from "../components/ThemeProvider"
 import { Analytics } from "@vercel/analytics/react"
 import { UMAMI_URL } from "../lib/traffic.mjs"
+import { SITE, ORG_ID } from "../lib/site"
 
 // Schibsted Grotesk (variable): titulares y texto. Plex Mono: etiquetas pequeñas.
 // Van dentro del proyecto (juego latino) para que la compilación no dependa de descargarlas de Google.
@@ -23,16 +24,16 @@ const plex = localFont({
 
 export const metadata = {
   metadataBase: new URL("https://www.hyperionmkt.com"),
-  title: "Hyperion Software | Sistemas a medida, puntos de venta y automatización",
+  title: "Hyperion Software | Sistemas a la medida y puntos de venta en Tijuana",
   description:
-    "10 años creando sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios. Creadores de Mitiendita, Caresia, Camión TJ, Grids, Barbella, Faro, Mirestaurante, Internships.gg y BeHive.",
+    "Estudio de software en Tijuana desde 2016: sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios de todo México.",
   alternates: { canonical: "/" },
   // Verificación de propiedad en Google Search Console (necesaria para publicar Faro con Google)
   verification: { google: "0cHVa4OdvzTtasKE6twq695QpSrM7D0UjVdBfsprBrs" },
   openGraph: {
-    title: "Hyperion Software | Sistemas a medida, puntos de venta y automatización",
+    title: "Hyperion Software | Sistemas a la medida y puntos de venta en Tijuana",
     description:
-      "Sistemas a la medida, puntos de venta, automatizaciones y servicio técnico. 10 años de experiencia.",
+      "Estudio de software en Tijuana desde 2016: sistemas a la medida, puntos de venta, automatizaciones y servicio técnico.",
     url: "https://www.hyperionmkt.com",
     siteName: "Hyperion Software",
     locale: "es_MX",
@@ -46,27 +47,30 @@ export const viewport = {
   themeColor: "#f5f4f0",
 }
 
+// Grafo de la marca: las demás páginas (productos, blog) enlazan a la organización por su @id
 const organizationLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Hyperion Software",
-  url: "https://www.hyperionmkt.com",
-  description:
-    "Empresa de tecnología con 10 años de experiencia en sistemas a la medida, puntos de venta, automatizaciones y servicio técnico.",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Tijuana",
-    addressRegion: "Baja California",
-    addressCountry: "MX",
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+52 6645798903",
-    email: "info@hyperionmkt.com",
-    contactType: "customer service",
-    areaServed: "MX",
-    availableLanguage: ["Spanish", "English"],
-  },
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": ORG_ID,
+      name: "Hyperion Software",
+      url: SITE,
+      logo: `${SITE}/brand/hyperion-logo.png`,
+      foundingDate: "2016",
+      description: "Estudio de software en Tijuana: sistemas a la medida, puntos de venta, automatizaciones y servicio técnico.",
+      address: { "@type": "PostalAddress", addressLocality: "Tijuana", addressRegion: "Baja California", addressCountry: "MX" },
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: "+526645798903",
+        email: "info@hyperionmkt.com",
+        contactType: "customer service",
+        areaServed: "MX",
+        availableLanguage: ["Spanish"],
+      },
+    },
+    { "@type": "WebSite", "@id": `${SITE}/#website`, url: SITE, name: "Hyperion Software", inLanguage: "es-MX", publisher: { "@id": ORG_ID } },
+  ],
 }
 
 export default function RootLayout({ children }) {

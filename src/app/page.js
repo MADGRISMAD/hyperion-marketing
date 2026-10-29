@@ -27,6 +27,7 @@ import {
   Zap,
 } from "lucide-react"
 import Navbar, { Logo } from "../components/landing/Navbar"
+import { ORG_ID } from "../lib/site"
 import Hero from "../components/landing/HeroVideo"
 import { IPhone, MacBook, Notif } from "../components/landing/Devices"
 import { CountUp, Move, Reveal, Scene, useMouseDepth } from "../components/landing/parallax"
@@ -192,7 +193,7 @@ const products = [
     live: "https://faro.hyperionmkt.com",
     liveLabel: "Faro",
     tagline: "Tu blog, escrito solo.",
-    description: "Pegas la dirección de tu sitio y la IA investiga tu negocio, elige los temas y escribe y publica artículos con imagen, a un ritmo que Google ve con buenos ojos.",
+    description: "Pegas la dirección de tu sitio y la IA investiga tu negocio, elige los temas y escribe y publica artículos con imagen, a la frecuencia que tú elijas: uno, dos o tres por semana.",
     features: ["Brand DNA sugerido por la IA, que tú ajustas", "Piloto automático con ritmo prudente; en salud, legal y finanzas queda en borrador", "Analytics reales con Google Search Console"],
     mascot: "/productos/faro-mascota.png",
     web: [faroWeb, "Página de inicio de Faro"],
@@ -231,6 +232,22 @@ const products = [
     web: [behiveWeb, "Lista de tickets de BeHive"],
   },
 ]
+
+// Cada producto con sitio propio, como aplicación de la organización (solo datos que ya muestra la página)
+const productsLd = {
+  "@context": "https://schema.org",
+  "@graph": products
+    .filter((p) => p.live)
+    .map((p) => ({
+      "@type": "SoftwareApplication",
+      name: p.name,
+      url: p.live,
+      description: p.description,
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      creator: { "@id": ORG_ID },
+    })),
+}
 
 function ProductCard({ p, i, eager }) {
   const onDark = false
@@ -517,7 +534,7 @@ function Services() {
               <div className="card grid gap-4 !rounded-[12px] p-5 md:grid-cols-[1.3fr_1fr]">
                 <div>
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[13px] font-semibold text-grey-500">Ventas de la semana</span>
+                    <span className="text-[13px] font-semibold text-grey-500">Ventas de la semana · ejemplo</span>
                     <span className="mono rounded-full bg-pink px-2 py-0.5 text-[12px]">+18%</span>
                   </div>
                   <div className="display mt-2 text-4xl tabular-nums">$84,210</div>
@@ -655,10 +672,13 @@ const flow = [
 
 function Automation() {
   const [active, setActive] = useState(0)
+  // sin el recorrido animado (móvil, movimiento reducido o antes de hidratar) se muestran los cinco pasos completos
+  const [all, setAll] = useState(true)
   const onProgress = (p, reduced) => {
     const wide = window.innerWidth >= 1024 && !reduced
     const next = wide ? Math.min(flow.length - 1, Math.floor(p * flow.length * 1.1)) : flow.length - 1
     setActive((a) => (a === next ? a : next))
+    setAll((a) => (a === !wide ? a : !wide))
   }
   return (
     <Scene id="automatizar" mode="pin" onProgress={onProgress} className="relative overflow-clip bg-ink text-canvas lg:h-[360vh]">
@@ -678,13 +698,13 @@ function Automation() {
               <li
                 key={f.step}
                 className={`grid grid-cols-[2.6rem_1fr] gap-3 rounded-[14px] border px-3 py-3 transition-[background-color,opacity,border-color] duration-300 ${
-                  i === active ? "border-canvas bg-white/10 opacity-100" : i < active ? "border-transparent opacity-60" : "border-transparent opacity-35"
+                  all ? "border-transparent opacity-100" : i === active ? "border-canvas bg-white/10 opacity-100" : i < active ? "border-transparent opacity-60" : "border-transparent opacity-35"
                 }`}
               >
                 <span className="mono text-[13px] text-pink">0{i + 1} /</span>
                 <span>
                   <span className="block font-bold">{f.step}</span>
-                  {i === active && <span className="mt-1 block text-[15px] text-grey-300">{f.text}</span>}
+                  {(all || i === active) && <span className="mt-1 block text-[15px] text-grey-300">{f.text}</span>}
                 </span>
               </li>
             ))}
@@ -707,7 +727,6 @@ function Automation() {
               ))}
             </div>
           </IPhone>
-          <p className="mono mt-6 text-center text-[12px] tracking-[0.12em] text-grey-300 uppercase">≈ 0.2 s de punta a punta</p>
         </div>
       </div>
     </Scene>
@@ -944,7 +963,10 @@ function Contact() {
                 No pudimos enviar tu mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.
               </p>
             )}
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <p className="mt-6 text-[13px] text-grey-500">
+              Usamos tus datos solo para responderte. Consulta el <Link href="/privacidad" className="link-pink">aviso de privacidad</Link>.
+            </p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <button type="submit" disabled={status === "sending"} className="bt bt-pink w-full whitespace-nowrap !px-4 disabled:opacity-70">
                 {status === "sending" ? (
                   <>
@@ -1017,6 +1039,9 @@ function Footer() {
               <li><a href="tel:+526645798903" className={a}>+52 664 579 8903</a></li>
               <li><a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className={a}>WhatsApp</a></li>
               <li><Link href="/trafico" className={a}>Tráfico de nuestros sitios</Link></li>
+              <li><Link href="/blog" className={a}>Blog</Link></li>
+              <li><Link href="/faro" className={a}>Faro</Link></li>
+              <li><Link href="/privacidad" className={a}>Aviso de privacidad</Link></li>
             </ul>
           </div>
         </div>
@@ -1043,6 +1068,7 @@ export default function Home() {
   useMouseDepth()
   return (
     <div className="relative">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productsLd) }} />
       <Navbar />
       <main>
         {/* el hero conserva su propio estilo: se queda fuera de .hy */}

@@ -38,7 +38,7 @@ export default function Navbar() {
           <Link href="#contacto" className="bt bt-pink bt-sm ml-1 hidden sm:inline-flex">
             Cotizar
           </Link>
-          <button className="flex h-9 w-9 items-center justify-center rounded-lg text-[#141414] lg:hidden" onClick={() => setOpen(true)} aria-label="Abrir menú">
+          <button className="flex h-9 w-9 items-center justify-center rounded-lg text-[#141414] lg:hidden" onClick={() => setOpen(true)} aria-label="Abrir menú" aria-expanded={open} aria-controls="menu-movil">
             <Menu className="h-5 w-5" />
           </button>
         </div>
@@ -46,6 +46,11 @@ export default function Navbar() {
 
       {/* Menú móvil: pantalla completa sobre tinta */}
       <div
+        id="menu-movil"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menú"
+        aria-hidden={!open}
         className={`fixed inset-0 z-[60] bg-[#141414] text-[#f5f4f0] transition-[opacity,visibility] duration-300 lg:hidden ${open ? "visible opacity-100" : "invisible opacity-0"}`}
       >
         <div className="flex h-16 items-center justify-between px-5">

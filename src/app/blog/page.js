@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { Logo } from "../../components/landing/Navbar"
 import { getPosts } from "../../lib/faro"
+import { SITE, ORG_ID } from "../../lib/site"
 
 export const metadata = {
   title: "Blog | Hyperion Software",
@@ -12,8 +13,30 @@ export const metadata = {
 
 export default async function Blog() {
   const { site, posts } = await getPosts()
+  const ld = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Blog",
+        "@id": `${SITE}/blog#blog`,
+        url: `${SITE}/blog`,
+        name: "Blog de Hyperion Software",
+        inLanguage: "es-MX",
+        publisher: { "@id": ORG_ID },
+        blogPost: posts.map((p) => ({ "@type": "BlogPosting", headline: p.title, url: `${SITE}${p.path}`, datePublished: p.published_at })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Inicio", item: SITE },
+          { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE}/blog` },
+        ],
+      },
+    ],
+  }
   return (
     <div className="min-h-screen bg-canvas text-ink">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
       <header className="border-b border-ink/15">
         <div className="container flex h-16 items-center justify-between">
           <Link href="/" aria-label="Hyperion Software, inicio"><Logo className="h-10" /></Link>
