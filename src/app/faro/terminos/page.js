@@ -4,6 +4,7 @@ export const metadata = {
   title: "Condiciones del servicio | Faro by Hyperion",
   description: "Las reglas de uso de Faro, de Hyperion Software.",
   alternates: { canonical: "/faro/terminos" },
+  openGraph: { url: "/faro/terminos", images: ["/og.png"] },
 }
 
 export default function Terminos() {

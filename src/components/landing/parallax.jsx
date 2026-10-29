@@ -25,7 +25,12 @@ function requestFrame() {
 function start() {
   if (started) return
   started = true
-  reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  const preference = window.matchMedia("(prefers-reduced-motion: reduce)")
+  reducedMotion = preference.matches
+  preference.addEventListener("change", (event) => {
+    reducedMotion = event.matches
+    requestFrame()
+  })
   window.addEventListener("scroll", requestFrame, { passive: true })
   window.addEventListener("resize", requestFrame)
 }

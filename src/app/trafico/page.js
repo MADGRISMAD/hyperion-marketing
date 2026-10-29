@@ -10,6 +10,7 @@ export const metadata = {
   title: "Tráfico de nuestros sitios | Hyperion Marketing",
   description: "Visitas de la última semana de Mitiendita, Mirestaurante, Caresia, BeHive, Grids, Camión TJ y Hyperion. Datos públicos, sin cookies.",
   alternates: { canonical: "/trafico" },
+  openGraph: { url: "/trafico", images: ["/og.png"] },
 }
 
 const fmt = new Intl.NumberFormat("es-MX")

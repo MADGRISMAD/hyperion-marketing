@@ -22,7 +22,7 @@ const plex = localFont({
 })
 
 export const metadata = {
-  metadataBase: new URL("https://hyperionmkt.com"),
+  metadataBase: new URL("https://www.hyperionmkt.com"),
   title: "Hyperion Software | Sistemas a medida, puntos de venta y automatización",
   description:
     "10 años creando sistemas a la medida, puntos de venta, automatizaciones y servicio técnico para negocios. Creadores de Mitiendita, Caresia, Camión TJ, Grids, Barbella, Faro, Mirestaurante, Internships.gg y BeHive.",
@@ -33,7 +33,7 @@ export const metadata = {
     title: "Hyperion Software | Sistemas a medida, puntos de venta y automatización",
     description:
       "Sistemas a la medida, puntos de venta, automatizaciones y servicio técnico. 10 años de experiencia.",
-    url: "https://hyperionmkt.com",
+    url: "https://www.hyperionmkt.com",
     siteName: "Hyperion Software",
     locale: "es_MX",
     type: "website",
@@ -50,7 +50,7 @@ const organizationLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Hyperion Software",
-  url: "https://hyperionmkt.com",
+  url: "https://www.hyperionmkt.com",
   description:
     "Empresa de tecnología con 10 años de experiencia en sistemas a la medida, puntos de venta, automatizaciones y servicio técnico.",
   address: {

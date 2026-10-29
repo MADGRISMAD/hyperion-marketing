@@ -5,6 +5,7 @@ export const metadata = {
   title: "Consultoría IT | Hyperion Marketing",
   description: "Asesoramiento experto para optimizar tu infraestructura tecnológica.",
   alternates: { canonical: "/servicios/consultoria-it" },
+  openGraph: { url: "/servicios/consultoria-it", images: ["/og.png"] },
 }
 
 export default function ConsultoriaIT() {

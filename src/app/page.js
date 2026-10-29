@@ -301,6 +301,24 @@ function Products() {
   const track = useRef(null)
   const count = useRef(null)
   const bar = useRef(null)
+  const [reduced, setReduced] = useState(false)
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const update = () => {
+      setReduced(preference.matches)
+      const t = track.current
+      if (t) {
+        t.style.transform = ""
+        t.querySelectorAll("[data-shift], [data-shift-phone]").forEach((el) => { el.style.transform = "" })
+        t.parentElement.scrollLeft = 0
+      }
+      if (count.current) count.current.textContent = "01"
+      if (bar.current) bar.current.style.transform = "scaleX(0)"
+    }
+    update()
+    preference.addEventListener("change", update)
+    return () => preference.removeEventListener("change", update)
+  }, [])
   const total = products.length + 1
   // Las capturas entran de lado (fuera de la vista del navegador): se descargan cuando la sección está a una pantalla
   const [near, setNear] = useState(false)
@@ -318,6 +336,7 @@ function Products() {
     const wide = window.innerWidth >= 1024 && !reduced
     if (!wide) {
       t.style.transform = ""
+      t.querySelectorAll("[data-shift], [data-shift-phone]").forEach((el) => { el.style.transform = "" })
       return
     }
     // cada tarjeta se detiene al centro de la pantalla y se queda un momento antes de pasar a la siguiente
@@ -343,8 +362,8 @@ function Products() {
   }
 
   return (
-    <Scene id="productos" mode="pin" onProgress={onProgress} className="relative lg:h-[800vh]">
-      <div ref={sticky} className="overflow-hidden bg-paper-2 py-20 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:py-0 lg:pt-24">
+    <Scene id="productos" mode={reduced ? "pass" : "pin"} onProgress={onProgress} className={`relative ${reduced ? "" : "lg:h-[800vh]"}`}>
+      <div ref={sticky} className={`bg-paper-2 py-20 ${reduced ? "overflow-hidden lg:overflow-visible" : "overflow-hidden lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:py-0 lg:pt-24"}`}>
         <div className="container flex items-end justify-between gap-6 lg:pb-8">
           <div>
             <p className="eyebrow text-grey-500">Productos propios</p>
@@ -355,7 +374,7 @@ function Products() {
               <Dot />
             </h2>
           </div>
-          <div className="hidden w-48 shrink-0 lg:block">
+          <div className={`hidden w-48 shrink-0 ${reduced ? "" : "lg:block"}`}>
             <div className="mono flex items-baseline justify-between text-sm">
               <span ref={count}>01</span>
               <span>{String(total).padStart(2, "0")}</span>
@@ -365,8 +384,8 @@ function Products() {
             </div>
           </div>
         </div>
-        <div className="mt-10 overflow-x-auto [scrollbar-width:none] lg:mt-0 lg:flex-1 lg:overflow-visible lg:pb-12">
-          <div ref={track} className="flex h-[min(76vh,660px)] snap-x snap-mandatory gap-5 px-5 pb-3 will-change-transform md:px-10 lg:h-[max(420px,calc(100svh-20.5rem))] lg:gap-8 lg:px-[max(2.5rem,calc((100vw-1160px)/2))] lg:pb-0">
+        <div role="region" aria-label="Galería de productos" tabIndex={0} className={`mt-10 snap-x snap-mandatory overflow-x-auto ${reduced ? "[scrollbar-width:none] lg:[scrollbar-width:auto]" : "[scrollbar-width:none] lg:mt-0 lg:flex-1 lg:overflow-visible lg:pb-12"}`}>
+          <div ref={track} className="flex h-[min(76vh,660px)] gap-5 px-5 pb-3 will-change-transform md:px-10 lg:h-[max(420px,calc(100svh-20.5rem))] lg:gap-8 lg:px-[max(2.5rem,calc((100vw-1160px)/2))] lg:pb-0">
             {products.map((p, i) => (
               <ProductCard key={p.name} p={p} i={i} eager={near} />
             ))}

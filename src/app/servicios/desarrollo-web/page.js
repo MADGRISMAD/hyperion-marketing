@@ -5,6 +5,7 @@ export const metadata = {
   title: "Desarrollo web | Hyperion Marketing",
   description: "Sitios web modernos y rápidos que convierten visitas en clientes.",
   alternates: { canonical: "/servicios/desarrollo-web" },
+  openGraph: { url: "/servicios/desarrollo-web", images: ["/og.png"] },
 }
 
 export default function DesarrolloWeb() {

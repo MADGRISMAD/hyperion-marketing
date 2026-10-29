@@ -3,6 +3,8 @@ import { ArrowLeft, CheckCircle2 } from "lucide-react"
 
 export const metadata = {
   title: "¡Gracias! | Hyperion Marketing",
+  alternates: { canonical: "/gracias" },
+  openGraph: { url: "/gracias", images: ["/og.png"] },
   robots: { index: false },
 }
 

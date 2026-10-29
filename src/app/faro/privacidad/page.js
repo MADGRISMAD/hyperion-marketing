@@ -4,6 +4,7 @@ export const metadata = {
   title: "Política de privacidad | Faro by Hyperion",
   description: "Qué datos usa Faro, para qué, con quién se comparten y cómo borrarlos.",
   alternates: { canonical: "/faro/privacidad" },
+  openGraph: { url: "/faro/privacidad", images: ["/og.png"] },
 }
 
 export default function Privacidad() {

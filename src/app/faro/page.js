@@ -6,6 +6,7 @@ export const metadata = {
   title: "Faro by Hyperion | Tu blog escrito solo",
   description: "Faro lee tu sitio, entiende tu negocio y escribe y publica artículos con imagen para tu blog, con datos reales de Google Search Console.",
   alternates: { canonical: "/faro" },
+  openGraph: { url: "/faro", images: ["/og.png"] },
 }
 
 const pasos = [

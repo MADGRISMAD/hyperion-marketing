@@ -5,6 +5,7 @@ export const metadata = {
   title: "Sistemas a medida | Hyperion Marketing",
   description: "Software personalizado que optimiza los procesos de tu negocio.",
   alternates: { canonical: "/servicios/sistemas-a-medida" },
+  openGraph: { url: "/servicios/sistemas-a-medida", images: ["/og.png"] },
 }
 
 export default function SistemasAMedida() {

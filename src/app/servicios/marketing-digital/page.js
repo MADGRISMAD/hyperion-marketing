@@ -5,6 +5,7 @@ export const metadata = {
   title: "Marketing digital | Hyperion Marketing",
   description: "Estrategia, contenido y campañas para que tu negocio se vea.",
   alternates: { canonical: "/servicios/marketing-digital" },
+  openGraph: { url: "/servicios/marketing-digital", images: ["/og.png"] },
 }
 
 export default function MarketingDigital() {

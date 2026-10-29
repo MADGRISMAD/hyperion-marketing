@@ -7,6 +7,7 @@ export const metadata = {
   title: "Blog | Hyperion Software",
   description: "Ideas sobre sistemas a la medida, puntos de venta y automatización para negocios.",
   alternates: { canonical: "/blog" },
+  openGraph: { url: "/blog", images: ["/og.png"] },
 }
 
 export default async function Blog() {

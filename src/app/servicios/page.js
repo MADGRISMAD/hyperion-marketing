@@ -6,6 +6,7 @@ export const metadata = {
   title: "Servicios | Hyperion Marketing",
   description: "Desarrollo web, sistemas a medida, marketing digital y consultoría IT.",
   alternates: { canonical: "/servicios" },
+  openGraph: { url: "/servicios", images: ["/og.png"] },
 }
 
 const servicios = [

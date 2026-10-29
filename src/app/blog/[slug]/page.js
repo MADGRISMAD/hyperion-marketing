@@ -10,8 +10,8 @@ export async function generateMetadata({ params }) {
   return {
     title: post.seo.title,
     description: post.seo.description,
-    alternates: { canonical: post.canonical },
-    openGraph: { type: "article", title: post.title, description: post.seo.description, images: post.image ? [post.image.url] : [] },
+    alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: { url: `/blog/${post.slug}`, type: "article", title: post.title, description: post.seo.description, images: post.image ? [post.image.url] : [] },
     other: { "faro-site": post.site_id }, // Faro lo usa para marcar este sitio como conectado
   }
 }
