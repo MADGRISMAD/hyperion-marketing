@@ -11,18 +11,22 @@ import {
   ChevronRight,
   Code2,
   FileText,
+  HardDrive,
   Loader2,
   Mail,
   MessageCircle,
   Package,
   PenTool,
+  Receipt,
   Phone,
   Rocket,
   Search,
+  ShieldCheck,
   ShoppingBag,
   ShoppingCart,
   LifeBuoy,
   UtensilsCrossed,
+  Wifi,
   Wrench,
   Zap,
 } from "lucide-react"
@@ -681,159 +685,299 @@ function Tile({ className = "", children }) {
   return <Reveal className={`card relative overflow-hidden p-7 transition-transform duration-200 motion-safe:hover:-translate-y-1 md:p-9 ${className}`}>{children}</Reveal>
 }
 
+// «Sticker» flotante de la capa delantera: el más rápido con el scroll y, con mouse, sigue un poco al cursor (.depth)
+function Sticker({ children, d = 12, className = "" }) {
+  return (
+    <span className={`depth inline-flex items-center gap-1.5 rounded-full border border-ink bg-white px-3 py-1.5 text-[13px] font-bold whitespace-nowrap shadow-[0_12px_24px_-14px_rgba(20,20,20,0.55)] ${className}`} style={{ "--d": d }}>
+      {children}
+    </span>
+  )
+}
+
+// Servicios en capas: al fondo un «04» gigante y anillos (lo más lento), luego formas de color que van en otra
+// dirección, las tarjetas a la velocidad del scroll y, delante, stickers que cruzan los bordes (lo más rápido).
+// Dentro de cada tarjeta, su ilustración también tiene capas a velocidades distintas. Con movimiento reducido, todo quieto.
 function Services() {
   return (
     <Scene id="servicios" className="relative overflow-hidden border-y border-ink/10 bg-paper-2 py-24 md:py-36">
-      <div className="container">
-        <Head
-          eyebrow="Servicios"
-          title={
-            <>
-              Cuatro cosas.
-              <br />
-              <span className="text-grey-500">Muy bien hechas</span>
-            </>
-          }
-          text="Desde el sistema que corre tu operación hasta el cable de red que lo conecta. Un solo equipo, de principio a fin."
-        />
+      {/* capa 1 · fondo, la más lenta */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <Move y={[140, -140]} className="absolute -top-10 -right-6 hidden md:block">
+          <span className="display block text-[clamp(14rem,34vw,30rem)] leading-none text-transparent [-webkit-text-stroke:2px_rgba(20,20,20,0.09)]">04</span>
+        </Move>
+        <Move y={[-80, 160]} r={[0, 40]} className="absolute top-[38%] -left-40">
+          <Rings className="h-[520px] w-[520px]" opacity={0.1} />
+        </Move>
+        {/* capa 2 · formas de color, en sentido contrario */}
+        <Move y={[220, -260]} r={[-10, 14]} className="absolute top-[30%] -left-10 hidden md:block">
+          <span className="block h-24 w-24 rounded-full border border-ink bg-pink" />
+        </Move>
+        <Move y={[-120, 200]} r={[18, -12]} className="absolute right-[4%] bottom-[16%] hidden md:block">
+          <span className="block h-20 w-20 rounded-[18px] border border-ink bg-ink" />
+        </Move>
+        <Move y={[160, -120]} x={[0, 30]} className="absolute top-[62%] right-[30%] hidden lg:block">
+          <span className="block h-10 w-10 rounded-full border-2 border-ink bg-white" />
+        </Move>
+      </div>
 
-        <div className="mt-16 grid gap-6 lg:grid-cols-6">
+      <div className="container relative">
+        <Move y={[40, -40]}>
+          <Head
+            eyebrow="Servicios"
+            title={
+              <>
+                Cuatro cosas.
+                <br />
+                <span className="text-grey-500">Muy bien hechas</span>
+              </>
+            }
+            text="Desde el sistema que corre tu operación hasta el cable de red que lo conecta. Un solo equipo, de principio a fin."
+          />
+        </Move>
+
+        <div className="relative mt-16 grid gap-6 lg:grid-cols-6">
+          {/* capa 5 · stickers delanteros, los más rápidos (solo en pantallas anchas, donde cruzan los bordes) */}
+          <div className="pointer-events-none absolute inset-0 z-20 hidden lg:block" aria-hidden="true">
+            <Move y={[160, -220]} r={[-8, 4]} className="absolute top-[3%] left-[58%]">
+              <Sticker d={18}>
+                <span className="h-2 w-2 rounded-full bg-pink" /> +18% esta semana
+              </Sticker>
+            </Move>
+            <Move y={[220, -180]} r={[6, -6]} className="absolute top-[58%] left-[10%]">
+              <Sticker d={22} className="!bg-ink !text-canvas">
+                F12 · Cobrar
+              </Sticker>
+            </Move>
+            <Move y={[120, -260]} r={[-4, 8]} className="absolute top-[66%] left-[36%]">
+              <Sticker d={14}>
+                <Zap className="h-3.5 w-3.5" /> Bot listo
+              </Sticker>
+            </Move>
+          </div>
+
           {/* Sistemas a la medida */}
           <Tile className="lg:col-span-4 lg:row-span-2">
-            <div className="flex items-center gap-3">
-              <Chip icon={Code2} />
-              <span className="mono text-sm text-grey-500">01 /</span>
-            </div>
-            <h3 className="display mt-5 text-4xl md:text-5xl">Sistemas a la medida</h3>
-            <p className="mt-3 max-w-md text-grey-700">Software diseñado alrededor de tus procesos, no al revés: ERP, CRM, portales, inventarios y paneles de control.</p>
-            <Link href="/servicios/sistemas-a-medida" className="link-pink mt-5 inline-flex items-center gap-1 text-[15px]">
-              Conocer más <ChevronRight className="h-4 w-4" />
-            </Link>
-            {/* tablero de ejemplo */}
-            <Move y={[60, -30]} className="mt-10 md:mt-12">
-              <div className="card grid gap-4 !rounded-[12px] p-5 md:grid-cols-[1.3fr_1fr]">
-                <div>
-                  <div className="flex items-baseline justify-between">
-                    <span className="text-[13px] font-semibold text-grey-500">Ventas de la semana · ejemplo</span>
-                    <span className="mono rounded-full bg-pink px-2 py-0.5 text-[12px]">+18%</span>
-                  </div>
-                  <div className="display mt-2 text-4xl tabular-nums">$84,210</div>
-                  <div className="mt-5 flex h-28 items-end gap-2">
-                    {[38, 52, 46, 64, 58, 82, 96].map((v, i) => (
-                      <span key={i} className="flex-1 rounded-t-md" style={{ height: `${v}%`, background: i === 6 ? "#FF3D7F" : "#141414" }} />
-                    ))}
-                  </div>
-                  <div className="mono mt-2 flex justify-between text-[11px] text-grey-500">
-                    {["L", "M", "M", "J", "V", "S", "D"].map((d, i) => (
-                      <span key={i} className="flex-1 text-center">
-                        {d}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <ul className="space-y-2.5 text-[14px]">
-                  {[
-                    ["Inventario", "1,284 productos", "#ff3d7f"],
-                    ["Clientes", "312 activos", "#141414"],
-                    ["Pedidos abiertos", "17", "#141414"],
-                    ["Sucursales", "3 en línea", "#141414"],
-                  ].map(([k, v, c]) => (
-                    <li key={k} className="flex items-center justify-between rounded-[10px] border border-ink/15 bg-canvas px-3.5 py-2.5">
-                      <span className="flex items-center gap-2 text-grey-700">
-                        <span className="h-2.5 w-2.5 rounded-full" style={{ background: c }} />
-                        {k}
-                      </span>
-                      <span className="font-bold">{v}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            {/* capa 3 · retícula de puntos detrás del tablero, más lenta que la tarjeta */}
+            <Move y={[30, -30]} className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3" aria-hidden="true">
+              <svg className="h-full w-full" aria-hidden="true">
+                <defs>
+                  <pattern id="servicios-puntos" width="22" height="22" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1.4" fill="#141414" fillOpacity="0.12" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#servicios-puntos)" />
+              </svg>
             </Move>
+            <div className="relative">
+              <div className="flex items-center gap-3">
+                <Chip icon={Code2} />
+                <span className="mono text-sm text-grey-500">01 /</span>
+              </div>
+              <h3 className="display mt-5 text-4xl md:text-5xl">Sistemas a la medida</h3>
+              <p className="mt-3 max-w-md text-grey-700">Software diseñado alrededor de tus procesos, no al revés: ERP, CRM, portales, inventarios y paneles de control.</p>
+              <Link href="/servicios/sistemas-a-medida" className="link-pink mt-5 inline-flex items-center gap-1 text-[15px]">
+                Conocer más <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="relative mt-10 md:mt-12">
+              {/* capa 4 · el tablero */}
+              <Move y={[70, -30]}>
+                <div className="card grid gap-4 !rounded-[12px] p-5 md:grid-cols-[1.3fr_1fr]">
+                  <div>
+                    <div className="flex items-baseline justify-between">
+                      <span className="text-[13px] font-semibold text-grey-500">Ventas de la semana · ejemplo</span>
+                      <span className="mono rounded-full bg-pink px-2 py-0.5 text-[12px]">+18%</span>
+                    </div>
+                    <div className="display mt-2 text-4xl tabular-nums">$84,210</div>
+                    <div className="mt-5 flex h-28 items-end gap-2">
+                      {[38, 52, 46, 64, 58, 82, 96].map((v, i) => (
+                        <span key={i} className="flex-1 rounded-t-md" style={{ height: `${v}%`, background: i === 6 ? "#FF3D7F" : "#141414" }} />
+                      ))}
+                    </div>
+                    <div className="mono mt-2 flex justify-between text-[12px] text-grey-500">
+                      {["L", "M", "M", "J", "V", "S", "D"].map((d, i) => (
+                        <span key={i} className="flex-1 text-center">
+                          {d}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <ul className="space-y-2.5 text-[14px]">
+                    {[
+                      ["Inventario", "1,284 productos", "#ff3d7f"],
+                      ["Clientes", "312 activos", "#141414"],
+                      ["Pedidos abiertos", "17", "#141414"],
+                      ["Sucursales", "3 en línea", "#141414"],
+                    ].map(([k, v, c]) => (
+                      <li key={k} className="flex items-center justify-between rounded-[10px] border border-ink/15 bg-canvas px-3.5 py-2.5">
+                        <span className="flex items-center gap-2 text-grey-700">
+                          <span className="h-2.5 w-2.5 rounded-full" style={{ background: c }} />
+                          {k}
+                        </span>
+                        <span className="font-bold">{v}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Move>
+              {/* capa 5 · aviso que flota delante del tablero, más rápido */}
+              <Move y={[150, 10]} r={[-4, 2]} className="absolute -right-2 -bottom-10 hidden sm:block md:-right-4" aria-hidden="true">
+                <Notif app="Pedidos" color="#141414" icon={Package} title="Pedido #1284 listo" text="Sale a ruta en 10 min" className="!w-[250px]" />
+              </Move>
+            </div>
           </Tile>
 
           {/* Puntos de venta */}
           <Tile className="lg:col-span-2">
-            <div className="flex items-center gap-3">
-              <Chip icon={ShoppingCart} />
-              <span className="mono text-sm text-grey-500">02 /</span>
-            </div>
-            <h3 className="display mt-5 text-3xl">Puntos de venta</h3>
-            <p className="mt-3 text-grey-700">Instalación y personalización para tiendas, restaurantes y comercios, con sistema propio en la nube: <a href="https://mitiendita.software" target="_blank" rel="noopener noreferrer" className="link-pink">Mitiendita</a>.</p>
-            <Move y={[50, -20]} r={[-4, 2]} className="mt-7">
-              <div className="card mx-auto max-w-[260px] !rounded-[12px] p-5 font-mono text-[12px]">
-                <div className="flex justify-between text-grey-500">
-                  <span>Ticket 0482</span>
-                  <span>14:32</span>
-                </div>
-                {[
-                  ["Refresco 600 ml", "22.00"],
-                  ["Papas 45 g", "19.00"],
-                  ["Pan blanco", "48.00"],
-                  ["Leche 1 L", "29.50"],
-                ].map(([k, v]) => (
-                  <div key={k} className="mt-2 flex justify-between">
-                    <span>{k}</span>
-                    <span>${v}</span>
-                  </div>
-                ))}
-                <div className="mt-3 flex justify-between border-t-2 border-dashed border-ink pt-3 text-[14px] font-bold">
-                  <span>Total</span>
-                  <span>$118.50</span>
-                </div>
+            <div className="relative">
+              <div className="flex items-center gap-3">
+                <Chip icon={ShoppingCart} />
+                <span className="mono text-sm text-grey-500">02 /</span>
               </div>
-            </Move>
+              <h3 className="display mt-5 text-3xl">Puntos de venta</h3>
+              <p className="mt-3 text-grey-700">Instalación y personalización para tiendas, restaurantes y comercios, con sistema propio en la nube: <a href="https://mitiendita.software" target="_blank" rel="noopener noreferrer" className="link-pink">Mitiendita</a>.</p>
+            </div>
+            <div className="relative mx-auto mt-8 max-w-[260px]" aria-hidden="true">
+              {/* capa 3 · tickets anteriores, apilados detrás y más lentos */}
+              <Move y={[20, -6]} r={[7, 5]} className="absolute inset-0">
+                <div className="h-full rounded-[12px] border border-ink/15 bg-canvas" />
+              </Move>
+              <Move y={[34, -12]} r={[-5, -3]} className="absolute inset-0">
+                <div className="h-full rounded-[12px] border border-ink/15 bg-white" />
+              </Move>
+              {/* capa 4 · el ticket */}
+              <Move y={[56, -22]} r={[-3, 2]} className="relative">
+                <div className="card !rounded-[12px] p-5 font-mono text-[12px]">
+                  <div className="flex justify-between text-grey-500">
+                    <span>Ticket 0482</span>
+                    <span>14:32</span>
+                  </div>
+                  {[
+                    ["Refresco 600 ml", "22.00"],
+                    ["Papas 45 g", "19.00"],
+                    ["Pan blanco", "48.00"],
+                    ["Leche 1 L", "29.50"],
+                  ].map(([k, v]) => (
+                    <div key={k} className="mt-2 flex justify-between">
+                      <span>{k}</span>
+                      <span>${v}</span>
+                    </div>
+                  ))}
+                  <div className="mt-3 flex justify-between border-t-2 border-dashed border-ink pt-3 text-[14px] font-bold">
+                    <span>Total</span>
+                    <span>$118.50</span>
+                  </div>
+                </div>
+              </Move>
+              {/* capa 5 · el recibo que sale, el más rápido */}
+              <Move y={[130, -40]} r={[8, -2]} className="absolute -top-4 -right-6">
+                <span className="flex h-11 w-11 items-center justify-center rounded-[12px] border border-ink bg-pink">
+                  <Receipt className="h-5 w-5" />
+                </span>
+              </Move>
+            </div>
           </Tile>
 
           {/* Automatizaciones */}
           <Tile className="lg:col-span-2">
-            <div className="flex items-center gap-3">
-              <Chip icon={Zap} />
-              <span className="mono text-sm text-grey-500">03 /</span>
+            <div className="relative">
+              <div className="flex items-center gap-3">
+                <Chip icon={Zap} />
+                <span className="mono text-sm text-grey-500">03 /</span>
+              </div>
+              <h3 className="display mt-5 text-3xl">Automatizaciones</h3>
+              <p className="mt-3 text-grey-700">Que tus sistemas hablen entre ellos y hagan solos el trabajo repetitivo: reportes, integraciones y bots.</p>
+              <Link href="#automatizar" className="link-pink mt-5 inline-flex items-center gap-1 text-[15px]">
+                Ver cómo funciona <ChevronRight className="h-4 w-4" />
+              </Link>
             </div>
-            <h3 className="display mt-5 text-3xl">Automatizaciones</h3>
-            <p className="mt-3 text-grey-700">Que tus sistemas hablen entre ellos y hagan solos el trabajo repetitivo: reportes, integraciones y bots.</p>
-            <Link href="#automatizar" className="link-pink mt-5 inline-flex items-center gap-1 text-[15px]">
-              Ver cómo funciona <ChevronRight className="h-4 w-4" />
-            </Link>
+            {/* un evento que dispara lo demás: cada paso es una capa a su propia velocidad, unidos por una línea más lenta */}
+            <div className="relative mt-8 h-44" aria-hidden="true">
+              <Move y={[16, -16]} className="absolute inset-y-4 left-[22px] w-px">
+                <span className="block h-full w-full border-l-2 border-dashed border-ink/25" />
+              </Move>
+              {[
+                [ShoppingBag, "Venta", "Llega una compra", [24, -16], "#ff3d7f", "top-0"],
+                [Package, "Inventario", "Se descuenta solo", [56, -30], "#141414", "top-[36%]"],
+                [FileText, "Factura", "Se envía al cliente", [92, -46], "#141414", "top-[72%]"],
+              ].map(([Icon, t, d, y, c, pos]) => (
+                <Move key={t} y={y} className={`absolute left-0 ${pos}`}>
+                  <span className="flex items-center gap-3 rounded-full border border-ink/15 bg-white py-1.5 pr-4 pl-1.5 shadow-[0_10px_22px_-16px_rgba(20,20,20,0.5)]">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full text-white" style={{ background: c }}>
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span className="text-[14px] leading-tight">
+                      <b className="block">{t}</b>
+                      <span className="text-grey-700">{d}</span>
+                    </span>
+                  </span>
+                </Move>
+              ))}
+            </div>
           </Tile>
 
           {/* Servicio técnico */}
           <Tile className="lg:col-span-3">
-            <div className="flex items-center gap-3">
-              <Chip icon={Wrench} />
-              <span className="mono text-sm text-grey-500">04 /</span>
+            {/* capa 5 · íconos del oficio en la fila del encabezado, cada uno a su velocidad; el recorrido es corto para no llegar al título */}
+            <div className="pointer-events-none absolute top-7 right-7 flex items-start gap-2 md:top-9 md:right-9" aria-hidden="true">
+              <Move y={[14, -14]} r={[-10, 6]}>
+                <span className="flex h-10 w-10 items-center justify-center rounded-[12px] border border-ink bg-ink text-canvas">
+                  <ShieldCheck className="h-5 w-5" />
+                </span>
+              </Move>
+              <Move y={[22, -10]} r={[8, -4]}>
+                <span className="flex h-11 w-11 items-center justify-center rounded-[13px] border border-ink bg-pink">
+                  <HardDrive className="h-5 w-5" />
+                </span>
+              </Move>
+              <Move y={[8, -18]} r={[-6, 4]}>
+                <span className="flex h-12 w-12 items-center justify-center rounded-[14px] border border-ink bg-white">
+                  <Wifi className="h-6 w-6" />
+                </span>
+              </Move>
             </div>
-            <h3 className="display mt-5 text-3xl md:text-4xl">Servicio técnico</h3>
-            <p className="mt-3 max-w-md text-grey-700">Mantenimiento de equipos, redes, instalación y soporte a los sistemas que ya tienes funcionando.</p>
-            <ul className="mt-7 grid gap-2 sm:grid-cols-2">
-              {["Mantenimiento de equipos", "Redes e instalación", "Soporte a tus sistemas", "Respaldos y seguridad"].map((t) => (
-                <li key={t} className="flex items-center gap-2.5 rounded-[10px] border border-ink/15 bg-canvas px-4 py-3 text-[14px] font-medium">
-                  <span className="h-2.5 w-2.5 rounded-full border border-ink/30 bg-pink" /> {t}
-                </li>
-              ))}
-            </ul>
+            <div className="relative">
+              <div className="flex items-center gap-3">
+                <Chip icon={Wrench} />
+                <span className="mono text-sm text-grey-500">04 /</span>
+              </div>
+              <h3 className="display mt-5 text-3xl md:text-4xl">Servicio técnico</h3>
+              <p className="mt-3 max-w-md text-grey-700">Mantenimiento de equipos, redes, instalación y soporte a los sistemas que ya tienes funcionando.</p>
+              <ul className="mt-7 grid gap-2 sm:grid-cols-2">
+                {["Mantenimiento de equipos", "Redes e instalación", "Soporte a tus sistemas", "Respaldos y seguridad"].map((t, i) => (
+                  <Move as="li" key={t} y={[24 + i * 10, -12 - i * 6]} className="flex items-center gap-2.5 rounded-[10px] border border-ink/15 bg-canvas px-4 py-3 text-[14px] font-medium">
+                    <span className="h-2.5 w-2.5 rounded-full border border-ink/30 bg-pink" /> {t}
+                  </Move>
+                ))}
+              </ul>
+            </div>
           </Tile>
 
           {/* También */}
           <Tile className="lg:col-span-3">
-            <p className="eyebrow text-grey-500">También hacemos</p>
-            <ul className="mt-5 divide-y-2 divide-ink/15">
-              {[
-                ["/servicios/desarrollo-web", "Desarrollo web", "Sitios rápidos que convierten visitas en clientes."],
-                ["/servicios/marketing-digital", "Marketing digital", "Estrategia, contenido y campañas."],
-                ["/servicios/consultoria-it", "Consultoría IT", "Te ayudamos a decidir antes de invertir."],
-              ].map(([href, t, d]) => (
-                <li key={href}>
-                  <Link href={href} className="group flex items-center justify-between gap-4 py-4">
-                    <span>
-                      <span className="block text-xl font-bold tracking-[-0.02em]">{t}</span>
-                      <span className="text-[14px] text-grey-700">{d}</span>
-                    </span>
-                    <ArrowRight className="h-5 w-5 shrink-0 text-grey-500 transition-transform group-hover:translate-x-1 group-hover:text-ink" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <Move y={[-30, 50]} r={[0, 25]} className="pointer-events-none absolute -right-24 -bottom-28" aria-hidden="true">
+              <Rings className="h-[300px] w-[300px]" opacity={0.1} />
+            </Move>
+            <div className="relative">
+              <p className="eyebrow text-grey-500">También hacemos</p>
+              <ul className="mt-5 divide-y-2 divide-ink/15">
+                {[
+                  ["/servicios/desarrollo-web", "Desarrollo web", "Sitios rápidos que convierten visitas en clientes."],
+                  ["/servicios/marketing-digital", "Marketing digital", "Estrategia, contenido y campañas."],
+                  ["/servicios/consultoria-it", "Consultoría IT", "Te ayudamos a decidir antes de invertir."],
+                ].map(([href, t, d]) => (
+                  <li key={href}>
+                    <Link href={href} className="group flex items-center justify-between gap-4 py-4">
+                      <span>
+                        <span className="block text-xl font-bold tracking-[-0.02em]">{t}</span>
+                        <span className="text-[14px] text-grey-700">{d}</span>
+                      </span>
+                      <ArrowRight className="h-5 w-5 shrink-0 text-grey-500 transition-transform group-hover:translate-x-1 group-hover:text-ink" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Tile>
         </div>
       </div>
