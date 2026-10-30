@@ -5,15 +5,23 @@ import Image from "next/image"
 // `eager` adelanta la descarga (se usa cuando la sección está por aparecer); `priority` solo para lo que se ve al abrir.
 const loadingOf = (priority, eager) => (priority ? undefined : eager ? "eager" : "lazy")
 
-// MacBook: pantalla con bisel negro y muesca, y la base de aluminio un poco más ancha.
-// La pantalla toma la proporción exacta de la captura, para que no se recorte de los lados.
-export function MacBook({ img, alt, priority = false, eager = false, sizes = "(min-width: 1024px) 900px, 92vw", className = "" }) {
+// MacBook con tapa que se abre: la tapa gira sobre la bisagra (su borde inferior) y, mientras está casi cerrada,
+// se ve su dorso de aluminio. `lidRef` recibe el giro y `screenRef` el encendido de la pantalla (los maneja quien la usa).
+// La pantalla es 16:10, la proporción de las capturas de los productos.
+export function MacBook3D({ lidRef, screenRef, children, className = "" }) {
   return (
-    <div className={`relative ${className}`}>
-      <div className="relative rounded-[14px] bg-[#0d0d0f] p-[1.6%] shadow-[0_0_0_1px_#2a2a2e,0_50px_90px_-40px_rgba(17,17,20,0.55)] md:rounded-[20px]">
-        <span className="absolute top-[1.6%] left-1/2 z-10 h-[2.2%] w-[11%] -translate-x-1/2 rounded-b-[6px] bg-[#0d0d0f]" aria-hidden="true" />
-        <div className="relative overflow-hidden rounded-[9px] bg-[#1a1a1d] md:rounded-[11px]" style={{ aspectRatio: `${img.width} / ${img.height}` }}>
-          <Image src={img} alt={alt} placeholder="blur" priority={priority} loading={loadingOf(priority, eager)} sizes={sizes} className="h-full w-full object-cover" />
+    <div className={`relative [perspective:2600px] [perspective-origin:50%_35%] ${className}`}>
+      <div ref={lidRef} className="relative origin-bottom [transform-style:preserve-3d]">
+        <div className="relative rounded-[14px] bg-[#0d0d0f] p-[1.6%] shadow-[0_0_0_1px_#2a2a2e,0_50px_90px_-40px_rgba(17,17,20,0.55)] [backface-visibility:hidden] md:rounded-[20px]">
+          <span className="absolute top-[1.6%] left-1/2 z-10 h-[2.2%] w-[11%] -translate-x-1/2 rounded-b-[6px] bg-[#0d0d0f]" aria-hidden="true" />
+          <div className="relative aspect-[16/10] overflow-hidden rounded-[9px] bg-[#1a1a1d] md:rounded-[11px]">
+            <div ref={screenRef} className="absolute inset-0">
+              {children}
+            </div>
+          </div>
+        </div>
+        <div className="absolute inset-0 flex items-center justify-center rounded-[14px] bg-[#c9c9ce] [backface-visibility:hidden] [transform:rotateX(180deg)] md:rounded-[20px]" aria-hidden="true">
+          <span className="h-[14%] w-[9%] rounded-full bg-[#b4b4ba]" />
         </div>
       </div>
       {/* base */}

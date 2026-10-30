@@ -29,7 +29,7 @@ import {
 import Navbar, { Logo } from "../components/landing/Navbar"
 import { ORG_ID } from "../lib/site"
 import Hero from "../components/landing/HeroVideo"
-import { IPhone, MacBook, Notif } from "../components/landing/Devices"
+import { IPhone, MacBook3D, Notif } from "../components/landing/Devices"
 import { CountUp, Move, Reveal, Scene, useMouseDepth } from "../components/landing/parallax"
 // Imágenes importadas: Next conoce su tamaño y genera una miniatura borrosa que se ve mientras carga la real
 import tienditaApp from "../../public/productos/mitiendita-landing.jpg"
@@ -250,181 +250,233 @@ const productsLd = {
     })),
 }
 
-function ProductCard({ p, i, eager }) {
-  const onDark = false
+// ── Productos: una MacBook que se abre con el scroll y luego muestra cada producto ──
+// Escritorio sin movimiento reducido: la sección se fija; el primer tramo abre la tapa y cada tramo siguiente
+// cambia la portada de la pantalla, la ficha y el selector. Móvil o movimiento reducido: la MacBook ya abierta
+// y el selector cambia de producto con un clic (el mismo contenido, sin fijar la sección).
+const OPEN = 1 // tramos de scroll que tarda la tapa en abrirse
+const STEPS = products.length + 1 // los nueve productos y «el tuyo»
+const STEP_VH = 90 // alto de scroll de cada tramo
+const LID_CLOSED = -88 // grados: la tapa casi plana sobre la base
+// ease-in-out cúbico: la tapa arranca suave, gana velocidad y se asienta
+const inOut = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2)
+const twoDigits = (n) => String(n).padStart(2, "0")
+
+function ProductInfo({ p, i }) {
   return (
-    <article
-      data-card
-      className={`relative grid h-full shrink-0 snap-center grid-rows-[auto_1fr] overflow-hidden rounded-[24px] border border-ink/15 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:grid-rows-1 w-[86vw] lg:w-[min(1120px,84vw)] ${onDark ? "text-white" : "text-ink"}`}
-      style={{ background: p.bg }}
-    >
-      <Rings className="pointer-events-none absolute -top-36 -left-28 h-[480px] w-[480px]" stroke={onDark ? "#ffffff" : "#141414"} opacity={0.16} />
-      <div className="relative flex flex-col p-7 md:p-10 lg:p-12">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="tag">
-            {String(i + 1).padStart(2, "0")} · {p.cat}
-          </span>
-          <span className="tag !flex items-center gap-1.5 !bg-white">
-            <span className="h-2 w-2 shrink-0 rounded-full border border-ink" style={{ background: p.live ? "#141414" : "#ff3d7f" }} />
-            {p.live ? "En línea" : "Demo bajo pedido"}
-          </span>
-        </div>
-        <div className="mt-6 flex items-center gap-4">
-          {p.logo && <img src={p.logo} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-2xl object-contain" />}
-          <h3 className={`display ${p.name.length > 12 ? "text-[clamp(1.9rem,3.1vw,2.8rem)]" : p.name.length > 11 ? "text-[clamp(2.2rem,3.6vw,3.2rem)]" : "text-[clamp(2.4rem,4.4vw,3.8rem)]"}`}>{p.name}{p.by && <>{" "}<small className="ml-2 align-baseline font-sans text-[0.3em] font-bold tracking-normal text-ink/60">by Hyperion</small></>}</h3>
-        </div>
-        <p className="mt-3 text-xl leading-snug font-bold tracking-[-0.02em] md:text-2xl">{p.tagline}</p>
-        <p className={`mt-3 leading-relaxed ${onDark ? "text-white" : "text-ink/80"}`}>{p.description}</p>
-        <ul className={`mt-6 hidden space-y-2 text-[15px] md:block [@media(max-height:820px)]:hidden ${onDark ? "text-white" : "text-ink/85"}`}>
-          {p.features.map((f) => (
-            <li key={f} className="flex gap-2.5">
-              <span className="mt-[7px] h-2.5 w-2.5 shrink-0 rounded-full border border-ink/30 bg-pink" />
-              {f}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-auto pt-7">
-          {p.live ? (
-            <a href={p.live} target="_blank" rel="noopener noreferrer" className="bt bt-white bt-sm">
-              Visitar {p.liveLabel || p.live.replace("https://", "")} <ArrowUpRight className="h-4 w-4" />
-            </a>
-          ) : (
-            <a href={wa(`Hola Hyperion, me gustaría ver una demo de ${p.name}`)} target="_blank" rel="noopener noreferrer" aria-label={`Pedir una demo de ${p.name} por WhatsApp`} className="bt bt-white bt-sm">
-              Pedir una demo <ChevronRight className="h-4 w-4" />
-            </a>
-          )}
-        </div>
+    <>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="tag">
+          {twoDigits(i + 1)} · {p.cat}
+        </span>
+        <span className="tag !flex items-center gap-1.5 !bg-white">
+          <span className="h-2 w-2 shrink-0 rounded-full border border-ink" style={{ background: p.live ? "#141414" : "#ff3d7f" }} />
+          {p.live ? "En línea" : "Demo bajo pedido"}
+        </span>
       </div>
-      {/* pantallas recortadas abajo: se desplazan a su propio ritmo mientras la tarjeta cruza la pantalla */}
-      <div className="relative min-h-[240px] overflow-hidden border-t border-ink/10 bg-white/25 lg:border-t-0 lg:border-l-2">
-        <div className="absolute inset-0 flex items-end justify-center px-[8%] pt-[8%] pb-[7%]">
-          <div data-shift className={`relative w-full lg:w-[min(100%,calc((100svh-20.5rem)*1.2))] will-change-transform ${p.phone ? "lg:-translate-x-[6%]" : ""}`}>
-            {p.mascot && <img src={p.mascot} alt="" width={900} height={507} loading="lazy" className="pointer-events-none absolute right-[7%] hidden lg:block bottom-[calc(100%-5px)] z-10 w-[38%] drop-shadow-[0_14px_14px_rgba(232,51,109,0.22)]" />}
-            <MacBook eager={eager} img={p.web[0]} alt={p.web[1]} sizes="(min-width: 1024px) 560px, 80vw" />
-          </div>
-        </div>
-        {p.phone && (
-          <div data-shift-phone className="absolute right-[5%] bottom-[-10%] w-[22%] will-change-transform lg:bottom-[-6%] lg:w-[20%]">
-            <IPhone eager={eager} img={p.phone[0]} alt={p.phone[1]} />
-          </div>
+      <div className="mt-6 flex items-center gap-4">
+        {p.logo && <img src={p.logo} alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded-2xl object-contain" />}
+        <h3 className="display text-[clamp(2.2rem,3.6vw,3.4rem)]">
+          {p.name}
+          {p.by && (
+            <>
+              {" "}
+              <small className="ml-1 align-baseline font-sans text-[0.32em] font-bold tracking-normal text-ink/60">by Hyperion</small>
+            </>
+          )}
+        </h3>
+      </div>
+      <p className="mt-4 text-xl leading-snug font-bold tracking-[-0.02em] md:text-2xl">{p.tagline}</p>
+      <p className="mt-3 max-w-xl leading-relaxed text-ink/80">{p.description}</p>
+      <ul className="mt-6 space-y-2 text-[15px] text-ink/85 [@media(max-height:760px)]:hidden">
+        {p.features.map((f) => (
+          <li key={f} className="flex gap-2.5">
+            <span className="mt-[7px] h-2.5 w-2.5 shrink-0 rounded-full border border-ink/30 bg-pink" />
+            {f}
+          </li>
+        ))}
+      </ul>
+      <div className="mt-8">
+        {p.live ? (
+          <a href={p.live} target="_blank" rel="noopener noreferrer" className="bt bt-white bt-sm">
+            Visitar {p.liveLabel || p.live.replace("https://", "")} <ArrowUpRight className="h-4 w-4" />
+          </a>
+        ) : (
+          <a href={wa(`Hola Hyperion, me gustaría ver una demo de ${p.name}`)} target="_blank" rel="noopener noreferrer" aria-label={`Pedir una demo de ${p.name} por WhatsApp`} className="bt bt-white bt-sm">
+            Pedir una demo <ChevronRight className="h-4 w-4" />
+          </a>
         )}
       </div>
-    </article>
+    </>
   )
 }
 
-// Galería horizontal: en escritorio la sección se fija y el scroll vertical la mueve de lado
 function Products() {
-  const sticky = useRef(null)
-  const track = useRef(null)
+  const lid = useRef(null)
+  const screen = useRef(null)
   const count = useRef(null)
   const bar = useRef(null)
-  const [reduced, setReduced] = useState(false)
+  const tabs = useRef([])
+  const [pinned, setPinned] = useState(false) // escritorio y sin movimiento reducido
+  const [active, setActive] = useState(0)
+  const [seen, setSeen] = useState(2) // portadas que ya se pueden cargar: la actual y la siguiente
+  useEffect(() => setSeen((s) => Math.max(s, active + 2)), [active])
   useEffect(() => {
-    const preference = window.matchMedia("(prefers-reduced-motion: reduce)")
-    const update = () => {
-      setReduced(preference.matches)
-      const t = track.current
-      if (t) {
-        t.style.transform = ""
-        t.querySelectorAll("[data-shift], [data-shift-phone]").forEach((el) => { el.style.transform = "" })
-        t.parentElement.scrollLeft = 0
-      }
-      if (count.current) count.current.textContent = "01"
-      if (bar.current) bar.current.style.transform = "scaleX(0)"
-    }
+    const wide = window.matchMedia("(min-width: 1024px)")
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const update = () => setPinned(wide.matches && !still.matches)
     update()
-    preference.addEventListener("change", update)
-    return () => preference.removeEventListener("change", update)
-  }, [])
-  const total = products.length + 1
-  // Las capturas entran de lado (fuera de la vista del navegador): se descargan cuando la sección está a una pantalla
-  const [near, setNear] = useState(false)
-  const [upTo, setUpTo] = useState(0) // tarjeta más lejana a la que ya llegó el recorrido
-  useEffect(() => {
-    const el = sticky.current?.parentElement
-    if (!el) return
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && (setNear(true), io.disconnect()), { rootMargin: "100% 0px" })
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
-
-  const onProgress = (p, reduced) => {
-    const t = track.current
-    if (t) { const idx = Math.round(p * (products.length - 1)); setUpTo((u) => (idx > u ? idx : u)) }
-    if (!t) return
-    const wide = window.innerWidth >= 1024 && !reduced
-    if (!wide) {
-      t.style.transform = ""
-      t.querySelectorAll("[data-shift], [data-shift-phone]").forEach((el) => { el.style.transform = "" })
-      return
+    wide.addEventListener("change", update)
+    still.addEventListener("change", update)
+    return () => {
+      wide.removeEventListener("change", update)
+      still.removeEventListener("change", update)
     }
-    // cada tarjeta se detiene al centro de la pantalla y se queda un momento antes de pasar a la siguiente
-    const cards = [...t.querySelectorAll("[data-card]")]
-    const vw = window.innerWidth
-    const at = (c) => vw / 2 - (c.offsetLeft + c.offsetWidth / 2)
-    const f = p * (cards.length - 1)
-    const i = Math.min(cards.length - 2, Math.floor(f))
-    const k = Math.max(0, Math.min(1, (f - i - 0.18) / 0.64))
-    const e = k * k * (3 - 2 * k)
-    t.style.transform = `translate3d(${(at(cards[i]) + (at(cards[i + 1]) - at(cards[i])) * e).toFixed(1)}px,0,0)`
-    if (count.current) count.current.textContent = String(Math.round(i + e) + 1).padStart(2, "0")
+  }, [])
+  // sin recorrido fijado, la MacBook se queda abierta y encendida
+  useEffect(() => {
+    if (pinned) return
+    if (lid.current) lid.current.style.transform = ""
+    if (screen.current) screen.current.style.opacity = ""
+  }, [pinned])
+
+  const onProgress = (p) => {
+    if (!pinned) return
+    const u = p * (OPEN + STEPS)
+    const k = Math.min(1, u / OPEN)
+    if (lid.current) lid.current.style.transform = `rotateX(${(LID_CLOSED * (1 - inOut(k))).toFixed(2)}deg)`
+    // la pantalla se enciende en el último tramo de la apertura
+    if (screen.current) screen.current.style.opacity = Math.max(0, Math.min(1, (k - 0.55) / 0.45)).toFixed(3)
+    const i = Math.max(0, Math.min(STEPS - 1, Math.floor(u - OPEN)))
+    setActive((a) => (a === i ? a : i))
+    if (count.current) count.current.textContent = twoDigits(i + 1)
     if (bar.current) bar.current.style.transform = `scaleX(${p.toFixed(3)})`
-    // parallax dentro de cada tarjeta: la laptop va más lenta que la tarjeta y el teléfono sube
-    cards.forEach((card) => {
-      const r = card.getBoundingClientRect()
-      const d = (r.left + r.width / 2 - vw / 2) / vw // -1 … 1 respecto al centro
-      const m = card.querySelector("[data-shift]")
-      const ph = card.querySelector("[data-shift-phone]")
-      if (m) m.style.transform = `translate3d(${(d * 36).toFixed(1)}px, 0, 0)`
-      if (ph) ph.style.transform = `translate3d(${(d * -30).toFixed(1)}px, ${(d * 60).toFixed(1)}px, 0) rotate(${(d * 5).toFixed(2)}deg)`
-    })
   }
 
+  // elegir un producto: con el recorrido fijado, el scroll va al tramo de ese producto; si no, cambia en el lugar
+  const go = (i, focus = false) => {
+    const n = (i + STEPS) % STEPS
+    if (focus) tabs.current[n]?.focus()
+    if (!pinned) return setActive(n)
+    const el = document.getElementById("productos")
+    const top = el.getBoundingClientRect().top + window.scrollY
+    window.scrollTo({ top: top + (el.offsetHeight - window.innerHeight) * ((OPEN + n + 0.5) / (OPEN + STEPS)), behavior: "smooth" })
+  }
+  const onKeyDown = (e) => {
+    const map = { ArrowRight: active + 1, ArrowDown: active + 1, ArrowLeft: active - 1, ArrowUp: active - 1, Home: 0, End: STEPS - 1 }
+    if (!(e.key in map)) return
+    e.preventDefault()
+    go(map[e.key], true)
+  }
+
+  const faro = products.findIndex((p) => p.mascot)
   return (
-    <Scene id="productos" mode={reduced ? "pass" : "pin"} onProgress={onProgress} className={`relative ${reduced ? "" : "lg:h-[800vh]"}`}>
-      <div ref={sticky} className={`bg-paper-2 py-20 ${reduced ? "overflow-hidden lg:overflow-visible" : "overflow-hidden lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:py-0 lg:pt-24"}`}>
-        <div className="container flex items-end justify-between gap-6 lg:pb-8">
+    <Scene id="productos" mode={pinned ? "pin" : "pass"} onProgress={onProgress} className="relative bg-paper-2" style={pinned ? { height: `${(OPEN + STEPS) * STEP_VH + 100}vh` } : undefined}>
+      <div className={pinned ? "sticky top-0 flex h-screen flex-col pt-24 pb-8" : "py-20"}>
+        <div className="container flex items-end justify-between gap-6">
           <div>
             <p className="eyebrow text-grey-500">Productos propios</p>
-            <h2 className="display mt-3 text-[clamp(2.4rem,5vw,4.4rem)]">
-              Nueve productos.
-              <br />
-              <span className="text-grey-500">Hechos por nosotros</span>
+            <h2 className="display mt-3 text-[clamp(2.4rem,4.6vw,4rem)]">
+              Nueve productos. <span className="text-grey-500">Hechos por nosotros</span>
               <Dot />
             </h2>
           </div>
-          <div className={`hidden w-48 shrink-0 ${reduced ? "" : "lg:block"}`}>
-            <div className="mono flex items-baseline justify-between text-sm">
-              <span ref={count}>01</span>
-              <span>{String(total).padStart(2, "0")}</span>
+          {pinned && (
+            <div className="hidden w-48 shrink-0 lg:block" aria-hidden="true">
+              <div className="mono flex items-baseline justify-between text-sm">
+                <span ref={count}>01</span>
+                <span>{twoDigits(STEPS)}</span>
+              </div>
+              <div className="mt-2 h-1.5 rounded-full border border-ink/15 bg-white">
+                <div ref={bar} className="h-full origin-left rounded-full bg-pink" style={{ transform: "scaleX(0)" }} />
+              </div>
             </div>
-            <div className="mt-2 h-1.5 rounded-full border border-ink/15 bg-white">
-              <div ref={bar} className="h-full origin-left rounded-full bg-pink" style={{ transform: "scaleX(0)" }} />
+          )}
+        </div>
+
+        <div className={`container mt-10 grid gap-10 lg:mt-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center lg:gap-14 ${pinned ? "min-h-0 flex-1" : ""}`}>
+          <div className="min-w-0">
+            <div className="relative mx-auto w-[88%] lg:w-[min(88%,calc((100svh-21rem)*1.55))]">
+              <img
+                src={products[faro].mascot}
+                alt=""
+                width={900}
+                height={507}
+                loading="lazy"
+                className={`pointer-events-none absolute right-[8%] bottom-[calc(100%-6px)] z-10 w-[30%] drop-shadow-[0_14px_14px_rgba(232,51,109,0.22)] transition-opacity duration-300 ${active === faro ? "opacity-100" : "opacity-0"}`}
+              />
+              <MacBook3D lidRef={lid} screenRef={screen}>
+                {products.map((p, i) =>
+                  i < seen ? (
+                    <Image
+                      key={p.name}
+                      src={p.web[0]}
+                      alt={i === active ? p.web[1] : ""}
+                      fill
+                      placeholder="blur"
+                      sizes="(min-width: 1024px) 720px, 92vw"
+                      className={`object-cover object-top transition-opacity duration-300 ease-out ${i === active ? "opacity-100" : "opacity-0"}`}
+                    />
+                  ) : null,
+                )}
+                <div className={`absolute inset-0 flex items-center justify-center bg-ink transition-opacity duration-300 ease-out ${active === STEPS - 1 ? "opacity-100" : "opacity-0"}`} aria-hidden="true">
+                  <span className="display text-[clamp(1.6rem,3vw,2.6rem)] text-canvas">
+                    tu idea<Dot />
+                  </span>
+                </div>
+              </MacBook3D>
+            </div>
+
+            <div role="tablist" aria-label="Productos" aria-orientation="horizontal" onKeyDown={onKeyDown} className="mt-8 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] lg:flex-wrap lg:justify-center lg:overflow-visible">
+              {[...products.map((p) => p.name), "¿El tuyo?"].map((name, i) => (
+                <button
+                  key={name}
+                  ref={(el) => (tabs.current[i] = el)}
+                  role="tab"
+                  id={`producto-tab-${i}`}
+                  aria-selected={i === active}
+                  aria-controls={`producto-panel-${i}`}
+                  tabIndex={i === active ? 0 : -1}
+                  onClick={() => go(i)}
+                  className={`shrink-0 cursor-pointer rounded-full border px-3.5 py-2 text-[14px] font-medium whitespace-nowrap transition-colors duration-150 ${i === active ? "border-ink bg-ink text-canvas" : "border-ink/15 bg-white text-ink hover:border-ink/40"}`}
+                >
+                  {name}
+                </button>
+              ))}
             </div>
           </div>
-        </div>
-        <div role="region" aria-label="Galería de productos" tabIndex={0} className={`mt-10 snap-x snap-mandatory overflow-x-auto ${reduced ? "[scrollbar-width:none] lg:[scrollbar-width:auto]" : "[scrollbar-width:none] lg:mt-0 lg:flex-1 lg:overflow-visible lg:pb-12"}`}>
-          <div ref={track} className="flex h-[min(76vh,660px)] gap-5 px-5 pb-3 will-change-transform md:px-10 lg:h-[max(420px,calc(100svh-20.5rem))] lg:gap-8 lg:px-[max(2.5rem,calc((100vw-1160px)/2))] lg:pb-0">
+
+          {/* fichas apiladas en la misma celda: se cruzan con opacidad y la inactiva no se puede enfocar */}
+          <div className="grid min-w-0">
             {products.map((p, i) => (
-              <ProductCard key={p.name} p={p} i={i} eager={near && i <= upTo + 2} />
+              <div
+                key={p.name}
+                role="tabpanel"
+                id={`producto-panel-${i}`}
+                aria-labelledby={`producto-tab-${i}`}
+                inert={i !== active}
+                className={`[grid-area:1/1] transition-[opacity,visibility] duration-300 ease-out ${i === active ? "visible opacity-100" : "invisible opacity-0"}`}
+              >
+                <ProductInfo p={p} i={i} />
+              </div>
             ))}
-            {/* el último */}
-            <article
-              data-card
-              className="relative flex h-full w-[86vw] shrink-0 snap-center flex-col justify-center overflow-hidden rounded-[24px] border border-ink/15 bg-ink p-10 text-canvas md:p-14 lg:w-[min(720px,70vw)]"
+            <div
+              role="tabpanel"
+              id={`producto-panel-${STEPS - 1}`}
+              aria-labelledby={`producto-tab-${STEPS - 1}`}
+              inert={active !== STEPS - 1}
+              className={`[grid-area:1/1] transition-[opacity,visibility] duration-300 ease-out ${active === STEPS - 1 ? "visible opacity-100" : "invisible opacity-0"}`}
             >
-              <Rings className="pointer-events-none absolute -right-32 -bottom-40 h-[520px] w-[520px]" stroke="#f5f4f0" opacity={0.12} />
-              <span className="eyebrow relative text-grey-300">{String(total).padStart(2, "0")} · ¿El tuyo?</span>
-              <h3 className="display relative mt-6 text-[clamp(2.6rem,5vw,4.6rem)]">
-                El décimo puede ser <span className="inline-block -rotate-1 rounded-lg bg-pink px-2 text-ink">tu idea</span>
+              <span className="tag">{twoDigits(STEPS)} · ¿El tuyo?</span>
+              <h3 className="display mt-6 text-[clamp(2.4rem,4vw,3.8rem)]">
+                El décimo puede ser <span className="inline-block -rotate-1 rounded-lg bg-pink px-2">tu idea</span>
                 <Dot />
               </h3>
-              <p className="relative mt-5 max-w-md text-lg text-grey-300">El mismo equipo que construyó estos nueve, trabajando en el tuyo.</p>
-              <Link href="#contacto" className="bt bt-pink bt-inv relative mt-9 self-start">
+              <p className="mt-5 max-w-md text-lg text-ink/80">El mismo equipo que construyó estos nueve, trabajando en el tuyo.</p>
+              <Link href="#contacto" className="bt bt-pink mt-8">
                 Cotizar proyecto <ArrowRight className="h-4 w-4" />
               </Link>
-            </article>
+            </div>
           </div>
         </div>
       </div>
