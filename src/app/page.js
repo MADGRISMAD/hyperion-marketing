@@ -501,7 +501,7 @@ function Chip({ icon: Icon }) {
 }
 
 function Tile({ className = "", children }) {
-  return <Reveal className={`card relative overflow-hidden p-7 transition-transform duration-200 hover:-translate-y-1 md:p-9 ${className}`}>{children}</Reveal>
+  return <Reveal className={`card relative overflow-hidden p-7 transition-transform duration-200 motion-safe:hover:-translate-y-1 md:p-9 ${className}`}>{children}</Reveal>
 }
 
 function Services() {
@@ -725,7 +725,7 @@ function Automation() {
             <div className="relative mt-4 space-y-2 px-[4%]">
               {flow.slice(0, active + 1).map((f, i) => (
                 <div key={f.step} className="notif-in">
-                  <Notif app={f.app} color={f.color} icon={f.icon} time={i === active ? "ahora" : `hace ${(active - i) * 2} s`} title={f.title} text={f.body} className="!w-full !rounded-[12px] !p-3" />
+                  <Notif app={f.app} color={f.color} icon={f.icon} time={i === active ? "ahora" : `hace ${(active - i) * 2} s`} title={f.title} text={f.body} className="!w-full !rounded-[22px] !p-3" />
                 </div>
               ))}
             </div>
@@ -924,7 +924,7 @@ function Contact() {
         </div>
 
         <Reveal delay={100}>
-          <form onSubmit={onSubmit} className="card !rounded-[24px] p-6 md:p-10">
+          <form onSubmit={onSubmit} className="card p-6 md:p-10">
             <h3 className="text-2xl font-bold tracking-[-0.03em]">Cotiza tu proyecto</h3>
             <div className="mt-7 grid gap-5 md:grid-cols-2">
               <label className="block">

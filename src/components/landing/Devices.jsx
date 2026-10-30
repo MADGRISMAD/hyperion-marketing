@@ -12,7 +12,7 @@ export function MacBook({ img, alt, priority = false, eager = false, sizes = "(m
     <div className={`relative ${className}`}>
       <div className="relative rounded-[14px] bg-[#0d0d0f] p-[1.6%] shadow-[0_0_0_1px_#2a2a2e,0_50px_90px_-40px_rgba(17,17,20,0.55)] md:rounded-[20px]">
         <span className="absolute top-[1.6%] left-1/2 z-10 h-[2.2%] w-[11%] -translate-x-1/2 rounded-b-[6px] bg-[#0d0d0f]" aria-hidden="true" />
-        <div className="relative overflow-hidden rounded-[4px] bg-[#1a1a1d]" style={{ aspectRatio: `${img.width} / ${img.height}` }}>
+        <div className="relative overflow-hidden rounded-[9px] bg-[#1a1a1d] md:rounded-[11px]" style={{ aspectRatio: `${img.width} / ${img.height}` }}>
           <Image src={img} alt={alt} placeholder="blur" priority={priority} loading={loadingOf(priority, eager)} sizes={sizes} className="h-full w-full object-cover" />
         </div>
       </div>
@@ -44,7 +44,7 @@ export function IPhone({ img, alt, priority = false, eager = false, className = 
 export function Notif({ app, color, time = "ahora", title, text, icon: Icon, className = "", style }) {
   return (
     <div className={`notif flex w-[300px] items-start gap-3 p-3.5 ${className}`} style={style}>
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[11px] text-white" style={{ background: color }}>
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[9px] text-white" style={{ background: color }}>
         {Icon ? <Icon className="h-5 w-5" strokeWidth={2.2} /> : app[0]}
       </span>
       <span className="min-w-0 flex-1 leading-tight">
