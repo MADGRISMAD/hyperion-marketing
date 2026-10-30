@@ -552,7 +552,7 @@ function Products() {
               </MacBook3D>
             </div>
 
-            <div role="tablist" aria-label="Productos" aria-orientation="horizontal" onKeyDown={onKeyDown} className="mt-24 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] lg:mt-12 lg:flex-wrap lg:justify-center lg:overflow-visible">
+            <div role="tablist" aria-label="Productos" aria-orientation="horizontal" onKeyDown={onKeyDown} className="mt-16 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] lg:mt-12 lg:flex-wrap lg:justify-center lg:overflow-visible">
               {[...products.map((p) => p.name), "¿El tuyo?"].map((name, i) => (
                 <button
                   key={name}
