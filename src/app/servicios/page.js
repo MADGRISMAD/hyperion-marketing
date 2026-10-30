@@ -10,9 +10,9 @@ export const metadata = {
 }
 
 const servicios = [
-  { icon: Globe, title: "Desarrollo Web", description: "Sitios web modernos y responsivos que convierten visitantes en clientes.", href: "/servicios/desarrollo-web" },
-  { icon: Code, title: "Sistemas a Medida", description: "Soluciones de software personalizadas para optimizar tus procesos de negocio.", href: "/servicios/sistemas-a-medida" },
-  { icon: Megaphone, title: "Marketing Digital", description: "Estrategias efectivas para aumentar tu visibilidad online y atraer clientes.", href: "/servicios/marketing-digital" },
+  { icon: Globe, title: "Desarrollo web", description: "Sitios web modernos y responsivos que convierten visitantes en clientes.", href: "/servicios/desarrollo-web" },
+  { icon: Code, title: "Sistemas a la medida", description: "Soluciones de software personalizadas para optimizar tus procesos de negocio.", href: "/servicios/sistemas-a-medida" },
+  { icon: Megaphone, title: "Marketing digital", description: "Estrategias efectivas para aumentar tu visibilidad online y atraer clientes.", href: "/servicios/marketing-digital" },
   { icon: Settings, title: "Consultoría IT", description: "Te ayudamos a decidir qué tecnología conviene a tu negocio antes de invertir.", href: "/servicios/consultoria-it" },
 ]
 

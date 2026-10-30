@@ -724,7 +724,7 @@ function Automation() {
             </div>
             <div className="relative mt-4 space-y-2 px-[4%]">
               {flow.slice(0, active + 1).map((f, i) => (
-                <div key={f.step} style={{ animation: "notif-in 420ms var(--ease-out) both" }}>
+                <div key={f.step} className="notif-in">
                   <Notif app={f.app} color={f.color} icon={f.icon} time={i === active ? "ahora" : `hace ${(active - i) * 2} s`} title={f.title} text={f.body} className="!w-full !rounded-[12px] !p-3" />
                 </div>
               ))}
@@ -834,7 +834,7 @@ function Studio() {
             </div>
             <Move x={[80, -20]} className="absolute -right-4 -bottom-6 md:-right-10">
               <div className="notif px-5 py-4">
-                <div className="eyebrow !text-[11px] text-grey-500">Base</div>
+                <div className="eyebrow !text-[12px] text-grey-500">Base</div>
                 <div className="mt-1 font-bold">Tijuana, Baja California</div>
                 <div className="mono mt-0.5 text-[12px] text-grey-500">32.5149° N · 117.0382° O</div>
               </div>
@@ -1009,7 +1009,7 @@ function Footer() {
             </Link>
           </div>
           <div>
-            <h4 className="eyebrow mb-4 text-grey-500">Productos</h4>
+            <h3 className="eyebrow mb-4 text-grey-300">Productos</h3>
             <ul className={col}>
               {products.map((p) => (
                 <li key={p.name}>
@@ -1027,7 +1027,7 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="eyebrow mb-4 text-grey-500">Servicios</h4>
+            <h3 className="eyebrow mb-4 text-grey-300">Servicios</h3>
             <ul className={col}>
               <li><Link href="/servicios/sistemas-a-medida" className={a}>Sistemas a la medida</Link></li>
               <li><Link href="#servicios" className={a}>Puntos de venta</Link></li>
@@ -1040,14 +1040,14 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="eyebrow mb-4 text-grey-500">Contacto</h4>
+            <h3 className="eyebrow mb-4 text-grey-300">Contacto</h3>
             <ul className={col}>
               <li><a href="mailto:info@hyperionmkt.com" className={a}>info@hyperionmkt.com</a></li>
               <li><a href="tel:+526645798903" className={a}>+52 664 579 8903</a></li>
               <li><a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className={a}>WhatsApp</a></li>
               <li><Link href="/trafico" className={a}>Tráfico de nuestros sitios</Link></li>
               <li><Link href="/blog" className={a}>Blog</Link></li>
-              <li><Link href="/faro" className={a}>Faro</Link></li>
+              <li><Link href="/faro" className={a}>Cómo funciona Faro</Link></li>
               <li><Link href="/privacidad" className={a}>Aviso de privacidad</Link></li>
             </ul>
           </div>
@@ -1061,11 +1061,13 @@ function Footer() {
           </span>
         </Move>
       </div>
-      <div className="container flex flex-col justify-between gap-2 border-t border-canvas/20 py-6 text-[13px] text-grey-500 md:flex-row">
-        <p>© {new Date().getFullYear()} Hyperion Software · Tijuana, B.C.</p>
-        <a href="#inicio" className="hover:text-canvas">
-          Volver arriba ↑
-        </a>
+      <div className="container">
+        <div className="flex flex-col justify-between gap-2 border-t border-canvas/20 py-6 text-[13px] text-grey-300 md:flex-row">
+          <p>© {new Date().getFullYear()} Hyperion Software · Tijuana, B.C.</p>
+          <a href="#inicio" className="hover:text-canvas">
+            Volver arriba ↑
+          </a>
+        </div>
       </div>
     </Scene>
   )

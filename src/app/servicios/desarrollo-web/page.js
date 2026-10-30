@@ -13,9 +13,9 @@ export default function DesarrolloWeb() {
     <ServicePage
       path="/servicios/desarrollo-web"
       icon={Globe}
-      title="Desarrollo Web"
+      title="Desarrollo web"
       intro="Creamos sitios web modernos y funcionales que impulsan el crecimiento de tu negocio en línea."
-      heading="Sitios Web Profesionales"
+      heading="Sitios web profesionales"
       text="Desarrollamos sitios web que no solo se ven bien, sino que también generan resultados. Desde landing pages hasta sitios web corporativos completos."
       items={[
         "Diseño responsivo y adaptativo",
@@ -26,12 +26,12 @@ export default function DesarrolloWeb() {
         "Análisis de tráfico y conversiones",
       ]}
       extras={[
-        { icon: Smartphone, title: "Diseño Responsivo", text: "Tu sitio se adapta al celular, la tablet y la computadora." },
-        { icon: Zap, title: "Rendimiento Óptimo", text: "Sitios web rápidos y optimizados para mejorar la experiencia del usuario y el posicionamiento SEO." },
+        { icon: Smartphone, title: "Diseño responsivo", text: "Tu sitio se adapta al celular, la tablet y la computadora." },
+        { icon: Zap, title: "Rendimiento óptimo", text: "Sitios web rápidos y optimizados para mejorar la experiencia del usuario y el posicionamiento SEO." },
       ]}
       ctaTitle="¿Listo para comenzar tu proyecto web?"
       ctaText="Contáctanos para discutir cómo podemos ayudarte a crear el sitio web perfecto para tu negocio."
-      ctaLabel="Solicitar Cotización"
+      ctaLabel="Solicitar cotización"
     />
   )
 }

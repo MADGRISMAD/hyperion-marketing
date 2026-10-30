@@ -15,7 +15,7 @@ export default function ConsultoriaIT() {
       icon={Settings}
       title="Consultoría IT"
       intro="Te ayudamos a decidir qué tecnología conviene a tu negocio antes de invertir."
-      heading="Servicios de Consultoría"
+      heading="Servicios de consultoría"
       text="Ofrecemos soluciones estratégicas para optimizar tu infraestructura tecnológica y mejorar la eficiencia operativa."
       items={[
         "Auditoría de sistemas y procesos",
@@ -26,12 +26,12 @@ export default function ConsultoriaIT() {
         "Capacitación y soporte técnico",
       ]}
       extras={[
-        { icon: Shield, title: "Seguridad Informática", text: "Revisamos accesos, respaldos y actualizaciones de tus equipos y sistemas." },
-        { icon: Clock, title: "Optimización Continua", text: "Monitoreamos y mejoramos constantemente tus sistemas para mantenerlos al máximo rendimiento." },
+        { icon: Shield, title: "Seguridad informática", text: "Revisamos accesos, respaldos y actualizaciones de tus equipos y sistemas." },
+        { icon: Clock, title: "Optimización continua", text: "Monitoreamos y mejoramos constantemente tus sistemas para mantenerlos al máximo rendimiento." },
       ]}
       ctaTitle="¿Necesitas asesoría tecnológica?"
       ctaText="Contáctanos para una consulta gratuita y descubre cómo podemos optimizar tu infraestructura tecnológica."
-      ctaLabel="Solicitar Consulta"
+      ctaLabel="Solicitar consulta"
     />
   )
 }

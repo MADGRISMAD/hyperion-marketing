@@ -13,9 +13,9 @@ export default function MarketingDigital() {
     <ServicePage
       path="/servicios/marketing-digital"
       icon={Megaphone}
-      title="Marketing Digital"
+      title="Marketing digital"
       intro="Campañas, contenido y redes para que más clientes encuentren tu negocio, con métricas que puedes revisar."
-      heading="Estrategias Digitales"
+      heading="Estrategias digitales"
       text="Desarrollamos campañas de marketing digital personalizadas que conectan con tu audiencia y generan conversiones."
       items={[
         "Publicidad en redes sociales",
@@ -26,12 +26,12 @@ export default function MarketingDigital() {
         "Campañas de remarketing",
       ]}
       extras={[
-        { icon: Target, title: "Audiencia Objetivo", text: "Identificamos y segmentamos tu audiencia ideal para maximizar el impacto de tus campañas." },
-        { icon: BarChart3, title: "Análisis de Resultados", text: "Monitoreamos y optimizamos continuamente tus campañas y ajustamos lo que no funciona." },
+        { icon: Target, title: "Audiencia objetivo", text: "Identificamos y segmentamos tu audiencia ideal para maximizar el impacto de tus campañas." },
+        { icon: BarChart3, title: "Análisis de resultados", text: "Monitoreamos y optimizamos continuamente tus campañas y ajustamos lo que no funciona." },
       ]}
       ctaTitle="¿Listo para hacer crecer tu marca?"
       ctaText="Contáctanos para desarrollar una estrategia de marketing digital que genere resultados."
-      ctaLabel="Solicitar Cotización"
+      ctaLabel="Solicitar cotización"
     />
   )
 }
