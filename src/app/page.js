@@ -311,20 +311,135 @@ function ProductInfo({ p, i }) {
   )
 }
 
+// ── iPhone: al cambiar de proyecto, sale a la pantalla de inicio y abre la siguiente app desde su icono ──
+// Como en iOS: la app actual se encoge hacia su icono mientras aparece el inicio, se «toca» el icono siguiente y
+// esa app crece desde él. Si el proyecto cambia a media animación, al terminar va directo al último pedido.
+// Con movimiento reducido solo hay un fundido. Es una ilustración: los lectores de pantalla la ignoran.
+const EASE_IOS = "cubic-bezier(0.32, 0.72, 0, 1)" // curva tipo iOS (Ionic)
+const appIcon = (p) => (p ? { logo: p.logo, label: p.name, bg: p.logo ? "#ffffff" : "#141414", text: p.name.slice(0, 2) } : { label: "Tu app", bg: "#ff3d7f", text: "+" })
+
+function PhoneApps({ active, reduced }) {
+  const screen = useRef(null)
+  const home = useRef(null)
+  const app = useRef(null)
+  const icons = useRef([])
+  const shown = useRef(active)
+  const busy = useRef(false)
+  const wanted = useRef(active)
+  const items = [...products, null] // el último es «tu app»
+
+  const showOnly = (i) => app.current?.querySelectorAll("[data-app]").forEach((el) => (el.style.opacity = Number(el.dataset.app) === i ? "1" : "0"))
+  // transformación que lleva la pantalla completa al lugar y tamaño del icono i
+  const toIcon = (i) => {
+    const s = screen.current.getBoundingClientRect()
+    const r = icons.current[i].getBoundingClientRect()
+    const k = r.width / s.width
+    return `translate(${(r.left + r.width / 2 - (s.left + s.width / 2)).toFixed(1)}px, ${(r.top + r.height / 2 - (s.top + s.height / 2)).toFixed(1)}px) scale(${k.toFixed(3)})`
+  }
+
+  useEffect(() => {
+    wanted.current = active
+    if (reduced) {
+      shown.current = active
+      showOnly(active)
+      return
+    }
+    const run = async () => {
+      if (busy.current || shown.current === wanted.current || !screen.current) return
+      busy.current = true
+      const from = shown.current
+      const to = wanted.current
+      const opts = (duration) => ({ duration, easing: EASE_IOS, fill: "forwards" })
+      // se descartan las animaciones anteriores para medir los iconos en su lugar real (sin escala)
+      ;[app.current, home.current].forEach((el) => el.getAnimations().forEach((a) => a.cancel()))
+      try {
+        // 1) salir al inicio: la app se encoge hacia su icono y el inicio aparece desde un poco más cerca
+        await Promise.all([
+          app.current.animate([{ transform: "none", opacity: 1 }, { transform: toIcon(from), opacity: 0 }], opts(360)).finished,
+          home.current.animate([{ transform: "scale(1.12)", opacity: 0 }, { transform: "none", opacity: 1 }], opts(360)).finished,
+        ])
+        // 2) se toca el icono de la siguiente
+        await new Promise((r) => setTimeout(r, 120))
+        await icons.current[to].animate([{ transform: "none" }, { transform: "scale(0.86)" }, { transform: "none" }], { duration: 220, easing: "ease-out" }).finished
+        // 3) la app nueva crece desde su icono
+        showOnly(to)
+        await Promise.all([
+          app.current.animate([{ transform: toIcon(to), opacity: 0 }, { transform: "none", opacity: 1 }], opts(420)).finished,
+          home.current.animate([{ transform: "none", opacity: 1 }, { transform: "scale(0.94)", opacity: 0 }], opts(420)).finished,
+        ])
+        shown.current = to
+      } catch {
+        // animación cancelada (la sección se desmontó): el estado se arregla en la siguiente vuelta
+      } finally {
+        busy.current = false
+      }
+      if (wanted.current !== shown.current) run()
+    }
+    run()
+  }, [active, reduced])
+
+  return (
+    <IPhone>
+      <div ref={screen} className="absolute inset-0 overflow-hidden" aria-hidden="true">
+        {/* pantalla de inicio */}
+        <div ref={home} className="absolute inset-0 bg-[#1c1c1c] px-[9%] pt-[24%] opacity-0">
+          <div className="absolute top-[3.2%] left-[11%] text-[clamp(6px,0.75vw,11px)] font-semibold text-white">9:41</div>
+          <div className="grid grid-cols-4 gap-x-[12%] gap-y-[7%]">
+            {items.map((p, i) => {
+              const ic = appIcon(p)
+              return (
+                <div key={ic.label} className="flex flex-col items-center gap-[3px]">
+                  <span ref={(el) => (icons.current[i] = el)} className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-[22%] text-[clamp(7px,0.9vw,13px)] font-bold text-white" style={{ background: ic.bg }}>
+                    {ic.logo ? <img src={ic.logo} alt="" className="h-full w-full object-contain" /> : ic.text}
+                  </span>
+                  <span className="w-full truncate text-center text-[clamp(4px,0.5vw,7px)] text-white/85">{ic.label}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+        {/* la app abierta: todas apiladas; se ve solo la actual */}
+        <div ref={app} className="absolute inset-0">
+          {items.map((p, i) => (
+            // la visible es la que el teléfono está mostrando (la animación decide cuándo cambia), no la activa
+            <div key={i} data-app={i} className={`absolute inset-0 ${reduced ? "transition-opacity duration-300" : ""}`} style={{ opacity: i === (reduced ? active : shown.current) ? 1 : 0 }}>
+              {p?.phone ? (
+                <Image src={p.phone[0]} alt="" fill sizes="(min-width: 1024px) 220px, 34vw" className="object-cover object-top" />
+              ) : (
+                <div className="flex h-full flex-col items-center justify-center gap-3" style={{ background: p ? "#141414" : "#ff3d7f" }}>
+                  <span className="flex aspect-square w-[34%] items-center justify-center overflow-hidden rounded-[22%] text-[clamp(10px,1.4vw,20px)] font-bold" style={{ background: appIcon(p).bg, color: p ? "#fff" : "#141414" }}>
+                    {appIcon(p).logo ? <img src={appIcon(p).logo} alt="" className="h-full w-full object-contain" /> : appIcon(p).text}
+                  </span>
+                  <span className={`text-[clamp(7px,0.9vw,13px)] font-semibold ${p ? "text-white" : "text-ink"}`}>{appIcon(p).label}</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </IPhone>
+  )
+}
+
 function Products() {
   const lid = useRef(null)
   const screen = useRef(null)
+  const phone = useRef(null)
   const count = useRef(null)
   const bar = useRef(null)
   const tabs = useRef([])
   const [pinned, setPinned] = useState(false) // escritorio y sin movimiento reducido
+  const [reducedPref, setReducedPref] = useState(false)
   const [active, setActive] = useState(0)
   const [seen, setSeen] = useState(2) // portadas que ya se pueden cargar: la actual y la siguiente
   useEffect(() => setSeen((s) => Math.max(s, active + 2)), [active])
   useEffect(() => {
     const wide = window.matchMedia("(min-width: 1024px)")
     const still = window.matchMedia("(prefers-reduced-motion: reduce)")
-    const update = () => setPinned(wide.matches && !still.matches)
+    const update = () => {
+      setPinned(wide.matches && !still.matches)
+      setReducedPref(still.matches)
+    }
     update()
     wide.addEventListener("change", update)
     still.addEventListener("change", update)
@@ -338,6 +453,7 @@ function Products() {
     if (pinned) return
     if (lid.current) lid.current.style.transform = ""
     if (screen.current) screen.current.style.opacity = ""
+    if (phone.current) phone.current.style.cssText = ""
   }, [pinned])
 
   const onProgress = (p) => {
@@ -346,7 +462,13 @@ function Products() {
     const k = Math.min(1, u / OPEN)
     if (lid.current) lid.current.style.transform = `rotateX(${(LID_CLOSED * (1 - inOut(k))).toFixed(2)}deg)`
     // la pantalla se enciende en el último tramo de la apertura
-    if (screen.current) screen.current.style.opacity = Math.max(0, Math.min(1, (k - 0.55) / 0.45)).toFixed(3)
+    const on = Math.max(0, Math.min(1, (k - 0.55) / 0.45))
+    if (screen.current) screen.current.style.opacity = on.toFixed(3)
+    // el iPhone llega cuando la pantalla de la laptop se enciende
+    if (phone.current) {
+      phone.current.style.opacity = on.toFixed(3)
+      phone.current.style.transform = `translate3d(0, ${((1 - on) * 28).toFixed(1)}px, 0)`
+    }
     const i = Math.max(0, Math.min(STEPS - 1, Math.floor(u - OPEN)))
     setActive((a) => (a === i ? a : i))
     if (count.current) count.current.textContent = twoDigits(i + 1)
@@ -372,11 +494,11 @@ function Products() {
   const faro = products.findIndex((p) => p.mascot)
   return (
     <Scene id="productos" mode={pinned ? "pin" : "pass"} onProgress={onProgress} className="relative bg-paper-2" style={pinned ? { height: `${(OPEN + STEPS) * STEP_VH + 100}vh` } : undefined}>
-      <div className={pinned ? "sticky top-0 flex h-screen flex-col pt-24 pb-8" : "py-20"}>
+      <div className={pinned ? "sticky top-0 flex h-screen flex-col pt-24 pb-8 [@media(max-height:800px)]:pt-20" : "py-20"}>
         <div className="container flex items-end justify-between gap-6">
           <div>
             <p className="eyebrow text-grey-500">Productos propios</p>
-            <h2 className="display mt-3 text-[clamp(2.4rem,4.6vw,4rem)]">
+            <h2 className="display mt-3 text-[clamp(2.4rem,4.6vw,4rem)] lg:[@media(max-height:800px)]:text-[2.6rem]">
               Nueve productos. <span className="text-grey-500">Hechos por nosotros</span>
               <Dot />
             </h2>
@@ -396,7 +518,7 @@ function Products() {
 
         <div className={`container mt-10 grid gap-10 lg:mt-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-center lg:gap-14 ${pinned ? "min-h-0 flex-1" : ""}`}>
           <div className="min-w-0">
-            <div className="relative mx-auto w-[88%] lg:w-[min(88%,calc((100svh-21rem)*1.55))]">
+            <div className="relative mx-auto w-[88%] lg:w-[min(88%,calc((100svh-25rem)*1.55))]">
               <img
                 src={products[faro].mascot}
                 alt=""
@@ -405,6 +527,9 @@ function Products() {
                 loading="lazy"
                 className={`pointer-events-none absolute right-[8%] bottom-[calc(100%-6px)] z-10 w-[30%] drop-shadow-[0_14px_14px_rgba(232,51,109,0.22)] transition-opacity duration-300 ${active === faro ? "opacity-100" : "opacity-0"}`}
               />
+              <div ref={phone} className="absolute -right-[6%] -bottom-[6%] z-20 w-[28%] lg:w-[22%]">
+                <PhoneApps active={active} reduced={!pinned && reducedPref} />
+              </div>
               <MacBook3D lidRef={lid} screenRef={screen}>
                 {products.map((p, i) =>
                   i < seen ? (
@@ -427,7 +552,7 @@ function Products() {
               </MacBook3D>
             </div>
 
-            <div role="tablist" aria-label="Productos" aria-orientation="horizontal" onKeyDown={onKeyDown} className="mt-8 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] lg:flex-wrap lg:justify-center lg:overflow-visible">
+            <div role="tablist" aria-label="Productos" aria-orientation="horizontal" onKeyDown={onKeyDown} className="mt-24 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] lg:mt-12 lg:flex-wrap lg:justify-center lg:overflow-visible">
               {[...products.map((p) => p.name), "¿El tuyo?"].map((name, i) => (
                 <button
                   key={name}
